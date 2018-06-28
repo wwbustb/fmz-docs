@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to Read BotVS's documentation!
-=================================
+======================================
 The main documentation for the site is organized into a couple sections:
 
 
@@ -13,12 +13,9 @@ The main documentation for the site is organized into a couple sections:
    :caption: 1. Basic Instruction
 
    getting_started
-   versions
-   builds
-   features
-   support
-   faq
-   yaml-config
-   guides/index
-   api/index
-   embed
+
+.. toctree::
+   :maxdepth: 2
+   :caption: 2. Coding Instruction
+
+   code_Instruction/index
