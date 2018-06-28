@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2.1 Typical Strategy structure &mdash; BotVS 0.1 documentation</title>
+  <title>2.3 Market API &mdash; BotVS 0.1 documentation</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2.1 Data Structure" href="Global Constant, Data Structure.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="index.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,9 +86,9 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
 </ul>
 <p class="caption"><span class="caption-text">2. Coding Instruction</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2.1 Typical Strategy structure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Global Constant, Data Structure.html">2.1 Data Structure</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange Variable</a></li>
 </ul>
 
             
@@ -136,15 +134,13 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
-        
-      <li>2.1 Typical Strategy structure</li>
+      <li>2.3 Market API</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/code_Instruction/Typical Strategy structure.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/code_Instruction/Market API.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -157,39 +153,27 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="typical-strategy-structure">
-<h1>2.1 Typical Strategy structure<a class="headerlink" href="#typical-strategy-structure" title="Permalink to this headline">¶</a></h1>
-<p>Strategy Coding currently support <cite>JavaScript</cite>, <cite>Python</cite>, <cite>C++</cite>, more programming tools supports under developing…</p>
-<ul class="simple">
-<li><code class="docutils literal"><span class="pre">main()</span></code> as the entry function.</li>
-<li><code class="docutils literal"><span class="pre">onexit()</span></code> as the normal exit function, 5 minutes top run time. It can undeclared.</li>
-<li><code class="docutils literal"><span class="pre">onerror()</span></code> as the abnormal exit function, 5 minutes top run time. It can undeclared.</li>
-<li><code class="docutils literal"><span class="pre">init()</span></code> as the Initialization function, the strategy program will run it automatically at the beginning . It can undeclared.</li>
-</ul>
-<p>Example of a basic strategy fame:</p>
-<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">onTick</span><span class="p">(){</span>
-<span class="c1">//write your strategy here, it will repeat itself</span>
-<span class="p">}</span>
-<span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
-    <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
-        <span class="nx">onTick</span><span class="p">();</span>
-        <span class="nx">Sleep</span><span class="p">(</span><span class="mi">60000</span><span class="p">);</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+  <div class="section" id="market-api">
+<h1>2.3 Market API<a class="headerlink" href="#market-api" title="Permalink to this headline">¶</a></h1>
+<p>The following functions all can be called from object <code class="docutils literal"><span class="pre">exchange</span></code> or <code class="docutils literal"><span class="pre">exchanges[x]</span></code>,for example：<code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code> or <code class="docutils literal"><span class="pre">exchanges[0].GetTicker()</span></code> means return the market quotations.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>When calling any API function that accesses the exchange house’s interface (such as <code class="docutils literal"><span class="pre">GetTicker()</span></code>, <code class="docutils literal"><span class="pre">Buy()</span></code>, <code class="docutils literal"><span class="pre">CancelOrder()</span></code>, etc.), it may get access failure due to exchange server problem, the network transmission problem, and so on.
+In this case, <code class="docutils literal"><span class="pre">GetTicker()</span></code> will return <code class="docutils literal"><span class="pre">null</span></code>, which may cause the stop of your programe.  a JS example to do fault tolerance as below.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">()</span>
+<span class="k">if</span><span class="p">(</span><span class="nx">ticker</span> <span class="o">==</span> <span class="kc">null</span><span class="p">){</span>
+    <span class="c1">// Retry, or other processing logic.</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>For example, if You want buy one amount of order at the price 100 every second. It can be written like this:</p>
-<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">onTick</span><span class="p">(){</span>
-    <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-<span class="p">}</span>
-<span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
-    <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
-        <span class="nx">onTick</span><span class="p">();</span>
-        <span class="nx">Sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span><span class="c1">//Pause time is optional, Units are Millisecond（1 second=1000millisecond</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+<p class="last">A deflaut retry function is <code class="docutils literal"><span class="pre">_C()</span></code></p>
+</div>
+<div class="section" id="getticker">
+<h2>2.3.1 GetTicker<a class="headerlink" href="#getticker" title="Permalink to this headline">¶</a></h2>
+<p>exchange.GetTicker();
+Acquiring the current market quotations
+Return value: Ticker structure
+The Ticker structure contains the following variables:</p>
 </div>
 </div>
 
@@ -198,15 +182,6 @@
            
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="Global Constant, Data Structure.html" class="btn btn-neutral float-right" title="2.1 Data Structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="index.html" class="btn btn-neutral" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>

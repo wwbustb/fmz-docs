@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Read BotVS's documentation!
+Welcome to Read BotVS's API documentation!
 ======================================
 The main documentation for the site is organized into a couple sections:
 

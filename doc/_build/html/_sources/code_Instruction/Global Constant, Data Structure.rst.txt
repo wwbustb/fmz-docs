@@ -1,0 +1,23 @@
+2.2 Exchange Variable
+=======================
+
+
+exchange
+>>>>>>>>>>>>>>>>>>
+
+It can be imaged as a real exchange house; default setting is the first exchange in your strategy’s parameter. 
+all of data interactive with the exchange which achieve through this object function.
+
+exchanges
+>>>>>>>>>>>>>>>>>>
+
+The exchange’s array, it contains multiple exchange objects which are sorted by order of addition . used as ``exchanges[0]`` , ``exchange[1]``  etc...
+
+.. note::
+
+    If you use ``exchange`` directly, which equals to ``exchanges[0]``.
+
+Order state
+>>>>>>>>>>>>>>>>>>
+
+

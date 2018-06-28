@@ -30,7 +30,7 @@ When you completed a quantitative strategy, how do you know that the logic, amou
 FMZ divides the backtest system into real market level and simulation level. 
 The real market level contains the whole completed historical data back testing. 
 The simulation level contains the candle bar graph data at regular intervals. 
-Both level are	based on the real market historical data. Only the real market level is more accurate and the results are more reliable.
+Both level are based on the real market historical data. Only the real market level is more accurate and the results are more reliable.
 
 **The simulation level Backtest System explanation.**
 
