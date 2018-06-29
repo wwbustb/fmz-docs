@@ -23,20 +23,22 @@ The following functions all can be called from object ``exchange`` or ``exchange
 
     exchange.GetTicker()
 
-Acquiring the current market quotations
+Acquiring the current market quotations.
+
 Return value: Ticker structure
+
 The Ticker structure contains the following variables:
 
 ==================  ==================== ===============
 Field               Type                 Description
 ==================  ==================== ===============
-info                Object               the original structure returned by the exchange
-high                Number               Highest price
-low			        Number               lowest price
-sell                Number               the latest selling price
-buy                 Number               the latest buying price
-last                Number	             last traded price
-volume              Number               most recent trading volume
+Info                Object               the original structure returned by the exchange
+High                Number               Highest price
+Low			        Number               lowest price
+Sell                Number               the latest selling price
+Buy                 Number               the latest buying price
+Last                Number	             last traded price
+Volume              Number               most recent trading volume
 OpenInterest        Number               net position(only for features)
 ==================  ==================== ===============
 
@@ -104,3 +106,71 @@ For Python the code is basically the same:
     - For JavaScript: ``var priceChange = praseFloat(ticker.Info.priceChange);``
     - For Python: ``priceChange = float(ticker.Info["priceChange"])``.
 
+2.3.2 GetDepth
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.GetDepth()
+
+Acquiring the exchange order book.
+
+Return value: Depth structure
+
+The Depth structure contains the following variables:
+
+==================  ==================== ===============
+Field               Type                 Description
+==================  ==================== ===============
+Asks                Array                the array of asks,from low to high by price
+Bids                Array                the array of bids,from high to low by price
+Time                Number               the timestamp of request
+==================  ==================== ===============
+
+The Asks and Bids structure contains the following variables:
+
+==================  ==================== ===============
+Field               Type                 Description
+==================  ==================== ===============
+Price               Number               the pirce of ask or bid
+Amount              Number               the amount of ask or bid
+==================  ==================== ===============
+
+Example depth from binance:
+
+.. sourcecode:: http
+
+    {
+        "Info":null,
+        "Asks":[
+            {"Price":5866.38,"Amount":0.068644},
+            {"Price":5866.39,"Amount":0.263985},
+            {"Price":5866.73,"Amount":0.05},
+            {"Price":5866.77,"Amount":0.05},
+            {"Price":5867.01,"Amount":0.15},
+            {"Price":5875.89,"Amount":0.05},
+            ......
+            ]
+        "Bids":[
+            {"Price":5865.13,"Amount":0.001898},
+            {"Price":5865,"Amount":0.085575},
+            {"Price":5864.15,"Amount":0.013053},
+            {"Price":5863.65,"Amount":0.016727},
+            {"Price":5863.51,"Amount":0.128906},
+            {"Price":5863.15,"Amount":0.2}
+            ......
+            ],
+        "Time":1530241857399
+    }
+
+A useful JavaScript example for using depth:
+
+.. code-block:: JavaScript
+
+    function main(){
+        var depth = exchange.GetDepth();
+        var price = depth.Asks[0].Price;
+        var amount = depth.Asks[0].Amount;
+        if(amount > 10){
+            exchange.Buy(price, 10);
+        }

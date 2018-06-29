@@ -92,6 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange Variable</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2.3 Market API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getticker">2.3.1 GetTicker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getdepth">2.3.2 GetDepth</a></li>
 </ul>
 </li>
 </ul>
@@ -180,9 +181,9 @@ In this case, <code class="docutils literal"><span class="pre">GetTicker()</span
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Acquiring the current market quotations
-Return value: Ticker structure
-The Ticker structure contains the following variables:</p>
+<p>Acquiring the current market quotations.</p>
+<p>Return value: Ticker structure</p>
+<p>The Ticker structure contains the following variables:</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="21%" />
@@ -196,31 +197,31 @@ The Ticker structure contains the following variables:</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>info</td>
+<tr class="row-even"><td>Info</td>
 <td>Object</td>
 <td>the original structure returned by the exchange</td>
 </tr>
-<tr class="row-odd"><td>high</td>
+<tr class="row-odd"><td>High</td>
 <td>Number</td>
 <td>Highest price</td>
 </tr>
-<tr class="row-even"><td>low</td>
+<tr class="row-even"><td>Low</td>
 <td>Number</td>
 <td>lowest price</td>
 </tr>
-<tr class="row-odd"><td>sell</td>
+<tr class="row-odd"><td>Sell</td>
 <td>Number</td>
 <td>the latest selling price</td>
 </tr>
-<tr class="row-even"><td>buy</td>
+<tr class="row-even"><td>Buy</td>
 <td>Number</td>
 <td>the latest buying price</td>
 </tr>
-<tr class="row-odd"><td>last</td>
+<tr class="row-odd"><td>Last</td>
 <td>Number</td>
 <td>last traded price</td>
 </tr>
-<tr class="row-even"><td>volume</td>
+<tr class="row-even"><td>Volume</td>
 <td>Number</td>
 <td>most recent trading volume</td>
 </tr>
@@ -288,6 +289,101 @@ The Ticker structure contains the following variables:</p>
 <li>For JavaScript: <code class="docutils literal"><span class="pre">var</span> <span class="pre">priceChange</span> <span class="pre">=</span> <span class="pre">praseFloat(ticker.Info.priceChange);</span></code></li>
 <li>For Python: <code class="docutils literal"><span class="pre">priceChange</span> <span class="pre">=</span> <span class="pre">float(ticker.Info[&quot;priceChange&quot;])</span></code>.</li>
 </ul>
+</div>
+</div>
+<div class="section" id="getdepth">
+<h2>2.3.2 GetDepth<a class="headerlink" href="#getdepth" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetDepth</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Acquiring the exchange order book.</p>
+<p>Return value: Depth structure</p>
+<p>The Depth structure contains the following variables:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="25%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Asks</td>
+<td>Array</td>
+<td>the array of asks,from low to high by price</td>
+</tr>
+<tr class="row-odd"><td>Bids</td>
+<td>Array</td>
+<td>the array of bids,from high to low by price</td>
+</tr>
+<tr class="row-even"><td>Time</td>
+<td>Number</td>
+<td>the timestamp of request</td>
+</tr>
+</tbody>
+</table>
+<p>The Asks and Bids structure contains the following variables:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="32%" />
+<col width="39%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Price</td>
+<td>Number</td>
+<td>the pirce of ask or bid</td>
+</tr>
+<tr class="row-odd"><td>Amount</td>
+<td>Number</td>
+<td>the amount of ask or bid</td>
+</tr>
+</tbody>
+</table>
+<p>Example depth from binance:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+    &quot;Info&quot;:null,
+    &quot;Asks&quot;:[
+        {&quot;Price&quot;:5866.38,&quot;Amount&quot;:0.068644},
+        {&quot;Price&quot;:5866.39,&quot;Amount&quot;:0.263985},
+        {&quot;Price&quot;:5866.73,&quot;Amount&quot;:0.05},
+        {&quot;Price&quot;:5866.77,&quot;Amount&quot;:0.05},
+        {&quot;Price&quot;:5867.01,&quot;Amount&quot;:0.15},
+        {&quot;Price&quot;:5875.89,&quot;Amount&quot;:0.05},
+        ......
+        ]
+    &quot;Bids&quot;:[
+        {&quot;Price&quot;:5865.13,&quot;Amount&quot;:0.001898},
+        {&quot;Price&quot;:5865,&quot;Amount&quot;:0.085575},
+        {&quot;Price&quot;:5864.15,&quot;Amount&quot;:0.013053},
+        {&quot;Price&quot;:5863.65,&quot;Amount&quot;:0.016727},
+        {&quot;Price&quot;:5863.51,&quot;Amount&quot;:0.128906},
+        {&quot;Price&quot;:5863.15,&quot;Amount&quot;:0.2}
+        ......
+        ],
+    &quot;Time&quot;:1530241857399
+}
+</pre></div>
+</div>
+<p>A useful JavaScript example for using depth:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">depth</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetDepth</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">price</span> <span class="o">=</span> <span class="nx">depth</span><span class="p">.</span><span class="nx">Asks</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Price</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">amount</span> <span class="o">=</span> <span class="nx">depth</span><span class="p">.</span><span class="nx">Asks</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Amount</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">amount</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">){</span>
+        <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">price</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+    <span class="p">}</span>
+</pre></div>
 </div>
 </div>
 </div>
