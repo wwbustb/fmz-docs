@@ -6,7 +6,7 @@ The following functions all can be called from object ``exchange`` or ``exchange
 .. warning::
 
     When calling any API function that accesses the exchange house’s interface (such as ``GetTicker()``, ``Buy()``, ``CancelOrder()``, etc.), it may get access failure due to exchange server problem, the network transmission problem, and so on.
-    In this case, ``GetTicker()`` will return ``null``, which may cause the stop of your programe.  a JS example to do fault tolerance as below.
+    In this case, ``GetTicker()`` will return ``null``, which may cause the stop of your programe.  a JavaScript example to do fault tolerance as below.
 
     .. code-block:: JavaScript
 
@@ -163,7 +163,7 @@ Example depth from binance:
         "Time":1530241857399
     }
 
-A useful JavaScript example for using depth:
+A useful JavaScript example by using depth:
 
 .. code-block:: JavaScript
 
@@ -173,4 +173,72 @@ A useful JavaScript example for using depth:
         var amount = depth.Asks[0].Amount;
         if(amount > 10){
             exchange.Buy(price, 10);
+        }    
+    }
+
+2.3.2 GetTrades
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.GetTrades()
+
+Acquiring Exchange Trading History.(not your trading history)
+
+Return value: Array of Trade Structure 
+
+.. note::
+
+    Some exchanges do not support this method, the number of return data depends on exchanges.
+
+The Trade structure contains the following variables:
+
+==================  ==================== ===============
+Field               Type                 Description
+==================  ==================== ===============
+Time                Number               Unix timestamp of the trade time
+Price               Number               price of the trade
+Amount              Number               amount of the trade
+Type                Order Type           Order Type Constant
+==================  ==================== ===============
+
+Order Type is global constant, you can take ``ORDER_TYPE_BUY`` as ``0`` :
+
+==================  ==================== ===============
+Global constant     Meaning                 Value
+==================  ==================== ===============
+ORDER_TYPE_BUY      buy order            0
+ORDER_TYPE_SELL     sell order           1
+==================  ==================== ===============
+
+Example trades from binance:
+
+.. sourcecode:: http
+
+    [
+        {"Id":47317269,"Time":1530244709886,"Amount":0.002902,"Price":5884.38,"Type":1},
+        {"Id":47317270,"Time":1530244709886,"Amount":0.082102,"Price":5884.78,"Type":1},
+        {"Id":47317271,"Time":1530244713111,"Amount":0.122439,"Price":5884,"Type":0},
+        .....
+        {"Id":47317278,"Time":1530244717131,"Amount":0.000029,"Price":5884,"Type":0},
+    ]
+
+A useful JavaScript example by using trades:
+
+.. code-block:: JavaScript
+
+    function main(){
+        while(true){
+            var trades = exchange.GetTrades();
+            for(var i=0;i<trades.length;i++){
+                if(trades[i].Type == ORDER_TYPE_BUY && trades[i].Amount > 100){
+                    Log("Big amount buy order","time:", trades[0].Time, "Price:", trades[0].Price, "Amount:", trades[0].Amount);
+                }
+            }
+            Sleep(3000)//sleep 3 seconds
         }
+    }
+
+.. warning::
+
+    The trades in simulation backtesting is empty.

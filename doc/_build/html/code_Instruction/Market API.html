@@ -93,6 +93,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2.3 Market API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getticker">2.3.1 GetTicker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getdepth">2.3.2 GetDepth</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gettrades">2.3.2 GetTrades</a></li>
 </ul>
 </li>
 </ul>
@@ -167,7 +168,7 @@
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p>When calling any API function that accesses the exchange house’s interface (such as <code class="docutils literal"><span class="pre">GetTicker()</span></code>, <code class="docutils literal"><span class="pre">Buy()</span></code>, <code class="docutils literal"><span class="pre">CancelOrder()</span></code>, etc.), it may get access failure due to exchange server problem, the network transmission problem, and so on.
-In this case, <code class="docutils literal"><span class="pre">GetTicker()</span></code> will return <code class="docutils literal"><span class="pre">null</span></code>, which may cause the stop of your programe.  a JS example to do fault tolerance as below.</p>
+In this case, <code class="docutils literal"><span class="pre">GetTicker()</span></code> will return <code class="docutils literal"><span class="pre">null</span></code>, which may cause the stop of your programe.  a JavaScript example to do fault tolerance as below.</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">()</span>
 <span class="k">if</span><span class="p">(</span><span class="nx">ticker</span> <span class="o">==</span> <span class="kc">null</span><span class="p">){</span>
     <span class="c1">// Retry, or other processing logic.</span>
@@ -375,7 +376,7 @@ In this case, <code class="docutils literal"><span class="pre">GetTicker()</span
 }
 </pre></div>
 </div>
-<p>A useful JavaScript example for using depth:</p>
+<p>A useful JavaScript example by using depth:</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
     <span class="kd">var</span> <span class="nx">depth</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetDepth</span><span class="p">();</span>
     <span class="kd">var</span> <span class="nx">price</span> <span class="o">=</span> <span class="nx">depth</span><span class="p">.</span><span class="nx">Asks</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Price</span><span class="p">;</span>
@@ -383,7 +384,104 @@ In this case, <code class="docutils literal"><span class="pre">GetTicker()</span
     <span class="k">if</span><span class="p">(</span><span class="nx">amount</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">){</span>
         <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">price</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
     <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="gettrades">
+<h2>2.3.2 GetTrades<a class="headerlink" href="#gettrades" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTrades</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Acquiring Exchange Trading History.(not your trading history)</p>
+<p>Return value: Array of Trade Structure</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Some exchanges do not support this method, the number of return data depends on exchanges.</p>
+</div>
+<p>The Trade structure contains the following variables:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="29%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Time</td>
+<td>Number</td>
+<td>Unix timestamp of the trade time</td>
+</tr>
+<tr class="row-odd"><td>Price</td>
+<td>Number</td>
+<td>price of the trade</td>
+</tr>
+<tr class="row-even"><td>Amount</td>
+<td>Number</td>
+<td>amount of the trade</td>
+</tr>
+<tr class="row-odd"><td>Type</td>
+<td>Order Type</td>
+<td>Order Type Constant</td>
+</tr>
+</tbody>
+</table>
+<p>Order Type is global constant, you can take <code class="docutils literal"><span class="pre">ORDER_TYPE_BUY</span></code> as <code class="docutils literal"><span class="pre">0</span></code> :</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="38%" />
+<col width="28%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Global constant</th>
+<th class="head">Meaning</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ORDER_TYPE_BUY</td>
+<td>buy order</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>ORDER_TYPE_SELL</td>
+<td>sell order</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>Example trades from binance:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>[
+    {&quot;Id&quot;:47317269,&quot;Time&quot;:1530244709886,&quot;Amount&quot;:0.002902,&quot;Price&quot;:5884.38,&quot;Type&quot;:1},
+    {&quot;Id&quot;:47317270,&quot;Time&quot;:1530244709886,&quot;Amount&quot;:0.082102,&quot;Price&quot;:5884.78,&quot;Type&quot;:1},
+    {&quot;Id&quot;:47317271,&quot;Time&quot;:1530244713111,&quot;Amount&quot;:0.122439,&quot;Price&quot;:5884,&quot;Type&quot;:0},
+    .....
+    {&quot;Id&quot;:47317278,&quot;Time&quot;:1530244717131,&quot;Amount&quot;:0.000029,&quot;Price&quot;:5884,&quot;Type&quot;:0},
+]
+</pre></div>
+</div>
+<p>A useful JavaScript example by using trades:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">trades</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTrades</span><span class="p">();</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">trades</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">trades</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">Type</span> <span class="o">==</span> <span class="nx">ORDER_TYPE_BUY</span> <span class="o">&amp;&amp;</span> <span class="nx">trades</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">Amount</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="p">){</span>
+                <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;Big amount buy order&quot;</span><span class="p">,</span><span class="s2">&quot;time:&quot;</span><span class="p">,</span> <span class="nx">trades</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Time</span><span class="p">,</span> <span class="s2">&quot;Price:&quot;</span><span class="p">,</span> <span class="nx">trades</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Price</span><span class="p">,</span> <span class="s2">&quot;Amount:&quot;</span><span class="p">,</span> <span class="nx">trades</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Amount</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">)</span><span class="c1">//sleep 3 seconds</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The trades in simulation backtesting is empty.</p>
 </div>
 </div>
 </div>
