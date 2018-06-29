@@ -4,6 +4,8 @@
 The following functions can all be called via an ``exchange`` or ``exchanges[x]`` object, for example: ``exchange.Sell(100, 1)``; 
 Send a buy order to the exchange with the price is 100, and the quantity is 1.
 
+If you want change the trading pair before trade, check on ``exchange.IO("currency", symbol)``
+
 2.4.1 Buy
 >>>>>>>>>>>>>>>>>>
 

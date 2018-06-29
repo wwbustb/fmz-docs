@@ -88,11 +88,14 @@
 </ul>
 <p class="caption"><span class="caption-text">2. Coding Instruction</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2.4 Trade API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#buy">2.4.1 Buy</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Coding Instruction</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2.4 Trade API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#buy">2.4.1 Buy</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -140,7 +143,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+          <li><a href="index.html">Coding Instruction</a> &raquo;</li>
         
       <li>2.4 Trade API</li>
     
@@ -165,6 +168,7 @@
 <h1>2.4 Trade API<a class="headerlink" href="#trade-api" title="Permalink to this headline">¶</a></h1>
 <p>The following functions can all be called via an <code class="docutils literal"><span class="pre">exchange</span></code> or <code class="docutils literal"><span class="pre">exchanges[x]</span></code> object, for example: <code class="docutils literal"><span class="pre">exchange.Sell(100,</span> <span class="pre">1)</span></code>;
 Send a buy order to the exchange with the price is 100, and the quantity is 1.</p>
+<p>If you want change the trading pair before trade, check on <code class="docutils literal"><span class="pre">exchange.IO(&quot;currency&quot;,</span> <span class="pre">symbol)</span></code></p>
 <div class="section" id="buy">
 <h2>2.4.1 Buy<a class="headerlink" href="#buy" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">Price</span><span class="p">,</span> <span class="nx">Amount</span><span class="p">)</span>
