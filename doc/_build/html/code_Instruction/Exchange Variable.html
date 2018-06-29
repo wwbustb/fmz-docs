@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.3 Market API" href="Market API.html" />
     <link rel="prev" title="2.1 Typical Strategy structure" href="Typical Strategy structure.html" /> 
 
   
@@ -89,11 +90,8 @@
 <p class="caption"><span class="caption-text">2. Coding Instruction</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2.2 Exchange Variable</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#exchange">exchange</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#exchanges">exchanges</a></li>
-</ul>
-</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2.2 Exchange Variable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
 </ul>
 
             
@@ -162,22 +160,23 @@
             
   <div class="section" id="exchange-variable">
 <h1>2.2 Exchange Variable<a class="headerlink" href="#exchange-variable" title="Permalink to this headline">¶</a></h1>
-<p>Every API method is called by exchange object, such as <code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code>, <code class="docutils literal"><span class="pre">exchange.Buy()</span></code></p>
-<div class="section" id="exchange">
-<h2>exchange<a class="headerlink" href="#exchange" title="Permalink to this headline">¶</a></h2>
+<p>Every API method is called by exchange object, such as <code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code>, <code class="docutils literal"><span class="pre">exchange.Buy()</span></code>.</p>
+<p>Exchange and trade pair is set when you start a robot.</p>
+<p><strong>exchange</strong></p>
 <p>It can be imaged as a real exchange house; default setting is the first exchange in your strategy’s parameter.
 all of data interactive with the exchange which achieve through this object function.</p>
-</div>
-<div class="section" id="exchanges">
-<h2>exchanges<a class="headerlink" href="#exchanges" title="Permalink to this headline">¶</a></h2>
+<p><strong>exchanges</strong></p>
 <p>The exchange’s array, it contains multiple exchange objects which are sorted by order of addition . used as <code class="docutils literal"><span class="pre">exchanges[0]</span></code> , <code class="docutils literal"><span class="pre">exchange[1]</span></code>  etc…</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>If you use <code class="docutils literal"><span class="pre">exchange</span></code> directly, which equals to <code class="docutils literal"><span class="pre">exchanges[0]</span></code>.</p>
 <p class="last">When you add an exchange, it’s always fllowed by a trade pair, such as <code class="docutils literal"><span class="pre">BTC_USDT</span></code>, so
-<code class="docutils literal"><span class="pre">exchanges[0]</span></code> and <code class="docutils literal"><span class="pre">exchanges[1]</span></code> can be the same “act exchange” but with different trade pair.</p>
+<code class="docutils literal"><span class="pre">exchanges[0]</span></code> and <code class="docutils literal"><span class="pre">exchanges[1]</span></code> can be the same “actually  exchange” but with different trade pair.</p>
 </div>
-</div>
+<p><strong>GetName</strong></p>
+<p><code class="docutils literal"><span class="pre">exchange.GetName()</span></code> Return the name of the exchange, string type</p>
+<p><strong>GetLabel</strong></p>
+<p><code class="docutils literal"><span class="pre">exchange.GetLabel()</span></code> Return the exchange’s custom label, string type</p>
 </div>
 
 
@@ -187,6 +186,8 @@ all of data interactive with the exchange which achieve through this object func
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Market API.html" class="btn btn-neutral float-right" title="2.3 Market API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="Typical Strategy structure.html" class="btn btn-neutral" title="2.1 Typical Strategy structure" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

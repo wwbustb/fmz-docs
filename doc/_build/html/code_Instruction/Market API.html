@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2.2 Exchange Variable" href="Exchange Variable.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -86,9 +87,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
 </ul>
 <p class="caption"><span class="caption-text">2. Coding Instruction</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange Variable</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2.3 Market API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getticker">2.3.1 GetTicker</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -134,6 +139,8 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
       <li>2.3 Market API</li>
     
     
@@ -170,10 +177,118 @@ In this case, <code class="docutils literal"><span class="pre">GetTicker()</span
 </div>
 <div class="section" id="getticker">
 <h2>2.3.1 GetTicker<a class="headerlink" href="#getticker" title="Permalink to this headline">¶</a></h2>
-<p>exchange.GetTicker();
-Acquiring the current market quotations
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Acquiring the current market quotations
 Return value: Ticker structure
 The Ticker structure contains the following variables:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="24%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>info</td>
+<td>Object</td>
+<td>the original structure returned by the exchange</td>
+</tr>
+<tr class="row-odd"><td>high</td>
+<td>Number</td>
+<td>Highest price</td>
+</tr>
+<tr class="row-even"><td>low</td>
+<td>Number</td>
+<td>lowest price</td>
+</tr>
+<tr class="row-odd"><td>sell</td>
+<td>Number</td>
+<td>the latest selling price</td>
+</tr>
+<tr class="row-even"><td>buy</td>
+<td>Number</td>
+<td>the latest buying price</td>
+</tr>
+<tr class="row-odd"><td>last</td>
+<td>Number</td>
+<td>last traded price</td>
+</tr>
+<tr class="row-even"><td>volume</td>
+<td>Number</td>
+<td>most recent trading volume</td>
+</tr>
+<tr class="row-odd"><td>OpenInterest</td>
+<td>Number</td>
+<td>net position(only for features)</td>
+</tr>
+</tbody>
+</table>
+<p>Example ticker from binance:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+    &quot;Info&quot;:{
+            &quot;highPrice&quot;:&quot;6173.01000000&quot;,
+            &quot;openTime&quot;:1530152780326,
+            &quot;firstId&quot;:53572675,
+            &quot;lastId&quot;:53735989,
+            &quot;count&quot;:163315,
+            &quot;priceChange&quot;:&quot;-266.96000000&quot;,
+            &quot;weightedAvgPrice&quot;:&quot;6035.81831943&quot;,
+            &quot;bidPrice&quot;:&quot;5871.63000000&quot;,
+            &quot;openPrice&quot;:&quot;6139.00000000&quot;,
+            &quot;closeTime&quot;:1530239180326,
+            &quot;lowPrice&quot;:&quot;5827.00000000&quot;,
+            &quot;quoteVolume&quot;:&quot;197096315.23211791&quot;,
+            &quot;priceChangePercent&quot;:&quot;-4.349&quot;,
+            &quot;prevClosePrice&quot;:&quot;6139.00000000&quot;,
+            &quot;lastQty&quot;:&quot;0.25866000&quot;,
+            &quot;bidQty&quot;:&quot;0.00300000&quot;,
+            &quot;askPrice&quot;:&quot;5872.05000000&quot;,
+            &quot;symbol&quot;:&quot;BTCUSDT&quot;,
+            &quot;lastPrice&quot;:&quot;5872.04000000&quot;,
+            &quot;askQty&quot;:&quot;0.07344000&quot;,
+            &quot;volume&quot;:&quot;32654.44796400&quot;
+        },
+    &quot;High&quot;:6173.01,
+    &quot;Low&quot;:5827,
+    &quot;Sell&quot;:5872.05,
+    &quot;Buy&quot;:5871.63,
+    &quot;Last&quot;:5872.04,
+    &quot;Volume&quot;:32654.447964,
+    &quot;OpenInterest&quot;:0,
+    &quot;Time&quot;:1530239180443
+}
+</pre></div>
+</div>
+<p>A JavaScript example using the variables in the Ticker structure:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">();</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;High:&quot;</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">High</span><span class="p">,</span> <span class="s2">&quot;Low:&quot;</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">Low</span><span class="p">,</span> <span class="s2">&quot;Sell:&quot;</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">Sell</span><span class="p">,</span> <span class="s2">&quot;Buy:&quot;</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">Buy</span><span class="p">,</span> <span class="s2">&quot;Last:&quot;</span><span class="p">,</span>
+        <span class="nx">ticker</span><span class="p">.</span><span class="nx">Last</span><span class="p">,</span> <span class="s2">&quot;Volume:&quot;</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">Volume</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For Python the code is basically the same:</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">ticker</span> <span class="o">=</span> <span class="n">exchange</span><span class="o">.</span><span class="n">GetTicker</span><span class="p">()</span>
+    <span class="n">Log</span><span class="p">(</span><span class="s2">&quot;High:&quot;</span><span class="p">,</span> <span class="n">ticker</span><span class="o">.</span><span class="n">High</span><span class="p">,</span> <span class="s2">&quot;Low:&quot;</span><span class="p">,</span> <span class="n">ticker</span><span class="o">.</span><span class="n">Low</span><span class="p">,</span> <span class="s2">&quot;Sell:&quot;</span><span class="p">,</span> <span class="n">ticker</span><span class="o">.</span><span class="n">Sell</span><span class="p">,</span> <span class="s2">&quot;Buy:&quot;</span><span class="p">,</span> <span class="n">ticker</span><span class="o">.</span><span class="n">Buy</span><span class="p">,</span> <span class="s2">&quot;Last:&quot;</span><span class="p">,</span>
+        <span class="n">ticker</span><span class="o">.</span><span class="n">Last</span><span class="p">,</span> <span class="s2">&quot;Volume:&quot;</span><span class="p">,</span> <span class="n">ticker</span><span class="o">.</span><span class="n">Volume</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you use the a number in <code class="docutils literal"><span class="pre">Info</span></code> directly, make sure the data type is float.</p>
+<ul class="last simple">
+<li>For JavaScript: <code class="docutils literal"><span class="pre">var</span> <span class="pre">priceChange</span> <span class="pre">=</span> <span class="pre">praseFloat(ticker.Info.priceChange);</span></code></li>
+<li>For Python: <code class="docutils literal"><span class="pre">priceChange</span> <span class="pre">=</span> <span class="pre">float(ticker.Info[&quot;priceChange&quot;])</span></code>.</li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -182,6 +297,13 @@ The Ticker structure contains the following variables:</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="Exchange Variable.html" class="btn btn-neutral" title="2.2 Exchange Variable" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

@@ -4,3 +4,4 @@
 
     Typical Strategy structure
     Exchange Variable
+    Market API
