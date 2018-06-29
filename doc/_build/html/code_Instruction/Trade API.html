@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; BotVS 0.1 documentation</title>
+  <title>2.4 Trade API &mdash; BotVS 0.1 documentation</title>
   
 
   
@@ -28,8 +28,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="2.1 Typical Strategy structure" href="Typical Strategy structure.html" />
-    <link rel="prev" title="1.1 Getting Started" href="../getting_started.html" /> 
+    <link rel="prev" title="2.3 Market API" href="Market API.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -88,11 +87,14 @@
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
 </ul>
 <p class="caption"><span class="caption-text">2. Coding Instruction</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Trade API.html">2.4 Trade API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2.4 Trade API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#buy">2.4.1 Buy</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -138,13 +140,15 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li>&lt;no title&gt;</li>
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>2.4 Trade API</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/code_Instruction/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/code_Instruction/Trade API.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -157,29 +161,44 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">2. Coding Instruction</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Exchange Variable.html#add-exchange">2.2.1 Add Exchange</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Exchange Variable.html#exchange-variable">2.2.2 Exchange Variable</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Exchange Variable.html#exchange-information">2.2.3 Exchange Information</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Exchange Variable.html#fmz-simulation-exchange">2.2.4 FMZ Simulation Exchange</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Market API.html#getticker">2.3.1 GetTicker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Market API.html#getdepth">2.3.2 GetDepth</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Market API.html#gettrades">2.3.3 GetTrades</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Market API.html#getrecords">2.3.4 GetRecords</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="Trade API.html">2.4 Trade API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="Trade API.html#buy">2.4.1 Buy</a></li>
-</ul>
-</li>
-</ul>
+  <div class="section" id="trade-api">
+<h1>2.4 Trade API<a class="headerlink" href="#trade-api" title="Permalink to this headline">¶</a></h1>
+<p>The following functions can all be called via an <code class="docutils literal"><span class="pre">exchange</span></code> or <code class="docutils literal"><span class="pre">exchanges[x]</span></code> object, for example: <code class="docutils literal"><span class="pre">exchange.Sell(100,</span> <span class="pre">1)</span></code>;
+Send a buy order to the exchange with the price is 100, and the quantity is 1.</p>
+<div class="section" id="buy">
+<h2>2.4.1 Buy<a class="headerlink" href="#buy" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">Price</span><span class="p">,</span> <span class="nx">Amount</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Send a buy order, return an order ID</p>
+<p><strong>Parameter</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>Price  : order price, number type
+Amount : order quantity, number type
+</pre></div>
+</div>
+<p><strong>Return</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>order id, number type
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If the exchange’s order API support market orders, use <code class="docutils literal"><span class="pre">exchange.Buy(-1,</span> <span class="pre">0.1)</span></code>, if your trading pair is <code class="docutils literal"><span class="pre">ETH_BTC</span></code>,
+which means buy 0.1 ETH at market price. Be carefully when using market order.</p>
+</div>
+<p>A useful JavaScript example of Buy for buy certain amount of bitcoin at a certain price:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">price</span> <span class="o">=</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">Buy</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">price</span> <span class="o">&gt;=</span> <span class="mi">7000</span><span class="p">){</span>
+            <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">price</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -190,10 +209,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Typical Strategy structure.html" class="btn btn-neutral float-right" title="2.1 Typical Strategy structure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-      
-        <a href="../getting_started.html" class="btn btn-neutral" title="1.1 Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Market API.html" class="btn btn-neutral" title="2.3 Market API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -35,8 +35,8 @@ Field               Type                 Description
 Info                Object               the original structure returned by the exchange
 High                Number               Highest price
 Low			        Number               lowest price
-Sell                Number               the latest selling price
-Buy                 Number               the latest buying price
+Sell                Number               the latest selling price, also called bidPrice
+Buy                 Number               the latest buying price, also called askPrice
 Last                Number	             last traded price
 Volume              Number               most recent trading volume
 OpenInterest        Number               net position(only for features)

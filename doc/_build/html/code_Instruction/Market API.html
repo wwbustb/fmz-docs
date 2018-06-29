@@ -28,7 +28,8 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="2.2 Exchange Variable" href="Exchange Variable.html" /> 
+    <link rel="next" title="2.4 Trade API" href="Trade API.html" />
+    <link rel="prev" title="2.2 Exchange" href="Exchange Variable.html" /> 
 
   
   <script src="../_static/js/modernizr.min.js"></script>
@@ -89,7 +90,7 @@
 <p class="caption"><span class="caption-text">2. Coding Instruction</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange Variable</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2.3 Market API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getticker">2.3.1 GetTicker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getdepth">2.3.2 GetDepth</a></li>
@@ -97,6 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#getrecords">2.3.4 GetRecords</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Trade API.html">2.4 Trade API</a></li>
 </ul>
 
             
@@ -213,11 +215,11 @@ In this case, <code class="docutils literal"><span class="pre">GetTicker()</span
 </tr>
 <tr class="row-odd"><td>Sell</td>
 <td>Number</td>
-<td>the latest selling price</td>
+<td>the latest selling price, also called bidPrice</td>
 </tr>
 <tr class="row-even"><td>Buy</td>
 <td>Number</td>
-<td>the latest buying price</td>
+<td>the latest buying price, also called askPrice</td>
 </tr>
 <tr class="row-odd"><td>Last</td>
 <td>Number</td>
@@ -581,8 +583,10 @@ PERIOD_D1  : one day.
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="Trade API.html" class="btn btn-neutral float-right" title="2.4 Trade API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="Exchange Variable.html" class="btn btn-neutral" title="2.2 Exchange Variable" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="Exchange Variable.html" class="btn btn-neutral" title="2.2 Exchange" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
