@@ -93,7 +93,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2.3 Market API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#getticker">2.3.1 GetTicker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getdepth">2.3.2 GetDepth</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#gettrades">2.3.2 GetTrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gettrades">2.3.3 GetTrades</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getrecords">2.3.4 GetRecords</a></li>
 </ul>
 </li>
 </ul>
@@ -376,7 +377,7 @@ In this case, <code class="docutils literal"><span class="pre">GetTicker()</span
 }
 </pre></div>
 </div>
-<p>A useful JavaScript example by using depth:</p>
+<p>A useful JavaScript example using depth:</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
     <span class="kd">var</span> <span class="nx">depth</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetDepth</span><span class="p">();</span>
     <span class="kd">var</span> <span class="nx">price</span> <span class="o">=</span> <span class="nx">depth</span><span class="p">.</span><span class="nx">Asks</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Price</span><span class="p">;</span>
@@ -389,7 +390,7 @@ In this case, <code class="docutils literal"><span class="pre">GetTicker()</span
 </div>
 </div>
 <div class="section" id="gettrades">
-<h2>2.3.2 GetTrades<a class="headerlink" href="#gettrades" title="Permalink to this headline">¶</a></h2>
+<h2>2.3.3 GetTrades<a class="headerlink" href="#gettrades" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTrades</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -465,7 +466,7 @@ In this case, <code class="docutils literal"><span class="pre">GetTicker()</span
 ]
 </pre></div>
 </div>
-<p>A useful JavaScript example by using trades:</p>
+<p>A useful JavaScript example using trades:</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
     <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
         <span class="kd">var</span> <span class="nx">trades</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTrades</span><span class="p">();</span>
@@ -482,6 +483,92 @@ In this case, <code class="docutils literal"><span class="pre">GetTicker()</span
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p class="last">The trades in simulation backtesting is empty.</p>
+</div>
+</div>
+<div class="section" id="getrecords">
+<h2>2.3.4 GetRecords<a class="headerlink" href="#getrecords" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetRecords</span><span class="p">(</span><span class="nx">period</span><span class="p">)</span>
+<span class="nx">exchange</span><span class="p">.</span><span class="nx">GetRecords</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Acquiring Exchange’s history K lines/Candlesticks data.</p>
+<p>Parameter <code class="docutils literal"><span class="pre">period</span></code> : K lines cycle, Optional Parameters, default K line cycle is set when start the robot.</p>
+<p>All available values:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>PERIOD_M1  : 1 minute,
+PERIOD_M5  : 5 minutes,
+PERIOD_M15 : 15 minutes,
+PERIOD_M30 : 30 minutes,
+PERIOD_H1  : 1 hour,
+PERIOD_D1  : one day.
+</pre></div>
+</div>
+<p>Return value: Record structure array. from old to recent by time.</p>
+<p>The Record structure contains the following variables:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="28%" />
+<col width="31%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Time</td>
+<td>Number</td>
+<td>Unix timestamp of the kline</td>
+</tr>
+<tr class="row-odd"><td>Open</td>
+<td>Number</td>
+<td>open price of the kline</td>
+</tr>
+<tr class="row-even"><td>High</td>
+<td>Number</td>
+<td>highest price of the kline</td>
+</tr>
+<tr class="row-odd"><td>Low</td>
+<td>Number</td>
+<td>lowest price of the kline</td>
+</tr>
+<tr class="row-even"><td>Close</td>
+<td>Number</td>
+<td>close price of the kline</td>
+</tr>
+<tr class="row-odd"><td>Volume</td>
+<td>Number</td>
+<td>trading volume</td>
+</tr>
+</tbody>
+</table>
+<p>Example Records from binance:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>[
+    {&quot;Time&quot;:1526616000000,&quot;Open&quot;:7995,&quot;High&quot;:8067.65,&quot;Low&quot;:7986.6,&quot;Close&quot;:8027.22,&quot;Volume&quot;:9444676.27669432},
+    {&quot;Time&quot;:1526619600000,&quot;Open&quot;:8019.03,&quot;High&quot;:8049.99,&quot;Low&quot;:7982.78,&quot;Close&quot;:8027,&quot;Volume&quot;:5354251.80804935},
+    {&quot;Time&quot;:1526623200000,&quot;Open&quot;:8027.01,&quot;High&quot;:8036.41,&quot;Low&quot;:7955.24,&quot;Close&quot;:7955.39,&quot;Volume&quot;:6659842.42025361},
+    ......
+]
+</pre></div>
+</div>
+<p>A useful JavaScript example using Records to get a close array:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">close</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="kd">var</span> <span class="nx">records</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetRecords</span><span class="p">(</span><span class="nx">PERIOD_H1</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">records</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="nx">close</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">records</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">Close</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<ul class="last simple">
+<li>The K-lines data will accumulate over time, accumulating up to 2000, then will update one record at one K-line cycle, and delete  the earliest one at the same time.</li>
+<li>If the exchange provides a K-line API. In this case, the data is obtained directly from the exchange.</li>
+<li>If the exchange does not provide a K-line API. your robot will using <code class="docutils literal"><span class="pre">GetTrades()</span></code> function to generate K-line each time the user calls GetRecords.In this case,Records length will be one when first start.</li>
+</ul>
 </div>
 </div>
 </div>

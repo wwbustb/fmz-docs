@@ -163,7 +163,7 @@ Example depth from binance:
         "Time":1530241857399
     }
 
-A useful JavaScript example by using depth:
+A useful JavaScript example using depth:
 
 .. code-block:: JavaScript
 
@@ -176,7 +176,7 @@ A useful JavaScript example by using depth:
         }    
     }
 
-2.3.2 GetTrades
+2.3.3 GetTrades
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -223,7 +223,7 @@ Example trades from binance:
         {"Id":47317278,"Time":1530244717131,"Amount":0.000029,"Price":5884,"Type":0},
     ]
 
-A useful JavaScript example by using trades:
+A useful JavaScript example using trades:
 
 .. code-block:: JavaScript
 
@@ -242,3 +242,70 @@ A useful JavaScript example by using trades:
 .. warning::
 
     The trades in simulation backtesting is empty.
+
+2.3.4 GetRecords
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.GetRecords(period)
+    exchange.GetRecords()
+
+Acquiring Exchange's history K lines/Candlesticks data.
+
+Parameter ``period`` : K lines cycle, Optional Parameters, default K line cycle is set when start the robot.
+
+All available values:
+
+.. sourcecode:: http
+
+    PERIOD_M1  : 1 minute, 
+    PERIOD_M5  : 5 minutes, 
+    PERIOD_M15 : 15 minutes, 
+    PERIOD_M30 : 30 minutes, 
+    PERIOD_H1  : 1 hour,
+    PERIOD_D1  : one day.
+
+Return value: Record structure array. from old to recent by time.
+
+The Record structure contains the following variables:
+
+==================  ==================== ===============
+Field               Type                 Description
+==================  ==================== ===============
+Time                Number               Unix timestamp of the kline
+Open                Number               open price of the kline
+High                Number               highest price of the kline
+Low                 Number               lowest price of the kline
+Close               Number               close price of the kline
+Volume              Number               trading volume
+==================  ==================== ===============
+
+Example Records from binance:
+
+.. sourcecode:: http
+
+    [
+        {"Time":1526616000000,"Open":7995,"High":8067.65,"Low":7986.6,"Close":8027.22,"Volume":9444676.27669432},
+        {"Time":1526619600000,"Open":8019.03,"High":8049.99,"Low":7982.78,"Close":8027,"Volume":5354251.80804935},
+        {"Time":1526623200000,"Open":8027.01,"High":8036.41,"Low":7955.24,"Close":7955.39,"Volume":6659842.42025361},
+        ......
+    ]
+
+A useful JavaScript example using Records to get a close array:
+
+.. code-block:: JavaScript
+
+    function main(){
+        var close = [];
+        var records = exchange.GetRecords(PERIOD_H1);
+        for(var i=0;i<records.length;i++){
+            close.push(records[i].Close);
+        }
+    }
+
+.. note::
+
+    - The K-lines data will accumulate over time, accumulating up to 2000, then will update one record at one K-line cycle, and delete  the earliest one at the same time.
+    - If the exchange provides a K-line API. In this case, the data is obtained directly from the exchange.
+    - If the exchange does not provide a K-line API. your robot will using ``GetTrades()`` function to generate K-line each time the user calls GetRecords.In this case,Records length will be one when first start.
