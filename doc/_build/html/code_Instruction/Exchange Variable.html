@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2.2 Exchange Variable &mdash; BotVS 0.1 documentation</title>
+  <title>2.2 Exchange &mdash; BotVS 0.1 documentation</title>
   
 
   
@@ -90,7 +90,13 @@
 <p class="caption"><span class="caption-text">2. Coding Instruction</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2.2 Exchange Variable</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2.2 Exchange</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#add-exchange">2.2.1 Add Exchange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exchange-variable">2.2.2 Exchange Variable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#exchange-information">2.2.3 Exchange Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fmz-simulation-exchange">2.2.4 FMZ Simulation Exchange</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
 </ul>
 
@@ -139,7 +145,7 @@
         
           <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
         
-      <li>2.2 Exchange Variable</li>
+      <li>2.2 Exchange</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -158,10 +164,54 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="exchange-variable">
-<h1>2.2 Exchange Variable<a class="headerlink" href="#exchange-variable" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="exchange">
+<h1>2.2 Exchange<a class="headerlink" href="#exchange" title="Permalink to this headline">¶</a></h1>
 <p>Every API method is called by exchange object, such as <code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code>, <code class="docutils literal"><span class="pre">exchange.Buy()</span></code>.</p>
-<p>Exchange and trade pair is set when you start a robot.</p>
+<p>Exchange and trade pair is set when you start a robot. The following market api and trade api is based on this setting.
+If you set your exchange is “Binance”, trade pair is “BTC_USDT”, then call <code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code>, you will get the ticker of “BTCUSDT” of Binance</p>
+<div class="section" id="add-exchange">
+<h2>2.2.1 Add Exchange<a class="headerlink" href="#add-exchange" title="Permalink to this headline">¶</a></h2>
+<p>Check on how to add exchange when start a robot.</p>
+<p>Now support:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>AEX
+BigONE
+Binance
+BitFlyer
+Bitfinex
+Bithumb
+Bitpie
+Bitstamp
+Bittrex
+BotVS
+CoinEx
+CoinPlus
+Coincheck
+Coinone
+Exchange
+Futures_BitMEX
+Futures_CTP
+Futures_Deribit
+Futures_Esunny
+Futures_OKCoin
+GateIO
+HitBTC
+Huobi
+KEX
+Korbit
+Kraken
+LiveCoin
+OKCoin_EN
+OKEX
+Poloniex
+Quoine
+WEX
+ZB
+Zaif
+</pre></div>
+</div>
+</div>
+<div class="section" id="exchange-variable">
+<h2>2.2.2 Exchange Variable<a class="headerlink" href="#exchange-variable" title="Permalink to this headline">¶</a></h2>
 <p><strong>exchange</strong></p>
 <p>It can be imaged as a real exchange house; default setting is the first exchange in your strategy’s parameter.
 all of data interactive with the exchange which achieve through this object function.</p>
@@ -173,10 +223,19 @@ all of data interactive with the exchange which achieve through this object func
 <p class="last">When you add an exchange, it’s always fllowed by a trade pair, such as <code class="docutils literal"><span class="pre">BTC_USDT</span></code>, so
 <code class="docutils literal"><span class="pre">exchanges[0]</span></code> and <code class="docutils literal"><span class="pre">exchanges[1]</span></code> can be the same “actually  exchange” but with different trade pair.</p>
 </div>
+</div>
+<div class="section" id="exchange-information">
+<h2>2.2.3 Exchange Information<a class="headerlink" href="#exchange-information" title="Permalink to this headline">¶</a></h2>
 <p><strong>GetName</strong></p>
 <p><code class="docutils literal"><span class="pre">exchange.GetName()</span></code> Return the name of the exchange, string type</p>
 <p><strong>GetLabel</strong></p>
 <p><code class="docutils literal"><span class="pre">exchange.GetLabel()</span></code> Return the exchange’s custom label, string type</p>
+</div>
+<div class="section" id="fmz-simulation-exchange">
+<h2>2.2.4 FMZ Simulation Exchange<a class="headerlink" href="#fmz-simulation-exchange" title="Permalink to this headline">¶</a></h2>
+<p>FMZ Simulation Exchange is basically the same as a real exchange, you can run your robot on FMZ Simulation Exchange for testing your strategy, which is totally free.
+check it on <a class="reference external" href="https://www.fmz.com/m/sandbox">https://www.fmz.com/m/sandbox</a>, and deposit some money or bitcoin to start</p>
+</div>
 </div>
 
 
