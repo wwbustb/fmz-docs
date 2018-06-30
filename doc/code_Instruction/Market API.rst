@@ -5,7 +5,7 @@ The following functions all can be called from object ``exchange`` or ``exchange
 
 .. warning::
 
-    When calling any API function that accesses the exchange house’s interface (such as ``GetTicker()``, ``Buy()``, ``CancelOrder()``, etc.), it may get access failure due to exchange server problem, the network transmission problem, and so on.
+    When calling any API function that accesses the exchange API (such as ``GetTicker()``, ``Buy()``, ``CancelOrder()``, etc.), it may get access failure due to exchange server problem, the network transmission problem, and so on.
     In this case, ``GetTicker()`` will return ``null``, which may cause the stop of your programe.  a JavaScript example to do fault tolerance as below.
 
     .. code-block:: JavaScript
@@ -86,8 +86,7 @@ A JavaScript example using the variables in the Ticker structure:
 
     function main(){
         var ticker = exchange.GetTicker();
-        Log("High:", ticker.High, "Low:", ticker.Low, "Sell:", ticker.Sell, "Buy:", ticker.Buy, "Last:",
-            ticker.Last, "Volume:", ticker.Volume);
+        Log("High:", ticker.High, "Low:", ticker.Low, "Sell:", ticker.Sell)
     }
 
 For Python the code is basically the same:
@@ -96,8 +95,7 @@ For Python the code is basically the same:
 
     def main():
         ticker = exchange.GetTicker()
-        Log("High:", ticker.High, "Low:", ticker.Low, "Sell:", ticker.Sell, "Buy:", ticker.Buy, "Last:",
-            ticker.Last, "Volume:", ticker.Volume)
+        Log("High:", ticker.High, "Low:", ticker.Low, "Sell:", ticker.Sell)
 
 .. note::
 

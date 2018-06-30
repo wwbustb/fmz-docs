@@ -82,12 +82,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">1. Basic Instruction</span></p>
+              <p class="caption"><span class="caption-text">Basic Instruction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">1.1 Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
 </ul>
-<p class="caption"><span class="caption-text">2. Coding Instruction</span></p>
+<p class="caption"><span class="caption-text">API Instruction</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2.2 Exchange</a><ul>
@@ -98,6 +98,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Trade API.html">2.4 Trade API</a></li>
 </ul>
 
             
@@ -168,7 +169,8 @@
 <h1>2.2 Exchange<a class="headerlink" href="#exchange" title="Permalink to this headline">¶</a></h1>
 <p>Every API method is called by exchange object, such as <code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code>, <code class="docutils literal"><span class="pre">exchange.Buy()</span></code>.</p>
 <p>Exchange and trade pair is set when you start a robot. The following market api and trade api is based on this setting.
-If you set your exchange is “Binance”, trade pair is “BTC_USDT”, then call <code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code>, you will get the ticker of “BTCUSDT” of Binance</p>
+If you set your exchange is “Binance”, trading pair is “BTC_USDT”, then call <code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code>, you will get the ticker of “BTCUSDT” of Binance.
+trading pair is also called <code class="docutils literal"><span class="pre">symbol</span></code> or <code class="docutils literal"><span class="pre">currency</span></code> in some exchenge’s API docs,</p>
 <div class="section" id="add-exchange">
 <h2>2.2.1 Add Exchange<a class="headerlink" href="#add-exchange" title="Permalink to this headline">¶</a></h2>
 <p>Check on how to add exchange when start a robot.</p>

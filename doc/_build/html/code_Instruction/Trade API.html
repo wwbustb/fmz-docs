@@ -92,10 +92,12 @@
 <li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2.4 Trade API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#buy">2.4.1 Buy</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sell">2.4.2 Sell</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cancelorder">2.4.3 CancelOrder</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#getorder">2.4.4 GetOrder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getaccount">2.4.1 GetAccount</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#buy">2.4.2 Buy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sell">2.4.3 Sell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cancelorder">2.4.4 CancelOrder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getorder">2.4.5 GetOrder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getorders">2.4.6 GetOrders</a></li>
 </ul>
 </li>
 </ul>
@@ -169,8 +171,94 @@
 <p>The following functions can all be called via an <code class="docutils literal"><span class="pre">exchange</span></code> or <code class="docutils literal"><span class="pre">exchanges[x]</span></code> object, for example: <code class="docutils literal"><span class="pre">exchange.Sell(100,</span> <span class="pre">1)</span></code>;
 Send a buy order to the exchange with the price is 100, and the quantity is 1.</p>
 <p>If you want change the trading pair before trade, check on <code class="docutils literal"><span class="pre">exchange.IO(&quot;currency&quot;,</span> <span class="pre">symbol)</span></code></p>
+<div class="section" id="getaccount">
+<h2>2.4.1 GetAccount<a class="headerlink" href="#getaccount" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Acquiring exchange account information</p>
+<p><strong>Return value: Account structure</strong></p>
+<p>The Account structure contains the following variables:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="17%" />
+<col width="69%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Info</td>
+<td>Object</td>
+<td>The original data returned by the exchange</td>
+</tr>
+<tr class="row-odd"><td>Balance</td>
+<td>Number</td>
+<td>Balance (Pricing currency balance, BTC if your trading pair is <code class="docutils literal"><span class="pre">ETH_BTC</span></code>)</td>
+</tr>
+<tr class="row-even"><td>FrozenBalance</td>
+<td>Number</td>
+<td>Frozen balance in your pending buy orders</td>
+</tr>
+<tr class="row-odd"><td>Stocks</td>
+<td>Number</td>
+<td>The available quantity of trading currency, ETH if your trading pair is <code class="docutils literal"><span class="pre">ETH_BTC</span></code></td>
+</tr>
+<tr class="row-even"><td>FrozenStocks</td>
+<td>Number</td>
+<td>Frozen Stocks in your pending sell orders</td>
+</tr>
+</tbody>
+</table>
+<p>Example of GetAccount from binance, trading pair is <code class="docutils literal"><span class="pre">BTC_USDT</span></code>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+    &quot;Stocks&quot;:0.38594816,
+    &quot;FrozenStocks&quot;:0,
+    &quot;Balance&quot;:542.858308,
+    &quot;FrozenBalance&quot;:0
+    &quot;Info&quot;:{
+            &quot;takerCommission&quot;:10,
+            &quot;canTrade&quot;:true,
+            &quot;canDeposit&quot;:true,
+            &quot;updateTime&quot;:1530330645991,
+            &quot;balances&quot;:[
+                        {&quot;asset&quot;:&quot;BTC&quot;,&quot;free&quot;:&quot;0.38594816&quot;,&quot;locked&quot;:&quot;0.00000000&quot;},
+                        {&quot;asset&quot;:&quot;LTC&quot;,&quot;free&quot;:&quot;0.00736000&quot;,&quot;locked&quot;:&quot;0.00000000&quot;},
+                        {&quot;asset&quot;:&quot;ETH&quot;,&quot;free&quot;:&quot;2.44434439&quot;,&quot;locked&quot;:&quot;0.00000000&quot;},
+                        {&quot;asset&quot;:&quot;BNC&quot;,&quot;free&quot;:&quot;0.00000000&quot;,&quot;locked&quot;:&quot;0.00000000&quot;},
+                        {&quot;asset&quot;:&quot;ICO&quot;,&quot;free&quot;:&quot;0.00000000&quot;,&quot;locked&quot;:&quot;0.00000000&quot;},
+                        ......
+                        ]
+            &quot;makerCommission&quot;:10,
+            &quot;buyerCommission&quot;:0,
+            &quot;sellerCommission&quot;:0,
+            &quot;canWithdraw&quot;:true
+        },
+}
+</pre></div>
+</div>
+<p>A useful JavaScript example of Log your account value for certain trading pair:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">account</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">price</span> <span class="o">=</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">Buy</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">stocks</span> <span class="o">=</span> <span class="nx">account</span><span class="p">.</span><span class="nx">Stocks</span> <span class="o">+</span> <span class="nx">account</span><span class="p">.</span><span class="nx">FrozenStocks</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">balance</span> <span class="o">=</span> <span class="nx">account</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">+</span> <span class="nx">account</span><span class="p">.</span><span class="nx">FrozenBalance</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">stocks</span><span class="o">*</span><span class="nx">price</span> <span class="o">+</span> <span class="nx">balance</span><span class="p">;</span>
+        <span class="nx">Log</span><span class="p">(</span><span class="s1">&#39;Account value is: &#39;</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="buy">
-<h2>2.4.1 Buy<a class="headerlink" href="#buy" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.2 Buy<a class="headerlink" href="#buy" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">Price</span><span class="p">,</span> <span class="nx">Amount</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -204,7 +292,7 @@ which means buy 0.1 ETH at market price. Be carefully when using market order.</
 </div>
 </div>
 <div class="section" id="sell">
-<h2>2.4.2 Sell<a class="headerlink" href="#sell" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.3 Sell<a class="headerlink" href="#sell" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">(</span><span class="nx">Price</span><span class="p">,</span> <span class="nx">Amount</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -225,7 +313,7 @@ which means sell 0.1 ETH at market price.</p>
 </div>
 </div>
 <div class="section" id="cancelorder">
-<h2>2.4.3 CancelOrder<a class="headerlink" href="#cancelorder" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.4 CancelOrder<a class="headerlink" href="#cancelorder" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">orderId</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -248,7 +336,7 @@ Whether the exchange cancels the order, it is best to call <code class="docutils
 </div>
 </div>
 <div class="section" id="getorder">
-<h2>2.4.4 GetOrder<a class="headerlink" href="#getorder" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.5 GetOrder<a class="headerlink" href="#getorder" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrder</span><span class="p">(</span><span class="nx">orderId</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -378,6 +466,66 @@ Whether the exchange cancels the order, it is best to call <code class="docutils
             <span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
         <span class="p">}</span>
         <span class="nx">Sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">Buy</span></code>, <code class="docutils literal"><span class="pre">Sell</span></code>, <code class="docutils literal"><span class="pre">CancelOrder</span></code>, can be followed by some additional output parameters, such as: <code class="docutils literal"><span class="pre">exchange.Buy(price,</span> <span class="pre">amount,</span> <span class="pre">'BTC_USDT')</span></code>,
+<code class="docutils literal"><span class="pre">exchange.CancelOrder(orderId,</span> <span class="pre">'BTC_USDT')</span></code>, Which will give you extra information in robot Logs.</p>
+</div>
+</div>
+<div class="section" id="getorders">
+<h2>2.4.6 GetOrders<a class="headerlink" href="#getorders" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrders</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Get all Current open orders for your trading pair.</p>
+<p><strong>Return value: Order structure array</strong></p>
+<p>Example of GetOrders from binance, the trading pair is <code class="docutils literal"><span class="pre">YOYOETH</span></code>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>[
+    {
+        &quot;Info&quot;:{
+                &quot;executedQty&quot;:&quot;0.00000000&quot;,
+                &quot;type&quot;:&quot;LIMIT&quot;,
+                &quot;isWorking&quot;:true,
+                &quot;price&quot;:&quot;0.00012826&quot;,
+                &quot;status&quot;:&quot;NEW&quot;,
+                &quot;timeInForce&quot;:&quot;GTC&quot;,
+                &quot;symbol&quot;:&quot;YOYOETH&quot;,
+                &quot;side&quot;:&quot;SELL&quot;,
+                &quot;stopPrice&quot;:&quot;0.00000000&quot;,
+                &quot;icebergQty&quot;:&quot;0.00000000&quot;,
+                &quot;time&quot;:1530331666316,
+                &quot;orderId&quot;:16387538,
+                &quot;origQty&quot;:&quot;1123.00000000&quot;,
+                &quot;clientOrderId&quot;:&quot;TrKOsaHcqc667tjZQtg09b&quot;
+                },
+        &quot;Id&quot;:16387538,
+        &quot;Amount&quot;:1123,
+        &quot;Price&quot;:0.00012826,
+        &quot;DealAmount&quot;:0,
+        &quot;AvgPrice&quot;:0,
+        &quot;Status&quot;:0,
+        &quot;Type&quot;:1,
+        &quot;ContractType&quot;:&quot;&quot;
+    }
+]
+</pre></div>
+</div>
+<p>A  JavaScript example of using this API, which will cancel all open orders for set trading pair:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">fuction</span> <span class="nx">CancelAll</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">orders</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrders</span><span class="p">();</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">orders</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">orders</span><span class="p">[[</span><span class="nx">i</span><span class="p">].</span><span class="nx">Id</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="nx">CancelAll</span><span class="p">();</span>
+    <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
+        <span class="c1">//do something</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>

@@ -6,7 +6,76 @@ Send a buy order to the exchange with the price is 100, and the quantity is 1.
 
 If you want change the trading pair before trade, check on ``exchange.IO("currency", symbol)``
 
-2.4.1 Buy
+2.4.1 GetAccount
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.GetAccount()
+
+Acquiring exchange account information
+
+**Return value: Account structure**
+
+The Account structure contains the following variables:
+
+==================  ==================== ===============
+Field               Type                 Description
+==================  ==================== ===============
+Info                Object               The original data returned by the exchange 
+Balance             Number               Balance (Pricing currency balance, BTC if your trading pair is ``ETH_BTC``)
+FrozenBalance	    Number               Frozen balance in your pending buy orders
+Stocks              Number               The available quantity of trading currency, ETH if your trading pair is ``ETH_BTC``
+FrozenStocks        Number               Frozen Stocks in your pending sell orders
+==================  ==================== ===============
+
+Example of GetAccount from binance, trading pair is ``BTC_USDT``:
+
+.. sourcecode:: http
+
+    {   
+        "Stocks":0.38594816,
+        "FrozenStocks":0,
+        "Balance":542.858308,
+        "FrozenBalance":0
+        "Info":{
+                "takerCommission":10,
+                "canTrade":true,
+                "canDeposit":true,
+                "updateTime":1530330645991,
+                "balances":[
+                            {"asset":"BTC","free":"0.38594816","locked":"0.00000000"},
+                            {"asset":"LTC","free":"0.00736000","locked":"0.00000000"},
+                            {"asset":"ETH","free":"2.44434439","locked":"0.00000000"},
+                            {"asset":"BNC","free":"0.00000000","locked":"0.00000000"},
+                            {"asset":"ICO","free":"0.00000000","locked":"0.00000000"},
+                            ......
+                            ]
+                "makerCommission":10,
+                "buyerCommission":0,
+                "sellerCommission":0,
+                "canWithdraw":true
+            },
+    }
+
+A useful JavaScript example of Log your account value for certain trading pair:
+
+.. code-block:: JavaScript
+
+    function main(){
+        while(true){
+            var ticker = exchange.GetTicker();
+            var account = exchange.GetAccount();
+            var price = ticker.Buy;
+            var stocks = account.Stocks + account.FrozenStocks;
+            var balance = account.Balance + account.FrozenBalance;
+            var value = stocks*price + balance;
+            Log('Account value is: ', value);
+            Sleep(3000);
+        }    
+    }
+
+2.4.2 Buy
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -48,7 +117,7 @@ A useful JavaScript example of Buy for buy certain amount of bitcoin at a certai
         }    
     }
 
-2.4.2 Sell
+2.4.3 Sell
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -75,7 +144,7 @@ Send a sell order, return an order ID
     If the exchange's order API support market orders, use ``exchange.Sell(-1, 0.1)``, if your trading pair is ``ETH_BTC``,
     which means sell 0.1 ETH at market price.
 
-2.4.3 CancelOrder
+2.4.4 CancelOrder
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -106,7 +175,7 @@ A  JavaScript example of cancel an order after some time:
         exchange.CancelOrder(id);
     }
 
-2.4.4 GetOrder
+2.4.5 GetOrder
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -197,5 +266,73 @@ A  JavaScript example of using this API, which will buy until your account has 1
                 exchange.CancelOrder(id);
             }
             Sleep(3000);
+        }
+    }
+
+.. note::
+
+    ``Buy``, ``Sell``, ``CancelOrder``, can be followed by some additional output parameters, such as: ``exchange.Buy(price, amount, 'BTC_USDT')``,
+    ``exchange.CancelOrder(orderId, 'BTC_USDT')``, Which will give you extra information in robot Logs.
+
+
+2.4.6 GetOrders
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.GetOrders()
+
+Get all Current open orders for your trading pair.
+
+**Return value: Order structure array**
+
+Example of GetOrders from binance, the trading pair is ``YOYOETH``:
+
+.. sourcecode:: http
+
+    [
+        {
+            "Info":{
+                    "executedQty":"0.00000000",
+                    "type":"LIMIT",
+                    "isWorking":true,
+                    "price":"0.00012826",
+                    "status":"NEW",
+                    "timeInForce":"GTC",
+                    "symbol":"YOYOETH",
+                    "side":"SELL",
+                    "stopPrice":"0.00000000",
+                    "icebergQty":"0.00000000",
+                    "time":1530331666316,
+                    "orderId":16387538,
+                    "origQty":"1123.00000000",
+                    "clientOrderId":"TrKOsaHcqc667tjZQtg09b"
+                    },
+            "Id":16387538,
+            "Amount":1123,
+            "Price":0.00012826,
+            "DealAmount":0,
+            "AvgPrice":0,
+            "Status":0,
+            "Type":1,
+            "ContractType":""
+        }
+    ]
+
+A  JavaScript example of using this API, which will cancel all open orders for set trading pair:
+
+.. code-block:: JavaScript
+
+    fuction CancelAll(){
+        var orders = exchange.GetOrders();
+        for(var i=0;i<orders.length,i++){
+            exchange.CancelOrder(orders[[i].Id);
+        }
+    }
+    function main(){
+        CancelAll();
+        while(true){
+            //do something
+            Sleep(10000);
         }
     }

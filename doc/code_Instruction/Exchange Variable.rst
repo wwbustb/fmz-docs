@@ -4,7 +4,8 @@
 Every API method is called by exchange object, such as ``exchange.GetTicker()``, ``exchange.Buy()``.
 
 Exchange and trade pair is set when you start a robot. The following market api and trade api is based on this setting.
-If you set your exchange is "Binance", trade pair is "BTC_USDT", then call ``exchange.GetTicker()``, you will get the ticker of "BTCUSDT" of Binance
+If you set your exchange is "Binance", trading pair is "BTC_USDT", then call ``exchange.GetTicker()``, you will get the ticker of "BTCUSDT" of Binance.
+trading pair is also called ``symbol`` or ``currency`` in some exchenge's API docs,
 
 2.2.1 Add Exchange
 >>>>>>>>>>>>>>>>>>
