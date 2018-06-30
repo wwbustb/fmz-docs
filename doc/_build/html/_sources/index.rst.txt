@@ -10,13 +10,13 @@ The main documentation for the site is organized into a couple sections:
 
 
 .. toctree::
-   :maxdepth: 2
-   :caption: 1. Basic Instruction
+   :maxdepth: 3
+   :caption: Basic Instruction
 
    getting_started
 
 .. toctree::
-   :maxdepth: 2
-   :caption: 2. Coding Instruction
+   :maxdepth: 3
+   :caption: API Instruction
 
    code_Instruction/index

@@ -32,7 +32,7 @@ The Ticker structure contains the following variables:
 ==================  ==================== ===============
 Field               Type                 Description
 ==================  ==================== ===============
-Info                Object               the original structure returned by the exchange
+Info                Object               the original data returned by the exchange
 High                Number               Highest price
 Low			        Number               lowest price
 Sell                Number               the latest selling price, also called bidPrice

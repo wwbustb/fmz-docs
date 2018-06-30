@@ -81,21 +81,21 @@
               
             
             
-              <p class="caption"><span class="caption-text">1. Basic Instruction</span></p>
+              <p class="caption"><span class="caption-text">Basic Instruction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">1.1 Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
 </ul>
-<p class="caption"><span class="caption-text">2. Coding Instruction</span></p>
+<p class="caption"><span class="caption-text">API Instruction</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Coding Instruction</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">2.4 Trade API</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#buy">2.4.1 Buy</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2.4 Trade API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#buy">2.4.1 Buy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sell">2.4.2 Sell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cancelorder">2.4.3 CancelOrder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getorder">2.4.4 GetOrder</a></li>
 </ul>
 </li>
 </ul>
@@ -143,7 +143,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="index.html">Coding Instruction</a> &raquo;</li>
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
         
       <li>2.4 Trade API</li>
     
@@ -196,6 +196,186 @@ which means buy 0.1 ETH at market price. Be carefully when using market order.</
         <span class="kd">var</span> <span class="nx">price</span> <span class="o">=</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">Buy</span><span class="p">;</span>
         <span class="k">if</span><span class="p">(</span><span class="nx">price</span> <span class="o">&gt;=</span> <span class="mi">7000</span><span class="p">){</span>
             <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">price</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sell">
+<h2>2.4.2 Sell<a class="headerlink" href="#sell" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">(</span><span class="nx">Price</span><span class="p">,</span> <span class="nx">Amount</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Send a sell order, return an order ID</p>
+<p><strong>Parameter</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>Price  : order price, number type
+Amount : order quantity, number type
+</pre></div>
+</div>
+<p><strong>Return</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>order id, number type
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If the exchange’s order API support market orders, use <code class="docutils literal"><span class="pre">exchange.Sell(-1,</span> <span class="pre">0.1)</span></code>, if your trading pair is <code class="docutils literal"><span class="pre">ETH_BTC</span></code>,
+which means sell 0.1 ETH at market price.</p>
+</div>
+</div>
+<div class="section" id="cancelorder">
+<h2>2.4.3 CancelOrder<a class="headerlink" href="#cancelorder" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">orderId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Cancel an order by order id.</p>
+<p><strong>Parameter</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>orderId  : order id, returned by Buy or Sell API.
+</pre></div>
+</div>
+<p>Return value: bool type</p>
+<p><code class="docutils literal"><span class="pre">true</span></code> means that the cancellation of the order request was successful.
+<code class="docutils literal"><span class="pre">false</span></code> means cancellation of the order request failed. (It is only a successful request.
+Whether the exchange cancels the order, it is best to call <code class="docutils literal"><span class="pre">exchange.GetOrders()</span></code>.)</p>
+<p>A  JavaScript example of cancel an order after some time:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">(</span><span class="mi">99999</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="nx">Sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getorder">
+<h2>2.4.4 GetOrder<a class="headerlink" href="#getorder" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrder</span><span class="p">(</span><span class="nx">orderId</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Get order details by order id.</p>
+<p><strong>Parameter</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>orderId  : order id, returned by Buy or Sell API.
+</pre></div>
+</div>
+<p><strong>Return value: Order structure</strong></p>
+<p>The Order structure contains the following variables:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="17%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Info</td>
+<td>Object</td>
+<td>The original data returned by the exchange</td>
+</tr>
+<tr class="row-odd"><td>Id</td>
+<td>Number</td>
+<td>Unique ticket identifier</td>
+</tr>
+<tr class="row-even"><td>Price</td>
+<td>Number</td>
+<td>Order price</td>
+</tr>
+<tr class="row-odd"><td>Amount</td>
+<td>Number</td>
+<td>Order quantity</td>
+</tr>
+<tr class="row-even"><td>DealAmount</td>
+<td>Number</td>
+<td>The deal amount of this order</td>
+</tr>
+<tr class="row-odd"><td>AvgPrice</td>
+<td>Number</td>
+<td>Average transaction price (0 means the exchange do not return this field)</td>
+</tr>
+<tr class="row-even"><td>Status</td>
+<td>Const</td>
+<td>Order Status</td>
+</tr>
+<tr class="row-odd"><td>Type</td>
+<td>Const</td>
+<td>Order Type, <code class="docutils literal"><span class="pre">ORDER_TYPE_BUY</span></code> : Buy Order, <code class="docutils literal"><span class="pre">ORDER_TYPE_SELL</span></code> : Sell Order</td>
+</tr>
+</tbody>
+</table>
+<p>Order Status is global constant:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Global constant</th>
+<th class="head">Meaning</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ORDER_STATE_PENDING</td>
+<td>Incomplete</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>ORDER_STATE_CLOSED</td>
+<td>Completed</td>
+<td>1</td>
+</tr>
+<tr class="row-even"><td>ORDER_STATE_CANCELED</td>
+<td>Canceled</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+<p>Example of GetOrder from binance:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>{
+    &quot;Id&quot;:125723661,
+    &quot;Amount&quot;:0.01,
+    &quot;Price&quot;:7000,
+    &quot;DealAmount&quot;:0,
+    &quot;AvgPrice&quot;:0,
+    &quot;Status&quot;:0,
+    &quot;Type&quot;:1,
+    &quot;ContractType&quot;:&quot;&quot;,
+    &quot;Info&quot;:{
+        &quot;side&quot;:&quot;SELL&quot;,
+        &quot;stopPrice&quot;:&quot;0.00000000&quot;,
+        &quot;timeInForce&quot;:&quot;GTC&quot;,
+        &quot;type&quot;:&quot;LIMIT&quot;,
+        &quot;time&quot;:1530325939498,
+        &quot;orderId&quot;:125723661,
+        &quot;clientOrderId&quot;:&quot;H3R333f47MsFrahQUsa8egU&quot;,
+        &quot;origQty&quot;:&quot;0.01000000&quot;,
+        &quot;status&quot;:&quot;NEW&quot;,
+        &quot;executedQty&quot;:&quot;0.00000000&quot;,
+        &quot;isWorking&quot;:true,
+        &quot;symbol&quot;:&quot;BTCUSDT&quot;,
+        &quot;price&quot;:&quot;7000.00000000&quot;,
+        &quot;icebergQty&quot;:&quot;0.00000000&quot;
+    }
+}
+</pre></div>
+</div>
+<p>A  JavaScript example of using this API, which will buy until your account has 10 coins:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">amount</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">().</span><span class="nx">Stocks</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">();</span>
+        <span class="k">if</span><span class="p">(</span><span class="mi">10</span><span class="o">-</span><span class="nx">amount</span><span class="o">&gt;</span><span class="mf">0.01</span><span class="p">){</span>
+            <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Sell</span><span class="p">,</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">10</span><span class="o">-</span><span class="nx">amount</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span>
+        <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kd">var</span> <span class="nx">status</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrder</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">Status</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">Status</span> <span class="o">==</span> <span class="nx">ORDER_STATE_PENDING</span><span class="p">){</span>
+            <span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">id</span><span class="p">);</span>
         <span class="p">}</span>
         <span class="nx">Sleep</span><span class="p">(</span><span class="mi">3000</span><span class="p">);</span>
     <span class="p">}</span>
