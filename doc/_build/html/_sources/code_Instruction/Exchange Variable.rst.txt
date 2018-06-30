@@ -57,7 +57,7 @@ Now support:
 
 **exchange**
 
-It can be imaged as a real exchange house; default setting is the first exchange in your strategy’s parameter. 
+It can be imaged as a real exchange; default setting is the first exchange in your strategy’s parameter. 
 all of data interactive with the exchange which achieve through this object function.
 
 **exchanges**
