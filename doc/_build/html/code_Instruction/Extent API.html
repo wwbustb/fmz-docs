@@ -93,6 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Trade API.html">2.4 Trade API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2.5 Extended API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#io">2.5.1 IO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getrawjson">2.5.1 GetRawJSON</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getname">2.5.2 GetName</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getlabel">2.5.3 GetLabel</a></li>
@@ -101,6 +102,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#setprecision">2.5.4 SetPrecision</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getrate">2.5.5 GetRate</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setrate">2.5.6 SetRate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#log">2.5.5 Log</a></li>
 </ul>
 </li>
 </ul>
@@ -173,6 +175,43 @@
 <h1>2.5 Extended API<a class="headerlink" href="#extended-api" title="Permalink to this headline">¶</a></h1>
 <p>The following functions is used for extending your API.
 Most of the time, your code can be wrote by the API above.</p>
+<div class="section" id="io">
+<h2>2.5.1 IO<a class="headerlink" href="#io" title="Permalink to this headline">¶</a></h2>
+<p>exchange.IO() has different usages depends on  pramaeters.</p>
+<p><strong>Change trading pair</strong></p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">IO</span><span class="p">(</span><span class="s2">&quot;currency&quot;</span><span class="p">,</span> <span class="nx">symbol</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Parameter value: <code class="docutils literal"><span class="pre">symbol</span></code> , trading pair to switch.</p>
+<p>Example:<code class="docutils literal"><span class="pre">exchange.IO(&quot;currency&quot;,</span> <span class="pre">&quot;LTC_USDT&quot;)</span></code>, which will switch the default trading pairs configured by the robot when it was created to <code class="docutils literal"><span class="pre">LTC_USDT</span></code>.</p>
+<p>A JavaScript example of using IO to trade several trading pairs:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BTC_USDT&quot;</span><span class="p">,</span> <span class="s2">&quot;LTC_USDT&quot;</span><span class="p">,</span> <span class="s2">&quot;EOS_USDT&quot;</span><span class="p">,</span> <span class="s2">&quot;ETH_USDT&quot;</span><span class="p">,</span> <span class="s2">&quot;BCC_USDT&quot;</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">buyValue</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="nx">symbols</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+        <span class="nx">exchange</span><span class="p">.</span><span class="nx">IO</span><span class="p">(</span><span class="s2">&quot;currency&quot;</span><span class="p">,</span> <span class="nx">symbols</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+        <span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">amount</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">buyValue</span><span class="o">/</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Sell</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+        <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Sell</span><span class="p">,</span> <span class="nx">amount</span><span class="p">);</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Change exchange base API address</strong></p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchanges</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">IO</span><span class="p">(</span><span class="s2">&quot;base&quot;</span><span class="p">,</span> <span class="nx">baseAddress</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Parameter value: <code class="docutils literal"><span class="pre">baseAddress</span></code> , exchange base API address to switch.</p>
+<p>If an exchange change it’s base API address,  you can use this function to change the base address temporarily till FMZ change it.</p>
+<p>In some case, changing the address can acess another part of a exchange, such as huobipro and hadax,
+their API is the same, just switching the base address you can trade on hadax.
+<code class="docutils literal"><span class="pre">exchanges[0].IO(&quot;base&quot;,</span> <span class="pre">&quot;https://api.hadax.com/v1&quot;)</span></code></p>
+<p><strong>Use exchange’s orgin API</strong></p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">IO</span><span class="p">(</span><span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="nx">httpMethod</span><span class="p">,</span> <span class="nx">resource</span><span class="p">,</span> <span class="nx">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="getrawjson">
 <h2>2.5.1 GetRawJSON<a class="headerlink" href="#getrawjson" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetRawJSON</span><span class="p">()</span>
@@ -267,6 +306,25 @@ that’s why you should care about precision.</p>
 <p>Return value: number type</p>
 <p>If you use exchange.SetRate() to set an exchange rate value, such as 0.85(the rate of EUR and USD),
 then all exchange prices, depth, order price and all other price information in the current exchange currency represented by the exchange object will be multiplied by the setting.</p>
+</div>
+<div class="section" id="log">
+<h2>2.5.5 Log<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">Log</span><span class="p">(</span><span class="nx">logType</span><span class="p">,</span> <span class="nx">orderId</span><span class="p">,</span> <span class="nx">price</span><span class="p">,</span> <span class="nx">amount</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Doesn’t actually sent the order, just record order information for testing your strategy.</p>
+<p><a href="#id1"><span class="problematic" id="id2">**</span></a>Parameter values: **</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>logType : LOG_TYPE_BUY, LOG_TYPE_SELL, LOG_TYPE_CANCEL
+orderId : order id, customizable an incremental value
+price   : price
+amount  : quantity
+</pre></div>
+</div>
+<p>Return value: number type</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function is a member function of the exchange exchange object, which is different from the global function Log().</p>
+</div>
 </div>
 </div>
 
