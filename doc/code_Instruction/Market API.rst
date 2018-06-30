@@ -1,7 +1,8 @@
 2.3 Market API
 =======================
 
-The following functions all can be called from object ``exchange`` or ``exchanges[x]``,for example：``exchange.GetTicker()`` or ``exchanges[0].GetTicker()`` means return the market quotations.
+The following functions is used for get market inforamtion of exchange, 
+which are called from object ``exchange`` or ``exchanges[x]``,for example：``exchange.GetTicker()`` or ``exchanges[0].GetTicker()`` means return the market quotations.
 
 .. warning::
 

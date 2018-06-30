@@ -1,0 +1,336 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.5 Extended API &mdash; BotVS 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="2.4 Trade API" href="Trade API.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> BotVS
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Basic Instruction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html">1.1 Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API Instruction</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Trade API.html">2.4 Trade API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2.5 Extended API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getrawjson">2.5.1 GetRawJSON</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getname">2.5.2 GetName</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getlabel">2.5.3 GetLabel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getcurrency">2.5.4 GetCurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getquotecurrency">2.5.4 GetQuoteCurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setprecision">2.5.4 SetPrecision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getrate">2.5.5 GetRate</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setrate">2.5.6 SetRate</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">BotVS</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
+        
+      <li>2.5 Extended API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/code_Instruction/Extent API.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="extended-api">
+<h1>2.5 Extended API<a class="headerlink" href="#extended-api" title="Permalink to this headline">¶</a></h1>
+<p>The following functions is used for extending your API.
+Most of the time, your code can be wrote by the API above.</p>
+<div class="section" id="getrawjson">
+<h2>2.5.1 GetRawJSON<a class="headerlink" href="#getrawjson" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetRawJSON</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returning of the original content (string) that returned by the last REST API request, which can be used to resolve extension information on its own.</p>
+<p>There are a lot of inforamtions in the raw data returned from exchange, part of them are in <code class="docutils literal"><span class="pre">Info</span></code> Field, if not, you can use this API.</p>
+<p><strong>Return value : string type</strong></p>
+<p>A JavaScript example of using GetRawJSON and parse the raw data:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetRawJSON</span><span class="p">());</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">obj</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getname">
+<h2>2.5.2 GetName<a class="headerlink" href="#getname" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetName</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns the name of the exchange.</p>
+<p>Return value: string type.</p>
+</div>
+<div class="section" id="getlabel">
+<h2>2.5.3 GetLabel<a class="headerlink" href="#getlabel" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetLabel</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Return the exchange’s custom label.</p>
+<p>Return value: string type</p>
+</div>
+<div class="section" id="getcurrency">
+<h2>2.5.4 GetCurrency<a class="headerlink" href="#getcurrency" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetCurrency</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns the name of the currency pair operated by the exchange.</p>
+<p>Return value: string type</p>
+</div>
+<div class="section" id="getquotecurrency">
+<h2>2.5.4 GetQuoteCurrency<a class="headerlink" href="#getquotecurrency" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetQuoteCurrency</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns the base currency name of the exchange operation, eg BTC_CNY returns CNY, ETH_BTC returns BTC.</p>
+<p>Return value: string type</p>
+</div>
+<div class="section" id="setprecision">
+<h2>2.5.4 SetPrecision<a class="headerlink" href="#setprecision" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetPrecision</span><span class="p">(</span><span class="nx">PricePrecision</span><span class="p">,</span> <span class="nx">AmountPrecision</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set the decimal precision of price and type order quantity, and will automatically truncate after setting.</p>
+<p>If you use <code class="docutils literal"><span class="pre">exchange.Sell(7000.1225,1.223123)</span></code> on Bianace directly, which will return error <code class="docutils literal"><span class="pre">{&quot;code&quot;:-1013,&quot;msg&quot;:&quot;Filter</span> <span class="pre">failure:</span> <span class="pre">PRICE_FILTER&quot;}</span></code>.
+that’s why you should care about precision.</p>
+<p>You can also use <code class="docutils literal"><span class="pre">_N()</span></code> function as  <code class="docutils literal"><span class="pre">exchange.Sell(_N(price,2),</span> <span class="pre">_N(amount,5))</span></code></p>
+<p>You can find the demands of precision and others in exchange’s docs, for example: <a class="reference external" href="https://api.binance.com/api/v1/exchangeInfo">https://api.binance.com/api/v1/exchangeInfo</a></p>
+<p><strong>Parameter value:</strong></p>
+<p><code class="docutils literal"><span class="pre">PricePrecision</span></code> , number type, used to control the decimal point of the price.</p>
+<p><code class="docutils literal"><span class="pre">AmountPrecision</span></code> , number type, used to control the decimal point of the amount.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetPrecision</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+<span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">(</span><span class="mf">7000.1225</span><span class="p">,</span><span class="mf">1.223123</span><span class="p">)</span>   <span class="c1">//which will be the same as exchange.Sell(7000.12,1.223)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">SetPrecision doesn’t work in backtesting</p>
+</div>
+</div>
+<div class="section" id="getrate">
+<h2>2.5.5 GetRate<a class="headerlink" href="#getrate" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetRate</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returning of the exchange rate that between the exchange currency and the current display currency. Returning 1 means currency conversion is not allowed.</p>
+<p>Return value: number type</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you do not call exchange.SetRate() to set the conversion rate, GetRate defaults to the exchange rate value of 1, ie, the current displayed denomination currency has not been converted.</p>
+</div>
+</div>
+<div class="section" id="setrate">
+<h2>2.5.6 SetRate<a class="headerlink" href="#setrate" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetRate</span><span class="p">(</span><span class="nx">scale</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Parameter value: <code class="docutils literal"><span class="pre">scale</span></code> , number type</p>
+<p>Return value: number type</p>
+<p>If you use exchange.SetRate() to set an exchange rate value, such as 0.85(the rate of EUR and USD),
+then all exchange prices, depth, order price and all other price information in the current exchange currency represented by the exchange object will be multiplied by the setting.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="Trade API.html" class="btn btn-neutral" title="2.4 Trade API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, xiaocao.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

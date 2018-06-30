@@ -1,7 +1,8 @@
 2.4 Trade API
 =======================
 
-The following functions can all be called via an ``exchange`` or ``exchanges[x]`` object, for example: ``exchange.Sell(100, 1)``; 
+The following functions is used for trading, 
+which are called from  ``exchange`` or ``exchanges[x]`` object, for example: ``exchange.Sell(100, 1)``; 
 Send a buy order to the exchange with the price is 100, and the quantity is 1.
 
 If you want change the trading pair before trade, check on ``exchange.IO("currency", symbol)``

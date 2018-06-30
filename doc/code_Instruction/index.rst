@@ -5,3 +5,4 @@
     Exchange Variable
     Market API
     Trade API
+    Extent API

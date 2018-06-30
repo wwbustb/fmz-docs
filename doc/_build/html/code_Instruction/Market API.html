@@ -167,7 +167,8 @@
             
   <div class="section" id="market-api">
 <h1>2.3 Market API<a class="headerlink" href="#market-api" title="Permalink to this headline">¶</a></h1>
-<p>The following functions all can be called from object <code class="docutils literal"><span class="pre">exchange</span></code> or <code class="docutils literal"><span class="pre">exchanges[x]</span></code>,for example：<code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code> or <code class="docutils literal"><span class="pre">exchanges[0].GetTicker()</span></code> means return the market quotations.</p>
+<p>The following functions is used for get market inforamtion of exchange,
+which are called from object <code class="docutils literal"><span class="pre">exchange</span></code> or <code class="docutils literal"><span class="pre">exchanges[x]</span></code>,for example：<code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code> or <code class="docutils literal"><span class="pre">exchanges[0].GetTicker()</span></code> means return the market quotations.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
 <p>When calling any API function that accesses the exchange API (such as <code class="docutils literal"><span class="pre">GetTicker()</span></code>, <code class="docutils literal"><span class="pre">Buy()</span></code>, <code class="docutils literal"><span class="pre">CancelOrder()</span></code>, etc.), it may get access failure due to exchange server problem, the network transmission problem, and so on.
