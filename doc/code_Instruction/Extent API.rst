@@ -55,10 +55,35 @@ their API is the same, just switching the base address you can trade on hadax.
 
     exchange.IO("api", httpMethod, resource, params)
 
+Acesss to exchange's other API.
+
+Using this function requires the understanding of exchange’s orgin API, it extend the functionality that the FMZ does not add (to submit a POST request without having to worry about the parameter encryption process, 
+the FMZ has completed the encryption already, just need fill in the corresponding parameters). 
+For example, the FMZ platform does not currently support margin leverage trading on bitfinex exchanges. We can implement this function by using the IO function. 
+
+- First find bitfinex API description webpage: bitfinex.
+- Then we know that the order is interacting with a POST request, so we pass the parameter httpMethod to the order address of the "POST" margin transaction: ' https://api.bitfinex.com/v1/order/new '. Because the FMZ has internally specified the root address, we only need to pass the value of the parameter resource to "/v1/order/new".
+- Then the params parameter is not filled in. The params variable represents the information to be exchanged. We can send all kinds of information with the "&" symbol to send them. We first go to bitfinex to see that the next buy or sell order requires 5 parameters., they are: symbol, amount, price, side, type. We assign these five parameters respectively. If we want to buy Litecoin LTC, the quantity is 1, the price is 10, and the margin trading mode, then we can construct such a string: "symbol=ltc&amount=1&price=10&side=buy&type= Limit".
+
+The final JavaScript example:
+
+.. code-block:: JavaScript
+
+    function main(){
+        exchange.IO("api","POST","/v1/order/new","symbol=ltc&amount=1&price=10&side=buy&type=limit");
+    }
+
+An OKEX Example：
+
+.. code-block:: JavaScript
+
+    function main(){
+        var ret = exchange.IO("api", "POST", "/api/v1/future_position.do", "symbol=eth_usd&contract_type=this_week")
+	    Log(ret)
+    }
 
 
-
-2.5.1 GetRawJSON
+2.5.2 GetRawJSON
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -81,7 +106,7 @@ A JavaScript example of using GetRawJSON and parse the raw data:
         Log(obj);
     }
 
-2.5.2 GetName
+2.5.3 GetName
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -92,7 +117,7 @@ Returns the name of the exchange.
 
 Return value: string type.
 
-2.5.3 GetLabel
+2.5.4 GetLabel
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -114,7 +139,7 @@ Returns the name of the currency pair operated by the exchange.
 
 Return value: string type
 
-2.5.4 GetQuoteCurrency
+2.5.5 GetQuoteCurrency
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -125,7 +150,7 @@ Returns the base currency name of the exchange operation, eg BTC_CNY returns CNY
 
 Return value: string type
 
-2.5.4 SetPrecision
+2.5.6 SetPrecision
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -159,7 +184,7 @@ You can find the demands of precision and others in exchange's docs, for example
     SetPrecision doesn't work in backtesting
 
 
-2.5.5 GetRate
+2.5.7 GetRate
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -175,7 +200,7 @@ Return value: number type
     If you do not call exchange.SetRate() to set the conversion rate, GetRate defaults to the exchange rate value of 1, ie, the current displayed denomination currency has not been converted. 
 
 
-2.5.6 SetRate
+2.5.8 SetRate
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -189,7 +214,7 @@ Return value: number type
 If you use exchange.SetRate() to set an exchange rate value, such as 0.85(the rate of EUR and USD), 
 then all exchange prices, depth, order price and all other price information in the current exchange currency represented by the exchange object will be multiplied by the setting.
 
-2.5.5 Log
+2.5.9 Log
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -198,7 +223,7 @@ then all exchange prices, depth, order price and all other price information in 
 
 Doesn't actually sent the order, just record order information for testing your strategy.
 
-**Parameter values: **
+**Parameter values:**
 
 .. sourcecode:: http
 
@@ -212,7 +237,7 @@ Return value: number type
 
 .. note::
 
-    This function is a member function of the exchange exchange object, which is different from the global function Log(). 
+    This function is a function of the exchange exchange object, which is different from the global function Log(). 
 
 
 
