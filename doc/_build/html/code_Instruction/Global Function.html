@@ -198,8 +198,64 @@ as long as the object contains <code class="docutils literal"><span class="pre">
 </pre></div>
 </div>
 </div>
+<div class="section" id="logstatus">
+<h2>2.6.2 LogStatus<a class="headerlink" href="#logstatus" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogStatus</span><span class="p">(</span><span class="nx">Msg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This kind of Log information is displayed above the log and update every time when it is called.</p>
+<p>Parameter value: Msg can be any type.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogStatus</span><span class="p">(</span><span class="s2">&quot; This is a normal status prompt&quot;</span><span class="p">);</span>
+<span class="nx">LogStatus</span><span class="p">(</span><span class="s2">&quot; This is a red font status prompt #ff0000&quot;</span><span class="p">);</span>
+<span class="nx">LogStatus</span><span class="p">(</span><span class="s2">&quot; This is a multi-line status message\n I&#39;m the second line&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Like <code class="docutils literal"><span class="pre">Log()</span></code> function, <code class="docutils literal"><span class="pre">LogStatus</span></code> supports base64-encoded images and Python matplotlib.pyplot object.</p>
+<p>LogStatus can Log tables on your robot page.</p>
+<p>Log a table example, add <code class="docutils literal"><span class="pre">`</span></code> characters to both sides and treat it as a complex message format (currently supported table)</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39; Account information support color #ff0000&#39;</span><span class="p">,</span> <span class="nx">cols</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;BTC&#39;</span><span class="p">,</span> <span class="s1">&#39;ETH&#39;</span><span class="p">,</span> <span class="s1">&#39;USDT&#39;</span><span class="p">],</span> <span class="nx">rows</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2000</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3000</span><span class="p">]]};</span>
+<span class="nx">LogStatus</span><span class="p">(</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">table</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;`&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Another example, information can also appear in multiple lines:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogStatus</span><span class="p">(</span><span class="s2">&quot;First line message\n&quot;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">table</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;`\n third line message&quot;</span><span class="p">);</span><span class="sb">`</span>
+</pre></div>
+</div>
+<p>Log multiple tables in a group, switching by TAB:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">table1</span> <span class="o">=</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39; Account information 1&#39;</span><span class="p">,</span> <span class="nx">cols</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;BTC&#39;</span><span class="p">,</span> <span class="s1">&#39;ETH&#39;</span><span class="p">,</span> <span class="s1">&#39;USDT&#39;</span><span class="p">],</span> <span class="nx">rows</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2000</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3000</span><span class="p">]]};</span>
+<span class="kd">var</span> <span class="nx">table2</span> <span class="o">=</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39; Account information 2&#39;</span><span class="p">,</span> <span class="nx">cols</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;BTC&#39;</span><span class="p">,</span> <span class="s1">&#39;ETH&#39;</span><span class="p">,</span> <span class="s1">&#39;USDT&#39;</span><span class="p">],</span> <span class="nx">rows</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2000</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3000</span><span class="p">]]};</span>
+<span class="nx">LogStatus</span><span class="p">(</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">([</span><span class="nx">table1</span><span class="p">,</span> <span class="nx">table2</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;`&#39;</span><span class="p">);</span> <span class="c1">// Supports multiple tables to be displayed at the same time and will be displayed in a group with TAB</span>
+</pre></div>
+</div>
+<p>Log multiple tables in one page:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">tab1</span> <span class="o">=</span> <span class="p">{</span><span class="nx">type</span> <span class="o">:</span> <span class="s2">&quot;table&quot;</span><span class="p">,</span><span class="nx">title</span> <span class="o">:</span> <span class="s2">&quot;Table 1&quot;</span><span class="p">,</span><span class="nx">cols</span> <span class="o">:</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">],</span><span class="nx">rows</span> <span class="o">:</span> <span class="p">[]};</span>
+    <span class="kd">var</span> <span class="nx">tab2</span> <span class="o">=</span> <span class="p">{</span><span class="nx">type</span> <span class="o">:</span> <span class="s2">&quot;table&quot;</span><span class="p">,</span><span class="nx">title</span> <span class="o">:</span> <span class="s2">&quot;Table 2&quot;</span><span class="p">,</span><span class="nx">cols</span> <span class="o">:</span> <span class="p">[</span><span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;2&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">],</span><span class="nx">rows</span> <span class="o">:</span> <span class="p">[]};</span>
+    <span class="nx">tab1</span><span class="p">.</span><span class="nx">rows</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">&quot;jack&quot;</span><span class="p">,</span> <span class="s2">&quot;lucy&quot;</span><span class="p">]);</span>
+    <span class="nx">tab2</span><span class="p">.</span><span class="nx">rows</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="s2">&quot;apple&quot;</span><span class="p">,</span> <span class="s2">&quot;pen&quot;</span><span class="p">,</span> <span class="s2">&quot;apple pen&quot;</span><span class="p">]);</span>
+    <span class="nx">LogStatus</span><span class="p">(</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">tab1</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;`\n&#39;</span> <span class="o">+</span> <span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">tab2</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;`&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Log table with a button in the table. The strategy uses <code class="docutils literal"><span class="pre">GetCommand</span></code> to receive the contents of the cmd property.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span>
+    <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Positioning operations&#39;</span><span class="p">,</span>
+    <span class="nx">cols</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;Column 1&#39;</span><span class="p">,</span> <span class="s1">&#39;Column 2&#39;</span><span class="p">,</span> <span class="s1">&#39;Action&#39;</span><span class="p">],</span>
+    <span class="nx">rows</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">[</span><span class="s1">&#39;abc&#39;</span><span class="p">,</span> <span class="s1">&#39;def&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;type&#39;</span><span class="o">:</span><span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="o">:</span> <span class="s1">&#39;coverAll&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="s1">&#39;Close the position&#39;</span><span class="p">}],</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+<span class="nx">LogStatus</span><span class="p">(</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">table</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;`&#39;</span><span class="p">)</span>
+<span class="c1">// Or construct a separate button</span>
+<span class="nx">LogStatus</span><span class="p">(</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="o">:</span><span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="o">:</span> <span class="s1">&#39;coverAll&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="s1">&#39; Close the position&#39;</span><span class="p">})</span> <span class="o">+</span> <span class="s1">&#39;`&#39;</span><span class="p">)</span>
+<span class="c1">// Can customize button styles (bootstrap button properties)</span>
+<span class="nx">LogStatus</span><span class="p">(</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="s1">&#39;type&#39;</span><span class="o">:</span><span class="s1">&#39;button&#39;</span><span class="p">,</span> <span class="s1">&#39;class&#39;</span><span class="o">:</span> <span class="s1">&#39;btn btn-xs btn-danger&#39;</span><span class="p">,</span> <span class="s1">&#39;cmd&#39;</span><span class="o">:</span> <span class="s1">&#39;coverAll&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="s1">&#39;close the position&#39;</span><span class="p">})</span> <span class="o">+</span> <span class="s1">&#39;`&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="logprofit">
-<h2>2.6.2 LogProfit<a class="headerlink" href="#logprofit" title="Permalink to this headline">¶</a></h2>
+<h2>2.6.3 LogProfit<a class="headerlink" href="#logprofit" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogProfit</span><span class="p">(</span><span class="nx">Profit</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -228,11 +284,16 @@ as long as the object contains <code class="docutils literal"><span class="pre">
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<dl class="last docutils">
-<dt><code class="docutils literal"><span class="pre">LogProfit</span></code> doesn’t has to be record your profit , it can be any number you like to present, such as total account value, free USDT value.</dt>
-<dd><code class="docutils literal"><span class="pre">Profit</span></code> is calculated by your own.</dd>
-</dl>
+<p class="last"><code class="docutils literal"><span class="pre">LogProfit</span></code> doesn’t have to be recording the profit , it can be any number you like to present, such as total account value, free USDT amount.
+<code class="docutils literal"><span class="pre">Profit</span></code> is calculated by your own.</p>
 </div>
+</div>
+<div class="section" id="logprofitreset">
+<h2>2.6.4 LogProfitReset<a class="headerlink" href="#logprofitreset" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogProfitReset</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Clear all history logs, can take a number parameter, specify the number of reservations.</p>
 </div>
 </div>
 
