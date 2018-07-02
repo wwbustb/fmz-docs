@@ -59,7 +59,7 @@ Example of GetAccount from binance, trading pair is ``BTC_USDT``:
             },
     }
 
-A useful JavaScript example of Log your account value for certain trading pair:
+A useful JavaScript example of Log your account value for a certain trading pair:
 
 .. code-block:: JavaScript
 

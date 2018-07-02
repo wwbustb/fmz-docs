@@ -158,6 +158,82 @@
             
   <div class="section" id="global-founction">
 <h1>2.6 Global Founction<a class="headerlink" href="#global-founction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="log">
+<h2>2.6.1 Log<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Log</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Save a message to the robot logs.</p>
+<p>Parameter value: message can be any type.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Log</span><span class="p">(</span><span class="mi">123</span><span class="p">);</span>
+<span class="nx">Log</span><span class="p">(</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;world&#39;</span><span class="p">,</span> <span class="mi">123</span><span class="p">);</span>
+<span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;red color message&quot;</span><span class="p">,</span> <span class="s2">&quot;#FF0000&quot;</span><span class="p">);</span>
+<span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;blue color message#FF0000&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Log supports pushing message to your WeChat account.</p>
+<p>adding the <cite>&#64;</cite> character to the string,
+the message will go to the push queue and be pushed to the WeChat account that uses the binding (bind in account security) (50/hour, 1/5 second limit)</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;hello Wechat!@&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Log supports printing base64-encoded pictures:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;`data:image/png;base64,AAAA`&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Log supports direct printing of Python matplotlib.pyplot object.
+as long as the object contains <code class="docutils literal"><span class="pre">savefig</span></code> method can be directly Log print, such as:</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">Log</span><span class="p">(</span><span class="n">plt</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Log supports present message’s character or background with custom color:</p>
+<p>Changing message’s character color, message need end with RGB color code such as <code class="docutils literal"><span class="pre">##FF0000</span></code>, for more RGB color, check on <a class="reference external" href="https://www.w3schools.com/colors/colors_picker.asp">https://www.w3schools.com/colors/colors_picker.asp</a>.</p>
+<p>Changing message’s background color, message need end with like <code class="docutils literal"><span class="pre">#FF0000CC3299</span></code> ,the last six number <code class="docutils literal"><span class="pre">CC3299</span></code> represnt the RGB color code.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;red color message&quot;</span><span class="p">,</span> <span class="s2">&quot;#FF0000&quot;</span><span class="p">);</span>
+<span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;blue color message#FF0000CC3299&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logprofit">
+<h2>2.6.2 LogProfit<a class="headerlink" href="#logprofit" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogProfit</span><span class="p">(</span><span class="nx">Profit</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Record profit value, draw a line chart in your robot page, will remain after you restart your robot.</p>
+<p>Parameter value: profit , number type</p>
+<p>A useful JavaScript example of Log Profit for a certain trading pair:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">GetValue</span><span class="p">(){</span>
+        <span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">account</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">();</span>
+        <span class="kd">var</span> <span class="nx">price</span> <span class="o">=</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">Buy</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">stocks</span> <span class="o">=</span> <span class="nx">account</span><span class="p">.</span><span class="nx">Stocks</span> <span class="o">+</span> <span class="nx">account</span><span class="p">.</span><span class="nx">FrozenStocks</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">balance</span> <span class="o">=</span> <span class="nx">account</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">+</span> <span class="nx">account</span><span class="p">.</span><span class="nx">FrozenBalance</span><span class="p">;</span>
+        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">stocks</span><span class="o">*</span><span class="nx">price</span> <span class="o">+</span> <span class="nx">balance</span><span class="p">;</span>
+        <span class="k">return</span> <span class="nx">value</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">initValue</span> <span class="o">=</span> <span class="nx">GetValue</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">profit</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
+        <span class="nx">profit</span> <span class="o">=</span> <span class="nx">GetValue</span><span class="p">()</span> <span class="o">-</span> <span class="nx">initValue</span><span class="p">;</span>
+        <span class="nx">LogProfit</span><span class="p">(</span><span class="nx">profit</span><span class="p">);</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="mi">60000</span><span class="p">);</span><span class="c1">//sleep one minute</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<dl class="last docutils">
+<dt><code class="docutils literal"><span class="pre">LogProfit</span></code> doesn’t has to be record your profit , it can be any number you like to present, such as total account value, free USDT value.</dt>
+<dd><code class="docutils literal"><span class="pre">Profit</span></code> is calculated by your own.</dd>
+</dl>
+</div>
+</div>
 </div>
 
 
