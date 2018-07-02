@@ -99,6 +99,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#cancelorder">2.4.4 CancelOrder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getorder">2.4.5 GetOrder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getorders">2.4.6 GetOrders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getposition">2.4.7 GetPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setmarginlevel">2.4.8 SetMarginLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setdirection">2.4.9 SetDirection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setcontracttype">2.4.10 SetContractType</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Extent API.html">2.5 Extended API</a></li>
@@ -531,6 +535,118 @@ Whether the exchange cancels the order, it is best to call <code class="docutils
         <span class="nx">Sleep</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getposition">
+<h2>2.4.7 GetPosition<a class="headerlink" href="#getposition" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetPosition</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Get the current position information, only for Futures trade. OKEX can pass a parameter, specify the type of contract to get.</p>
+<p>Return value: position array</p>
+<p>BTC Futures support: OKEX, BitMEX.</p>
+<p>The position structure contains the following variables:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="12%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Info</td>
+<td>Object</td>
+<td>The original data returned by the exchange</td>
+</tr>
+<tr class="row-odd"><td>MarginLevel</td>
+<td>Number</td>
+<td>Leverage size, OKEX is 10 or 20, full amount of okex futures margin mode returns a fixed 10, because the original API does not support</td>
+</tr>
+<tr class="row-even"><td>Amount</td>
+<td>Number</td>
+<td>ositions, OKEX indicates the number of contracts (integer and greater than 1)</td>
+</tr>
+<tr class="row-odd"><td>FrozenAmount</td>
+<td>Number</td>
+<td>Position freeze</td>
+</tr>
+<tr class="row-even"><td>Price</td>
+<td>Number</td>
+<td>Average price of positions</td>
+</tr>
+<tr class="row-odd"><td>Profit</td>
+<td>Number</td>
+<td>Order Status</td>
+</tr>
+<tr class="row-even"><td>Type</td>
+<td>Const</td>
+<td><code class="docutils literal"><span class="pre">PD_LONG</span></code> is a long position, <code class="docutils literal"><span class="pre">PD_SHORT</span></code> is a short position.</td>
+</tr>
+<tr class="row-odd"><td>ContractType</td>
+<td>String</td>
+<td>Contract name</td>
+</tr>
+</tbody>
+</table>
+<p>A  JavaScript example:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="c1">// Note: GetPosition function obtains position information of all positions.</span>
+<span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetContractType</span><span class="p">(</span><span class="s2">&quot;this_week&quot;</span><span class="p">);</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetMarginLevel</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetDirection</span><span class="p">(</span><span class="s2">&quot;buy&quot;</span><span class="p">);</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+    <span class="nx">position</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetPosition</span><span class="p">();</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;Amount:&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Amount</span><span class="p">,</span> <span class="s2">&quot;FrozenAmount:&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">FrozenAmount</span><span class="p">,</span> <span class="s2">&quot;Price:&quot;</span><span class="p">,</span>
+        <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Price</span><span class="p">,</span> <span class="s2">&quot;Profit:&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Profit</span><span class="p">,</span> <span class="s2">&quot;Type:&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Type</span><span class="p">,</span>
+        <span class="s2">&quot;ContractType:&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">ContractType</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setmarginlevel">
+<h2>2.4.8 SetMarginLevel<a class="headerlink" href="#setmarginlevel" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetMarginLevel</span><span class="p">(</span><span class="nx">MarginLevel</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set the leverage size, only for Futures trade.</p>
+<p>Parameter value: number integer</p>
+<p>Set the leverage size of Buy or Sell. MarginLevel has 5, 10, 20 optional parameters. OKEX supports 10 times and 20 times. For example:
+<code class="docutils literal"><span class="pre">exchange.SetMarginLevel(10)</span></code></p>
+</div>
+<div class="section" id="setdirection">
+<h2>2.4.9 SetDirection<a class="headerlink" href="#setdirection" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetDirection</span><span class="p">(</span><span class="nx">Direction</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set Buy or Sell Order Types, only for Futures trade.</p>
+<p>Parameter value: string type, can be <code class="docutils literal"><span class="pre">buy</span></code>, <code class="docutils literal"><span class="pre">closebuy</span></code>, <code class="docutils literal"><span class="pre">sell</span></code>, <code class="docutils literal"><span class="pre">closesell</span></code>.</p>
+<p>A  JavaScript example:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetMarginLevel</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// Set the leverage to 5 times</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetDirection</span><span class="p">(</span><span class="s2">&quot;buy&quot;</span><span class="p">);</span> <span class="c1">// Set the order type to buy long</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">//buy long at the price 1000, quantity of 2</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetMarginLevel</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetDirection</span><span class="p">(</span><span class="s2">&quot;closebuy&quot;</span><span class="p">);</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setcontracttype">
+<h2>2.4.10 SetContractType<a class="headerlink" href="#setcontracttype" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetContractType</span><span class="p">(</span><span class="nx">ContractType</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set contract type</p>
+<p>Parameter value: string type</p>
+<p>OKEX futures have “this_week”, “next_week”, “quarter” three parameters</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetContractType</span><span class="p">(</span><span class="s2">&quot;this_week&quot;</span><span class="p">);</span> <span class="c1">// Set to Weekly Contract</span>
 </pre></div>
 </div>
 </div>

@@ -337,3 +337,102 @@ A  JavaScript example of using this API, which will cancel all open orders for s
             Sleep(10000);
         }
     }
+
+2.4.7 GetPosition
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.GetPosition()
+
+Get the current position information, only for Futures trade. OKEX can pass a parameter, specify the type of contract to get.
+
+Return value: position array
+
+BTC Futures support: OKEX, BitMEX.
+
+The position structure contains the following variables:
+
+==================  ==================== ===============
+Field               Type                 Description
+==================  ==================== ===============
+Info                Object               The original data returned by the exchange 
+MarginLevel         Number               Leverage size, OKEX is 10 or 20, full amount of okex futures margin mode returns a fixed 10, because the original API does not support
+Amount			    Number               ositions, OKEX indicates the number of contracts (integer and greater than 1)
+FrozenAmount        Number               Position freeze
+Price               Number	             Average price of positions
+Profit              Number               Order Status
+Type                Const                ``PD_LONG`` is a long position, ``PD_SHORT`` is a short position.
+ContractType        String               Contract name
+==================  ==================== ===============
+
+A  JavaScript example:
+
+.. code-block:: JavaScript
+
+    // Note: GetPosition function obtains position information of all positions.
+    function main(){
+        exchange.SetContractType("this_week");
+        exchange.SetMarginLevel(10);
+        exchange.SetDirection("buy");
+        exchange.Buy(10000, 2);
+        position = exchange.GetPosition();
+        Log("Amount:", position[0].Amount, "FrozenAmount:", position[0].FrozenAmount, "Price:",
+            position[0].Price, "Profit:", position[0].Profit, "Type:", position[0].Type,
+            "ContractType:", position[0].ContractType);
+    }
+
+2.4.8 SetMarginLevel
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.SetMarginLevel(MarginLevel)
+
+Set the leverage size, only for Futures trade.
+
+Parameter value: number integer
+
+Set the leverage size of Buy or Sell. MarginLevel has 5, 10, 20 optional parameters. OKEX supports 10 times and 20 times. For example:
+``exchange.SetMarginLevel(10)``
+
+2.4.9 SetDirection
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.SetDirection(Direction)
+
+Set Buy or Sell Order Types, only for Futures trade.
+
+Parameter value: string type, can be ``buy``, ``closebuy``, ``sell``, ``closesell``.
+
+A  JavaScript example:
+
+.. code-block:: JavaScript
+
+    function main(){
+        exchange.SetMarginLevel(5); // Set the leverage to 5 times
+        exchange.SetDirection("buy"); // Set the order type to buy long 
+        exchange.Buy(1000, 2); //buy long at the price 1000, quantity of 2
+        exchange.SetMarginLevel(5); 
+        exchange.SetDirection("closebuy"); 
+        exchange.Sell(1000, 2);
+    }
+
+2.4.10 SetContractType
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.SetContractType(ContractType)
+
+Set contract type
+
+Parameter value: string type
+
+OKEX futures have “this_week”, “next_week”, “quarter” three parameters
+
+.. code-block:: JavaScript
+
+    exchange.SetContractType("this_week"); // Set to Weekly Contract
