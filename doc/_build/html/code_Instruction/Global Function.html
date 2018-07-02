@@ -288,22 +288,34 @@ as long as the object contains <code class="docutils literal"><span class="pre">
 <code class="docutils literal"><span class="pre">Profit</span></code> is calculated by your own.</p>
 </div>
 </div>
+<div class="section" id="seterrorfilter">
+<h2>2.6.4 SetErrorFilter<a class="headerlink" href="#seterrorfilter" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">SetErrorFilter</span><span class="p">(</span><span class="nx">RegEx</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Error message filtering</p>
+<p>Parameter value: string type</p>
+<p>Errors that are matched by this regular expression will not be uploaded to the log system. Multiple set (filtered logs, database files corresponding to robot IDs in the logs/robot under the docker directory can be called multiple times to prevent frequent errors Causes database file expansion.)</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">SetErrorFilter</span><span class="p">(</span><span class="s2">&quot;502:|503:|tcp|character|unexpected|network|timeout|WSARecv|Connect|GetAddr|no such|reset|http|received|EOF|reused&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="logreset">
-<h2>2.6.4 LogReset<a class="headerlink" href="#logreset" title="Permalink to this headline">¶</a></h2>
+<h2>2.6.5 LogReset<a class="headerlink" href="#logreset" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogReset</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Clear the log, you can pass a parameter, specify the number of recent logs to keep, clear the rest of the log.</p>
 </div>
 <div class="section" id="logprofitreset">
-<h2>2.6.5 LogProfitReset<a class="headerlink" href="#logprofitreset" title="Permalink to this headline">¶</a></h2>
+<h2>2.6.6 LogProfitReset<a class="headerlink" href="#logprofitreset" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogProfitReset</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Clear all history logs, can take a number parameter, specify the number of reservations.</p>
 </div>
 <div class="section" id="enablelog">
-<h2>2.6.6 EnableLog<a class="headerlink" href="#enablelog" title="Permalink to this headline">¶</a></h2>
+<h2>2.6.7 EnableLog<a class="headerlink" href="#enablelog" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">EnableLog</span><span class="p">(</span><span class="nx">IsEnable</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -311,14 +323,43 @@ as long as the object contains <code class="docutils literal"><span class="pre">
 <p>Parameter value: isEnable is bool type</p>
 </div>
 <div class="section" id="logvacuum">
-<h2>2.6.7 LogVacuum<a class="headerlink" href="#logvacuum" title="Permalink to this headline">¶</a></h2>
+<h2>2.6.8 LogVacuum<a class="headerlink" href="#logvacuum" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogVacuum</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Reclaims the space occupied by SQLite when deleting data.</p>
 </div>
+<div class="section" id="getlasterror">
+<h2>2.6.9 GetLastError<a class="headerlink" href="#getlasterror" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">GetLastError</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Get the latest error message, generally do not need to use, because the program will automatically upload the error message to the log system.</p>
+<p>Return value: string type</p>
+</div>
+<div class="section" id="getcommand">
+<h2>2.6.10 GetCommand<a class="headerlink" href="#getcommand" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">GetCommand</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Get Interactive Command (utf-8).</p>
+<p>Get the command sent from the strategy interactive interface and clear it. If there is no command,
+it will return <code class="docutils literal"><span class="pre">null</span></code>. The returned command format is “Button name: parameter”. If there is no parameter, the command is the button name.</p>
+<p>A JavaScript example</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">cmd</span> <span class="o">=</span> <span class="nx">GetCommand</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">cmd</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">Log</span><span class="p">(</span><span class="nx">cmd</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="sleep">
-<h2>2.6.8 Sleep<a class="headerlink" href="#sleep" title="Permalink to this headline">¶</a></h2>
+<h2>2.6.11 Sleep<a class="headerlink" href="#sleep" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span>   Sleep(Millisecond)
 
 Pause the robot program for a period of time.
@@ -334,12 +375,130 @@ Parameter value: Millisecond is number type
 </div>
 </div>
 <div class="section" id="isvirtual">
-<h2>2.6.9 IsVirtual<a class="headerlink" href="#isvirtual" title="Permalink to this headline">¶</a></h2>
+<h2>2.6.12 IsVirtual<a class="headerlink" href="#isvirtual" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">IsVirtual</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Your robot is runing in a simulated backtest or not.</p>
 <p>Return value: bool type, Simulate back test state return true, the real market returns false</p>
+</div>
+<div class="section" id="getos">
+<h2>2.6.13 GetOS<a class="headerlink" href="#getos" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">GetOS</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns the information of the docker’s system.</p>
+</div>
+<div class="section" id="getpid">
+<h2>2.6.14 GetPid<a class="headerlink" href="#getpid" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">GetPid</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Return robot process ID</p>
+<p>Return value: string type</p>
+</div>
+<div class="section" id="mail">
+<h2>2.6.15 Mail<a class="headerlink" href="#mail" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Mail</span><span class="p">(</span><span class="nx">smtpServer</span><span class="p">,</span> <span class="nx">smtpUsername</span><span class="p">,</span> <span class="nx">smtpPassword</span><span class="p">,</span> <span class="nx">mailTo</span><span class="p">,</span> <span class="nx">title</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Send a e-mail.</p>
+<p>Parameter values: all are string types</p>
+<p>Return value: bool type, return true if successful</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="nx">Mail</span><span class="p">(</span><span class="s2">&quot;smtp.163.com&quot;</span><span class="p">,</span> <span class="s2">&quot;test@163.com&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="s2">&quot;usr@163.com&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;body&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="httpquery">
+<h2>2.6.16 HttpQuery<a class="headerlink" href="#httpquery" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">HttpQuery</span><span class="p">(</span><span class="nx">Url</span><span class="p">,</span> <span class="nx">PostData</span><span class="p">,</span> <span class="nx">Cookies</span><span class="p">,</span> <span class="nx">Headers</span><span class="p">,</span> <span class="nx">IsReturnHeader</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Web URL access.</p>
+<p>Parameter values: all are string types</p>
+<p>Get the content of a Url. If the second parameter PostData is a string, submit it as POST.
+The second parameter PostData can be a custom method such as:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">HttpQuery</span><span class="p">(</span><span class="s2">&quot;http://www.abc.com&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">method</span><span class="o">:</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="o">:</span><span class="s1">&#39;xx&#39;</span><span class="p">});</span>
+<span class="nx">HttpQuery</span><span class="p">(</span><span class="s2">&quot;http://www.abc.com&quot;</span><span class="p">,</span> <span class="p">{</span><span class="nx">method</span><span class="o">:</span><span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="o">:</span><span class="s1">&#39;xx&#39;</span><span class="p">,</span> <span class="nx">timeout</span><span class="o">:</span><span class="mi">1000</span><span class="p">});</span>
+</pre></div>
+</div>
+<p>Passing the cookie string requires a third parameter, but does not require POST. Please set the second parameter to <code class="docutils literal"><span class="pre">null</span></code>
+When runing in the backtes, the function returns the fixed string Dummy Data because the URL cannot be simulated.</p>
+<p>You can use this interface to send text messages or interact with other APIs</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">HttpQuery</span><span class="p">(</span><span class="s2">&quot;http://www.google.com&quot;</span><span class="p">);</span> <span class="c1">// Get</span>
+<span class="nx">HttpQuery</span><span class="p">(</span><span class="s2">&quot;http://www.google.com&quot;</span><span class="p">,</span> <span class="s2">&quot;xxx&quot;</span><span class="p">);</span> <span class="c1">// Post</span>
+<span class="nx">HttpQuery</span><span class="p">(</span><span class="s2">&quot;http://www.google.com&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="s2">&quot;a=10; b=20&quot;</span><span class="p">,</span> <span class="s2">&quot;User-Agent: Mobile\nContent-Type: text/html&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Example Accessing BIANACE APIs that do not require signatures:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">exchangeInfo</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">HttpQuery</span><span class="p">(</span><span class="s1">&#39;https://api.binance.com/api/v1/exchangeInfo&#39;</span><span class="p">));</span>
+<span class="nx">Log</span><span class="p">(</span><span class="nx">exchangeInfo</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">HttpQuery</span><span class="p">(</span><span class="s1">&#39;https://api.binance.com/api/v1/ticker/24hr&#39;</span><span class="p">));</span>
+<span class="nx">Log</span><span class="p">(</span><span class="nx">ticker</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <code class="docutils literal"><span class="pre">HttpQuery</span></code> function only supports JavaScript, for Python, using the <code class="docutils literal"><span class="pre">urlib2</span></code> or <code class="docutils literal"><span class="pre">request</span></code> library to send http requests directly.</p>
+</div>
+</div>
+<div class="section" id="md5">
+<h2>2.6.17 MD5<a class="headerlink" href="#md5" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">MD5</span><span class="p">(</span><span class="nx">string</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Parameter value: string type</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;MD5&quot;</span><span class="p">,</span> <span class="nx">MD5</span><span class="p">(</span><span class="s2">&quot;hello world&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hash">
+<h2>2.6.18 Hash<a class="headerlink" href="#hash" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Hash</span><span class="p">(</span><span class="nx">Algo</span><span class="p">,</span> <span class="nx">OutputAlgo</span><span class="p">,</span> <span class="nx">Data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Support hash calculation for md5/sha256/sha512/sha1, only supports in the real maket.</p>
+<p>Parameter values: all are string types</p>
+<p>The second parameter can be set to raw/hex/base64, which means output encrypted original content/hex encoded/base64 encoded.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">Hash</span><span class="p">(</span><span class="s2">&quot;md5&quot;</span><span class="p">,</span> <span class="s2">&quot;hex&quot;</span><span class="p">,</span> <span class="s2">&quot;hello&quot;</span><span class="p">));</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">Hash</span><span class="p">(</span><span class="s2">&quot;sha512&quot;</span><span class="p">,</span> <span class="s2">&quot;base64&quot;</span><span class="p">,</span> <span class="s2">&quot;hello&quot;</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hmac">
+<h2>2.6.19 HMAC<a class="headerlink" href="#hmac" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">HMAC</span><span class="p">(</span><span class="nx">Algo</span><span class="p">,</span> <span class="nx">OutputAlgo</span><span class="p">,</span> <span class="nx">Data</span><span class="p">,</span> <span class="nx">Key</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>HMAC encryption calculation of md5/sha256/sha512/sha1 is supported, only supported in the real market.</p>
+<p>Parameter values: all are string types.</p>
+<p>The second parameter can be set to raw/hex/base64, which means output encrypted original content/hex encoded/base64 encoded.</p>
+</div>
+<div class="section" id="unixnano">
+<h2>2.6.20 UnixNano<a class="headerlink" href="#unixnano" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">UnixNano</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Return the nanosecond timestamp. If you need to obtain the millisecond timestamp, you can use the following code:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="nx">UnixNano</span><span class="p">()</span> <span class="o">/</span> <span class="mi">1000000</span><span class="p">;</span>
+<span class="nx">Log</span><span class="p">(</span><span class="nx">_N</span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="unix">
+<h2>2.6.21 Unix<a class="headerlink" href="#unix" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Unix</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Returns the second-level timestamp, which is only supported in a strategy written in <code class="docutils literal"><span class="pre">C++</span></code>.</p>
+<div class="highlight-C++"><div class="highlight"><pre><span></span><span class="kt">uint64_t</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Unix</span><span class="p">();</span>
+<span class="n">Log</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+</pre></div>
+</div>
 </div>
 </div>
 

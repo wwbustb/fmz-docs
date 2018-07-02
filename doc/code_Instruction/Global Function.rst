@@ -230,68 +230,8 @@ Parameter value: isEnable is bool type
 
 Reclaims the space occupied by SQLite when deleting data.
 
-2.6.9 Sleep
->>>>>>>>>>>>>>>>>>
 
-.. code-block:: JavaScript
-
-    Sleep(Millisecond)
-
- Pause the robot program for a period of time.
-
- Parameter value: Millisecond is number type
- 
- ``Sleep(1000)`` means sleep 1 second.
-
- .. warning::
-
-    In almost all the situation, ``Sleep`` is necessary in ``while`` loops, otherwise you may exceed the exchange's API rate limits of REQUESTS. 
-
-
-2.6.10 IsVirtual
->>>>>>>>>>>>>>>>>>
-
-.. code-block:: JavaScript
-
-    IsVirtual()
-
-Your robot is runing in a simulated backtest or not.
-
-Return value: bool type, Simulate back test state return true, the real market returns false
-
-
-2.6.11 Mail
->>>>>>>>>>>>>>>>>>
-
-.. code-block:: JavaScript
-
-    Mail(smtpServer, smtpUsername, smtpPassword, mailTo, title, body)
-
-Send a e-mail.
-
-Parameter values: all are string types
-
-Return value: bool type, return true if successful
-
-.. code-block:: JavaScript
-
-    function main(){
-        Mail("smtp.163.com", "test@163.com", "password", "usr@163.com", "title", "body")
-    }
-
-2.6.12 GetPid
->>>>>>>>>>>>>>>>>>
-
-.. code-block:: JavaScript
-
-    GetPid()
-
-Return robot process ID
-
-Return value: string type
-
-
-2.6.13 GetLastError
+2.6.9 GetLastError
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -303,7 +243,7 @@ Get the latest error message, generally do not need to use, because the program 
 Return value: string type
 
 
-2.6.14 GetCommand
+2.6.10 GetCommand
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -328,6 +268,203 @@ A JavaScript example
             Sleep(1000); 
         }
     }
+
+2.6.11 Sleep
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    Sleep(Millisecond)
+
+ Pause the robot program for a period of time.
+
+ Parameter value: Millisecond is number type
+ 
+ ``Sleep(1000)`` means sleep 1 second.
+
+ .. warning::
+
+    In almost all the situation, ``Sleep`` is necessary in ``while`` loops, otherwise you may exceed the exchange's API rate limits of REQUESTS. 
+
+
+2.6.12 IsVirtual
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    IsVirtual()
+
+Your robot is runing in a simulated backtest or not.
+
+Return value: bool type, Simulate back test state return true, the real market returns false
+
+2.6.13 GetOS
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    GetOS()
+
+Returns the information of the docker's system.
+
+2.6.14 GetPid
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    GetPid()
+
+Return robot process ID
+
+Return value: string type
+
+
+2.6.15 Mail
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    Mail(smtpServer, smtpUsername, smtpPassword, mailTo, title, body)
+
+Send a e-mail.
+
+Parameter values: all are string types
+
+Return value: bool type, return true if successful
+
+.. code-block:: JavaScript
+
+    function main(){
+        Mail("smtp.163.com", "test@163.com", "password", "usr@163.com", "title", "body")
+    }
+
+
+2.6.16 HttpQuery
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    HttpQuery(Url, PostData, Cookies, Headers, IsReturnHeader)
+
+Web URL access.
+
+Parameter values: all are string types
+
+Get the content of a Url. If the second parameter PostData is a string, submit it as POST.
+The second parameter PostData can be a custom method such as:
+
+.. code-block:: JavaScript
+
+    HttpQuery("http://www.abc.com", {method:'PUT', data:'xx'});
+    HttpQuery("http://www.abc.com", {method:'PUT', data:'xx', timeout:1000});
+
+Passing the cookie string requires a third parameter, but does not require POST. Please set the second parameter to ``null``
+When runing in the backtes, the function returns the fixed string Dummy Data because the URL cannot be simulated.
+
+You can use this interface to send text messages or interact with other APIs
+
+.. code-block:: JavaScript
+
+    HttpQuery("http://www.google.com"); // Get 
+    HttpQuery("http://www.google.com", "xxx"); // Post 
+    HttpQuery("http://www.google.com", null, "a=10; b=20", "User-Agent: Mobile\nContent-Type: text/html", true);  
+
+Example Accessing BIANACE APIs that do not require signatures:
+
+.. code-block:: JavaScript
+
+    var exchangeInfo = JSON.parse(HttpQuery('https://api.binance.com/api/v1/exchangeInfo'));
+    Log(exchangeInfo);
+    var ticker = JSON.parse(HttpQuery('https://api.binance.com/api/v1/ticker/24hr'));
+    Log(ticker);
+
+.. note::
+
+    The ``HttpQuery`` function only supports JavaScript, for Python, using the ``urlib2`` or ``request`` library to send http requests directly.
+
+
+2.6.17 MD5
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    MD5(string)
+
+Parameter value: string type
+
+.. code-block:: JavaScript
+
+    Log("MD5", MD5("hello world"))
+
+
+2.6.18 Hash
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    Hash(Algo, OutputAlgo, Data)
+
+Support hash calculation for md5/sha256/sha512/sha1, only supports in the real maket.
+
+Parameter values: all are string types
+
+The second parameter can be set to raw/hex/base64, which means output encrypted original content/hex encoded/base64 encoded.
+
+.. code-block:: JavaScript
+
+    function main(){
+        Log(Hash("md5", "hex", "hello")); 
+        Log(Hash("sha512", "base64", "hello"));
+    }
+
+
+2.6.19 HMAC
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    HMAC(Algo, OutputAlgo, Data, Key)
+
+HMAC encryption calculation of md5/sha256/sha512/sha1 is supported, only supported in the real market.
+
+Parameter values: all are string types.
+
+The second parameter can be set to raw/hex/base64, which means output encrypted original content/hex encoded/base64 encoded.
+
+
+2.6.20 UnixNano
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    UnixNano()
+
+Return the nanosecond timestamp. If you need to obtain the millisecond timestamp, you can use the following code:
+
+.. code-block:: JavaScript
+
+    var time = UnixNano() / 1000000;
+    Log(_N(time, 0));
+
+2.6.21 Unix
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    Unix()
+
+Returns the second-level timestamp, which is only supported in a strategy written in ``C++``.
+
+.. code-block:: C++
+
+    uint64_t t = Unix();
+    Log(t);
+
+
+
+
+
+
 
 
 

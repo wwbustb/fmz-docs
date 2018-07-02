@@ -171,7 +171,26 @@ A useful JavaScript example of Log Profit for a certain trading pair:
     ``LogProfit`` doesn't have to be recording the profit , it can be any number you like to present, such as total account value, free USDT amount.
     ``Profit`` is calculated by your own.
 
-2.6.4 LogReset
+2.6.4 SetErrorFilter
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    SetErrorFilter(RegEx)
+
+Error message filtering
+
+Parameter value: string type
+
+Errors that are matched by this regular expression will not be uploaded to the log system. Multiple set (filtered logs, database files corresponding to robot IDs in the logs/robot under the docker directory can be called multiple times to prevent frequent errors Causes database file expansion.)
+
+.. code-block:: JavaScript
+
+    SetErrorFilter("502:|503:|tcp|character|unexpected|network|timeout|WSARecv|Connect|GetAddr|no such|reset|http|received|EOF|reused");
+
+
+
+2.6.5 LogReset
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -181,7 +200,7 @@ A useful JavaScript example of Log Profit for a certain trading pair:
 Clear the log, you can pass a parameter, specify the number of recent logs to keep, clear the rest of the log. 
 
 
-2.6.5 LogProfitReset
+2.6.6 LogProfitReset
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -191,7 +210,7 @@ Clear the log, you can pass a parameter, specify the number of recent logs to ke
 Clear all history logs, can take a number parameter, specify the number of reservations.
 
 
-2.6.6 EnableLog
+2.6.7 EnableLog
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -202,7 +221,7 @@ Turn on or off logging of orders and error messages/
 
 Parameter value: isEnable is bool type
 
-2.6.7 LogVacuum
+2.6.8 LogVacuum
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -211,7 +230,46 @@ Parameter value: isEnable is bool type
 
 Reclaims the space occupied by SQLite when deleting data.
 
-2.6.8 Sleep
+
+2.6.9 GetLastError
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    GetLastError()
+
+Get the latest error message, generally do not need to use, because the program will automatically upload the error message to the log system.
+
+Return value: string type
+
+
+2.6.10 GetCommand
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    GetCommand()
+
+Get Interactive Command (utf-8).
+
+Get the command sent from the strategy interactive interface and clear it. If there is no command, 
+it will return ``null``. The returned command format is "Button name: parameter". If there is no parameter, the command is the button name.
+
+A JavaScript example
+
+.. code-block:: JavaScript
+
+    function main(){
+        while(true) { 
+            var cmd = GetCommand(); 
+            if (cmd) { 
+                Log(cmd);
+            } 
+            Sleep(1000); 
+        }
+    }
+
+2.6.11 Sleep
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -229,7 +287,7 @@ Reclaims the space occupied by SQLite when deleting data.
     In almost all the situation, ``Sleep`` is necessary in ``while`` loops, otherwise you may exceed the exchange's API rate limits of REQUESTS. 
 
 
-2.6.9 IsVirtual
+2.6.12 IsVirtual
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -239,5 +297,175 @@ Reclaims the space occupied by SQLite when deleting data.
 Your robot is runing in a simulated backtest or not.
 
 Return value: bool type, Simulate back test state return true, the real market returns false
+
+2.6.13 GetOS
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    GetOS()
+
+Returns the information of the docker's system.
+
+2.6.14 GetPid
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    GetPid()
+
+Return robot process ID
+
+Return value: string type
+
+
+2.6.15 Mail
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    Mail(smtpServer, smtpUsername, smtpPassword, mailTo, title, body)
+
+Send a e-mail.
+
+Parameter values: all are string types
+
+Return value: bool type, return true if successful
+
+.. code-block:: JavaScript
+
+    function main(){
+        Mail("smtp.163.com", "test@163.com", "password", "usr@163.com", "title", "body")
+    }
+
+
+2.6.16 HttpQuery
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    HttpQuery(Url, PostData, Cookies, Headers, IsReturnHeader)
+
+Web URL access.
+
+Parameter values: all are string types
+
+Get the content of a Url. If the second parameter PostData is a string, submit it as POST.
+The second parameter PostData can be a custom method such as:
+
+.. code-block:: JavaScript
+
+    HttpQuery("http://www.abc.com", {method:'PUT', data:'xx'});
+    HttpQuery("http://www.abc.com", {method:'PUT', data:'xx', timeout:1000});
+
+Passing the cookie string requires a third parameter, but does not require POST. Please set the second parameter to ``null``
+When runing in the backtes, the function returns the fixed string Dummy Data because the URL cannot be simulated.
+
+You can use this interface to send text messages or interact with other APIs
+
+.. code-block:: JavaScript
+
+    HttpQuery("http://www.google.com"); // Get 
+    HttpQuery("http://www.google.com", "xxx"); // Post 
+    HttpQuery("http://www.google.com", null, "a=10; b=20", "User-Agent: Mobile\nContent-Type: text/html", true);  
+
+Example Accessing BIANACE APIs that do not require signatures:
+
+.. code-block:: JavaScript
+
+    var exchangeInfo = JSON.parse(HttpQuery('https://api.binance.com/api/v1/exchangeInfo'));
+    Log(exchangeInfo);
+    var ticker = JSON.parse(HttpQuery('https://api.binance.com/api/v1/ticker/24hr'));
+    Log(ticker);
+
+.. note::
+
+    The ``HttpQuery`` function only supports JavaScript, for Python, using the ``urlib2`` or ``request`` library to send http requests directly.
+
+
+2.6.17 MD5
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    MD5(string)
+
+Parameter value: string type
+
+.. code-block:: JavaScript
+
+    Log("MD5", MD5("hello world"))
+
+
+2.6.18 Hash
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    Hash(Algo, OutputAlgo, Data)
+
+Support hash calculation for md5/sha256/sha512/sha1, only supports in the real maket.
+
+Parameter values: all are string types
+
+The second parameter can be set to raw/hex/base64, which means output encrypted original content/hex encoded/base64 encoded.
+
+.. code-block:: JavaScript
+
+    function main(){
+        Log(Hash("md5", "hex", "hello")); 
+        Log(Hash("sha512", "base64", "hello"));
+    }
+
+
+2.6.19 HMAC
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    HMAC(Algo, OutputAlgo, Data, Key)
+
+HMAC encryption calculation of md5/sha256/sha512/sha1 is supported, only supported in the real market.
+
+Parameter values: all are string types.
+
+The second parameter can be set to raw/hex/base64, which means output encrypted original content/hex encoded/base64 encoded.
+
+
+2.6.20 UnixNano
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    UnixNano()
+
+Return the nanosecond timestamp. If you need to obtain the millisecond timestamp, you can use the following code:
+
+.. code-block:: JavaScript
+
+    var time = UnixNano() / 1000000;
+    Log(_N(time, 0));
+
+2.6.21 Unix
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    Unix()
+
+Returns the second-level timestamp, which is only supported in a strategy written in ``C++``.
+
+.. code-block:: C++
+
+    uint64_t t = Unix();
+    Log(t);
+
+
+
+
+
+
+
+
 
 
