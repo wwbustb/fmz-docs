@@ -288,12 +288,58 @@ as long as the object contains <code class="docutils literal"><span class="pre">
 <code class="docutils literal"><span class="pre">Profit</span></code> is calculated by your own.</p>
 </div>
 </div>
+<div class="section" id="logreset">
+<h2>2.6.4 LogReset<a class="headerlink" href="#logreset" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogReset</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Clear the log, you can pass a parameter, specify the number of recent logs to keep, clear the rest of the log.</p>
+</div>
 <div class="section" id="logprofitreset">
-<h2>2.6.4 LogProfitReset<a class="headerlink" href="#logprofitreset" title="Permalink to this headline">¶</a></h2>
+<h2>2.6.5 LogProfitReset<a class="headerlink" href="#logprofitreset" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogProfitReset</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Clear all history logs, can take a number parameter, specify the number of reservations.</p>
+</div>
+<div class="section" id="enablelog">
+<h2>2.6.6 EnableLog<a class="headerlink" href="#enablelog" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">EnableLog</span><span class="p">(</span><span class="nx">IsEnable</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Turn on or off logging of orders and error messages/</p>
+<p>Parameter value: isEnable is bool type</p>
+</div>
+<div class="section" id="logvacuum">
+<h2>2.6.7 LogVacuum<a class="headerlink" href="#logvacuum" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">LogVacuum</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Reclaims the space occupied by SQLite when deleting data.</p>
+</div>
+<div class="section" id="sleep">
+<h2>2.6.8 Sleep<a class="headerlink" href="#sleep" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span>   Sleep(Millisecond)
+
+Pause the robot program for a period of time.
+
+Parameter value: Millisecond is number type
+
+``Sleep(1000)`` means sleep 1 second.
+
+.. warning::
+
+   In almost all the situation, ``Sleep`` is necessary in ``while`` loops, otherwise you may exceed the exchange&#39;s API rate limits of REQUESTS.
+</pre></div>
+</div>
+</div>
+<div class="section" id="isvirtual">
+<h2>2.6.9 IsVirtual<a class="headerlink" href="#isvirtual" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">IsVirtual</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Your robot is runing in a simulated backtest or not.</p>
+<p>Return value: bool type, Simulate back test state return true, the real market returns false</p>
 </div>
 </div>
 

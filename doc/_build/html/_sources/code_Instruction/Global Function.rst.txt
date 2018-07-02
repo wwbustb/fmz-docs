@@ -171,7 +171,17 @@ A useful JavaScript example of Log Profit for a certain trading pair:
     ``LogProfit`` doesn't have to be recording the profit , it can be any number you like to present, such as total account value, free USDT amount.
     ``Profit`` is calculated by your own.
 
-2.6.4 LogProfitReset
+2.6.4 LogReset
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    LogReset()
+
+Clear the log, you can pass a parameter, specify the number of recent logs to keep, clear the rest of the log. 
+
+
+2.6.5 LogProfitReset
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -180,5 +190,54 @@ A useful JavaScript example of Log Profit for a certain trading pair:
 
 Clear all history logs, can take a number parameter, specify the number of reservations.
 
+
+2.6.6 EnableLog
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    EnableLog(IsEnable)
+
+Turn on or off logging of orders and error messages/
+
+Parameter value: isEnable is bool type
+
+2.6.7 LogVacuum
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    LogVacuum()
+
+Reclaims the space occupied by SQLite when deleting data.
+
+2.6.8 Sleep
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    Sleep(Millisecond)
+
+ Pause the robot program for a period of time.
+
+ Parameter value: Millisecond is number type
+ 
+ ``Sleep(1000)`` means sleep 1 second.
+
+ .. warning::
+
+    In almost all the situation, ``Sleep`` is necessary in ``while`` loops, otherwise you may exceed the exchange's API rate limits of REQUESTS. 
+
+
+2.6.9 IsVirtual
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    IsVirtual()
+
+Your robot is runing in a simulated backtest or not.
+
+Return value: bool type, Simulate back test state return true, the real market returns false
 
 
