@@ -171,7 +171,26 @@ A useful JavaScript example of Log Profit for a certain trading pair:
     ``LogProfit`` doesn't have to be recording the profit , it can be any number you like to present, such as total account value, free USDT amount.
     ``Profit`` is calculated by your own.
 
-2.6.4 LogReset
+2.6.4 SetErrorFilter
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    SetErrorFilter(RegEx)
+
+Error message filtering
+
+Parameter value: string type
+
+Errors that are matched by this regular expression will not be uploaded to the log system. Multiple set (filtered logs, database files corresponding to robot IDs in the logs/robot under the docker directory can be called multiple times to prevent frequent errors Causes database file expansion.)
+
+.. code-block:: JavaScript
+
+    SetErrorFilter("502:|503:|tcp|character|unexpected|network|timeout|WSARecv|Connect|GetAddr|no such|reset|http|received|EOF|reused");
+
+
+
+2.6.5 LogReset
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -181,7 +200,7 @@ A useful JavaScript example of Log Profit for a certain trading pair:
 Clear the log, you can pass a parameter, specify the number of recent logs to keep, clear the rest of the log. 
 
 
-2.6.5 LogProfitReset
+2.6.6 LogProfitReset
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -191,7 +210,7 @@ Clear the log, you can pass a parameter, specify the number of recent logs to ke
 Clear all history logs, can take a number parameter, specify the number of reservations.
 
 
-2.6.6 EnableLog
+2.6.7 EnableLog
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -202,7 +221,7 @@ Turn on or off logging of orders and error messages/
 
 Parameter value: isEnable is bool type
 
-2.6.7 LogVacuum
+2.6.8 LogVacuum
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -211,7 +230,7 @@ Parameter value: isEnable is bool type
 
 Reclaims the space occupied by SQLite when deleting data.
 
-2.6.8 Sleep
+2.6.9 Sleep
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -229,7 +248,7 @@ Reclaims the space occupied by SQLite when deleting data.
     In almost all the situation, ``Sleep`` is necessary in ``while`` loops, otherwise you may exceed the exchange's API rate limits of REQUESTS. 
 
 
-2.6.9 IsVirtual
+2.6.10 IsVirtual
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -239,5 +258,77 @@ Reclaims the space occupied by SQLite when deleting data.
 Your robot is runing in a simulated backtest or not.
 
 Return value: bool type, Simulate back test state return true, the real market returns false
+
+
+2.6.11 Mail
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    Mail(smtpServer, smtpUsername, smtpPassword, mailTo, title, body)
+
+Send a e-mail.
+
+Parameter values: all are string types
+
+Return value: bool type, return true if successful
+
+.. code-block:: JavaScript
+
+    function main(){
+        Mail("smtp.163.com", "test@163.com", "password", "usr@163.com", "title", "body")
+    }
+
+2.6.12 GetPid
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    GetPid()
+
+Return robot process ID
+
+Return value: string type
+
+
+2.6.13 GetLastError
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    GetLastError()
+
+Get the latest error message, generally do not need to use, because the program will automatically upload the error message to the log system.
+
+Return value: string type
+
+
+2.6.14 GetCommand
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    GetCommand()
+
+Get Interactive Command (utf-8).
+
+Get the command sent from the strategy interactive interface and clear it. If there is no command, 
+it will return ``null``. The returned command format is "Button name: parameter". If there is no parameter, the command is the button name.
+
+A JavaScript example
+
+.. code-block:: JavaScript
+
+    function main(){
+        while(true) { 
+            var cmd = GetCommand(); 
+            if (cmd) { 
+                Log(cmd);
+            } 
+            Sleep(1000); 
+        }
+    }
+
+
 
 
