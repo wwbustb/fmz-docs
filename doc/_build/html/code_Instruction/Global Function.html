@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2.6 Global Founction &mdash; BotVS 0.1 documentation</title>
+  <title>2.6 Global Function &mdash; BotVS 0.1 documentation</title>
   
 
   
@@ -93,7 +93,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Market API.html">2.3 Market API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Trade API.html">2.4 Trade API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Extent API.html">2.5 Extended API</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">2.6 Global Founction</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2.6 Global Function</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#log">2.6.1 Log</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#logstatus">2.6.2 LogStatus</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#logprofit">2.6.3 LogProfit</a></li>
@@ -115,6 +115,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#hmac">2.6.19 HMAC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#unixnano">2.6.20 UnixNano</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#unix">2.6.21 Unix</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#c">2.6.21 _C</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#g">2.6.22 _G</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#d">2.6.23 _D</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#n">2.6.24 _N</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cross">2.6.24 _Cross</a></li>
 </ul>
 </li>
 </ul>
@@ -164,7 +169,7 @@
         
           <li><a href="index.html">&lt;no title&gt;</a> &raquo;</li>
         
-      <li>2.6 Global Founction</li>
+      <li>2.6 Global Function</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -183,8 +188,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="global-founction">
-<h1>2.6 Global Founction<a class="headerlink" href="#global-founction" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="global-function">
+<h1>2.6 Global Function<a class="headerlink" href="#global-function" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="log">
 <h2>2.6.1 Log<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Log</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
@@ -387,18 +392,15 @@ it will return <code class="docutils literal"><span class="pre">null</span></cod
 </div>
 <div class="section" id="sleep">
 <h2>2.6.11 Sleep<a class="headerlink" href="#sleep" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-JavaScript"><div class="highlight"><pre><span></span>   Sleep(Millisecond)
-
-Pause the robot program for a period of time.
-
-Parameter value: Millisecond is number type
-
-``Sleep(1000)`` means sleep 1 second.
-
-.. warning::
-
-   In almost all the situation, ``Sleep`` is necessary in ``while`` loops, otherwise you may exceed the exchange&#39;s API rate limits of REQUESTS.
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">Millisecond</span><span class="p">)</span>
 </pre></div>
+</div>
+<p>Pause the robot program for a period of time.</p>
+<p>Parameter value: Millisecond is number type</p>
+<p><code class="docutils literal"><span class="pre">Sleep(1000)</span></code> means sleep 1 second.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">In almost all the situation, <code class="docutils literal"><span class="pre">Sleep</span></code> is necessary in <code class="docutils literal"><span class="pre">while</span></code> loops, otherwise you may exceed the exchange’s API rate limits of REQUESTS.</p>
 </div>
 </div>
 <div class="section" id="isvirtual">
@@ -524,6 +526,92 @@ When runing in the backtes, the function returns the fixed string Dummy Data bec
 <p>Returns the second-level timestamp, which is only supported in a strategy written in <code class="docutils literal"><span class="pre">C++</span></code>.</p>
 <div class="highlight-C++"><div class="highlight"><pre><span></span><span class="kt">uint64_t</span> <span class="n">t</span> <span class="o">=</span> <span class="n">Unix</span><span class="p">();</span>
 <span class="n">Log</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="c">
+<h2>2.6.21 _C<a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span>_C(function, args…)
+</pre></div>
+</div>
+<p>Retry function</p>
+<p>Will always call the specified function to return successfully (function returns null or false will retry), such as <code class="docutils literal"><span class="pre">_C</span> <span class="pre">(exchange.GetTicker)</span></code>, the
+default retry interval is 3 seconds, you can call <code class="docutils literal"><span class="pre">_CDelay</span></code> function to control the retry interval, such as <code class="docutils literal"><span class="pre">_CDelay</span> <span class="pre">(1000)</span></code> means change the <code class="docutils literal"><span class="pre">_C</span></code> function retry interval to 1 second, suggesting</p>
+<p>Support Function:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code></li>
+<li><code class="docutils literal"><span class="pre">exchange.GetDepth()</span></code></li>
+<li><code class="docutils literal"><span class="pre">exchange.GetTrade()`</span></code></li>
+<li><code class="docutils literal"><span class="pre">exchange.GetRecords()</span></code></li>
+<li><code class="docutils literal"><span class="pre">exchange.GetAccount()</span></code></li>
+<li><code class="docutils literal"><span class="pre">exchange.GetOrders()</span></code></li>
+<li><code class="docutils literal"><span class="pre">exchange.GetOrder()</span></code></li>
+</ul>
+<p>A JavaScript example:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">depth</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetDepth</span><span class="p">);</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">ticker</span><span class="p">);</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">depth</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="g">
+<h2>2.6.22 _G<a class="headerlink" href="#g" title="Permalink to this headline">¶</a></h2>
+<p>Global dictionary that can be saved after restart robot.</p>
+<p>The KV dict is permanently stored in the local file. Each robot has a separate database. After the restart or the escrow withdrawal, K must be a number or a string. It is case-insensitive and V can be any JSON serialized content.</p>
+<p>A JavaScript example:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">_G</span><span class="p">(</span><span class="s1">&#39;initValue&#39;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">);</span> <span class="c1">// set value</span>
+<span class="kd">var</span> <span class="nx">initValue</span> <span class="o">=</span> <span class="nx">_G</span><span class="p">(</span><span class="s1">&#39;initValue&#39;</span><span class="p">);</span> <span class="c1">// get value</span>
+<span class="nx">_G</span><span class="p">(</span><span class="s2">&quot;initValue&quot;</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span> <span class="c1">// remove global variable &quot;initValue&quot;</span>
+<span class="nx">_G</span><span class="p">(</span><span class="kc">null</span><span class="p">);</span> <span class="c1">//Remove all global variables</span>
+<span class="nx">_G</span><span class="p">();</span> <span class="c1">// Returns the ID of the current robot</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="d">
+<h2>2.6.23 _D<a class="headerlink" href="#d" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">_D</span><span class="p">(</span><span class="nx">timestamp</span><span class="p">,</span> <span class="nx">fmt</span><span class="o">=</span><span class="s2">&quot;yyyy-MM-dd hh:mm:ss&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the specified timestamp</p>
+<p>Returns the specified timestamp (ms) string, returns the current time without any parameter, such as _D(), or _D(1478570053241), The default format is yyyy-MM-dd hh:mm:ss.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="k">while</span><span class="p">(</span><span class="kc">true</span><span class="p">){</span>
+        <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="nx">_D</span><span class="p">();</span>
+        <span class="nx">LogStatus</span><span class="p">(</span><span class="s1">&#39;Last update time: &#39;</span><span class="p">,</span> <span class="nx">time</span><span class="p">);</span>
+        <span class="c1">//do some thing</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="n">
+<h2>2.6.24 _N<a class="headerlink" href="#n" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">_N</span><span class="p">(</span><span class="nx">num</span><span class="p">,</span> <span class="nx">precision</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Format a float</p>
+<p>Parameter value, num is number type, precision is integer number</p>
+<p>For example <code class="docutils literal"><span class="pre">_N</span> <span class="pre">(3.1415,</span> <span class="pre">2)</span></code> will delete the value after the two decimal points, return “3.14”. <code class="docutils literal"><span class="pre">_N(1321,-2)</span></code> will return “1300”.</p>
+</div>
+<div class="section" id="cross">
+<h2>2.6.24 _Cross<a class="headerlink" href="#cross" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">_Cross</span><span class="p">(</span><span class="nx">arr1</span><span class="p">,</span> <span class="nx">arr2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Returns the number of cross periods of the arrays arr1 and arr2.</p>
+<p>A positive number is the upper pass period, a negative number indicates the period of the wear pass, and a 0 indicates the current price.
+Can be used in MACD strategy.</p>
+<p>Parameter value: array of numbers</p>
+<p>Specific instructions for use: built-in function _Cross analysis and instructions</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">arr1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">]</span>
+<span class="kd">var</span> <span class="nx">arr2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">]</span>
+<span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;_Cross(arr1, arr2) : &quot;</span><span class="p">,</span> <span class="nx">_Cross</span><span class="p">(</span><span class="nx">arr1</span><span class="p">,</span> <span class="nx">arr2</span><span class="p">))</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;_Cross(arr2, arr1) : &quot;</span><span class="p">,</span> <span class="nx">_Cross</span><span class="p">(</span><span class="nx">arr2</span><span class="p">,</span> <span class="nx">arr1</span><span class="p">))</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>

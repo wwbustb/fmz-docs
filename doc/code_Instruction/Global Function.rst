@@ -1,4 +1,4 @@
-2.6 Global Founction
+2.6 Global Function
 =======================
 
 2.6.1 Log
@@ -276,13 +276,13 @@ A JavaScript example
 
     Sleep(Millisecond)
 
- Pause the robot program for a period of time.
+Pause the robot program for a period of time.
 
- Parameter value: Millisecond is number type
+Parameter value: Millisecond is number type
  
- ``Sleep(1000)`` means sleep 1 second.
+``Sleep(1000)`` means sleep 1 second.
 
- .. warning::
+.. warning::
 
     In almost all the situation, ``Sleep`` is necessary in ``while`` loops, otherwise you may exceed the exchange's API rate limits of REQUESTS. 
 
@@ -461,11 +461,118 @@ Returns the second-level timestamp, which is only supported in a strategy writte
     Log(t);
 
 
+2.6.21 _C
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    _C(function, args…)
+
+Retry function
+
+Will always call the specified function to return successfully (function returns null or false will retry), such as ``_C (exchange.GetTicker)``, the 
+default retry interval is 3 seconds, you can call ``_CDelay`` function to control the retry interval, such as ``_CDelay (1000)`` means change the ``_C`` function retry interval to 1 second, suggesting
+
+Support Function:
+
+- ``exchange.GetTicker()``
+- ``exchange.GetDepth()``
+- ``exchange.GetTrade()```
+- ``exchange.GetRecords()``
+- ``exchange.GetAccount()``
+- ``exchange.GetOrders()``
+- ``exchange.GetOrder()``
+
+A JavaScript example:
+
+.. code-block:: JavaScript
+
+    function main(){
+        var ticker = _C(exchange.GetTicker);
+        var depth = _C(exchange.GetDepth);
+        Log(ticker);
+        Log(depth);
+    }
+
+2.6.22 _G
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+    _G(K,V)
+
+Global dictionary that can be saved after restart robot.
+
+The KV dict is permanently stored in the local file. Each robot has a separate database. After the restart or the escrow withdrawal, K must be a number or a string. It is case-insensitive and V can be any JSON serialized content. 
+
+A JavaScript example:
+
+.. code-block:: JavaScript
+
+    _G('initValue', 1000); // set value
+    var initValue = _G('initValue'); // get value
+    _G("initValue", null); // remove global variable "initValue"
+    _G(null); //Remove all global variables
+    _G(); // Returns the ID of the current robot
 
 
+2.6.23 _D
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    _D(timestamp, fmt="yyyy-MM-dd hh:mm:ss")
+
+Returns the specified timestamp
+
+Returns the specified timestamp (ms) string, returns the current time without any parameter, such as _D(), or _D(1478570053241), The default format is yyyy-MM-dd hh:mm:ss.
+
+.. code-block:: JavaScript
+
+    function main(){
+        while(true){
+            var time = _D();
+            LogStatus('Last update time: ', time);
+            //do some thing
+        }
+    }
 
 
+2.6.24 _N
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    _N(num, precision)
+
+Format a float
+
+Parameter value, num is number type, precision is integer number
+
+For example ``_N (3.1415, 2)`` will delete the value after the two decimal points, return "3.14". ``_N(1321,-2)`` will return "1300".
 
 
+2.6.24 _Cross
+>>>>>>>>>>>>>>>>>>
 
+.. code-block:: JavaScript
+
+    _Cross(arr1, arr2)
+
+Returns the number of cross periods of the arrays arr1 and arr2.
+
+A positive number is the upper pass period, a negative number indicates the period of the wear pass, and a 0 indicates the current price.
+Can be used in MACD strategy.
+
+Parameter value: array of numbers
+
+Specific instructions for use: built-in function _Cross analysis and instructions
+
+.. code-block:: JavaScript
+
+    var arr1 = [1,2,3,4,5,6,8,8,9]
+    var arr2 = [2,3,4,5,6,7,7,7,7]
+    function main(){
+        Log("_Cross(arr1, arr2) : ", _Cross(arr1, arr2))
+        Log("_Cross(arr2, arr1) : ", _Cross(arr2, arr1))
+    }
 
