@@ -551,7 +551,7 @@ Parameter value, num is number type, precision is integer number
 For example ``_N (3.1415, 2)`` will delete the value after the two decimal points, return "3.14". ``_N(1321,-2)`` will return "1300".
 
 
-2.6.24 _Cross
+2.6.25 _Cross
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
