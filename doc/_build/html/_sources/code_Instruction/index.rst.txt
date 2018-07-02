@@ -6,4 +6,4 @@
     Market API
     Trade API
     Extent API
-    Global Founction
+    Global Function
