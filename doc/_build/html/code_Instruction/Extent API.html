@@ -94,6 +94,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Trade API.html">2.4 Trade API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">2.5 Extended API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#io">2.5.1 IO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#go">2.5.2 Go</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getrawjson">2.5.2 GetRawJSON</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getname">2.5.3 GetName</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getlabel">2.5.4 GetLabel</a></li>
@@ -220,7 +221,7 @@ For example, the FMZ platform does not currently support margin leverage trading
 <li>Then we know that the order is interacting with a POST request, so we pass the parameter httpMethod to the order address of the “POST” margin transaction: ‘ <a class="reference external" href="https://api.bitfinex.com/v1/order/new">https://api.bitfinex.com/v1/order/new</a> ‘. Because the FMZ has internally specified the root address, we only need to pass the value of the parameter resource to “/v1/order/new”.</li>
 <li>Then the params parameter is not filled in. The params variable represents the information to be exchanged. We can send all kinds of information with the “&amp;” symbol to send them. We first go to bitfinex to see that the next buy or sell order requires 5 parameters., they are: symbol, amount, price, side, type. We assign these five parameters respectively. If we want to buy Litecoin LTC, the quantity is 1, the price is 10, and the margin trading mode, then we can construct such a string: “symbol=ltc&amp;amount=1&amp;price=10&amp;side=buy&amp;type= Limit”.</li>
 </ul>
-<p>The final JavaScript example:</p>
+<p>The final JavaScript code:</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
     <span class="nx">exchange</span><span class="p">.</span><span class="nx">IO</span><span class="p">(</span><span class="s2">&quot;api&quot;</span><span class="p">,</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span><span class="s2">&quot;/v1/order/new&quot;</span><span class="p">,</span><span class="s2">&quot;symbol=ltc&amp;amount=1&amp;price=10&amp;side=buy&amp;type=limit&quot;</span><span class="p">);</span>
 <span class="p">}</span>
@@ -232,6 +233,46 @@ For example, the FMZ platform does not currently support margin leverage trading
         <span class="nx">Log</span><span class="p">(</span><span class="nx">ret</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+</div>
+<div class="section" id="go">
+<h2>2.5.2 Go<a class="headerlink" href="#go" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">Go</span><span class="p">(</span><span class="nx">Method</span><span class="p">,</span> <span class="nx">Args</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Multi-threaded asynchronous support functions that can convert the operations of all supported functions into asynchronous concurrency.</p>
+<p><strong>Parameter value:</strong></p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>Method : a function name.
+Args   : the args of method.
+</pre></div>
+</div>
+<p>Supported Functions: <code class="docutils literal"><span class="pre">GetTicker</span></code>, <code class="docutils literal"><span class="pre">GetDepth</span></code>, <code class="docutils literal"><span class="pre">GetTrades</span></code>, <code class="docutils literal"><span class="pre">GetRecords</span></code>, <code class="docutils literal"><span class="pre">GetAccount</span></code>, <code class="docutils literal"><span class="pre">GetOrders</span></code>, <code class="docutils literal"><span class="pre">GetOrder</span></code>, <code class="docutils literal"><span class="pre">CancelOrder</span></code>, <code class="docutils literal"><span class="pre">Buy</span></code>, <code class="docutils literal"><span class="pre">Sell</span></code>, <code class="docutils literal"><span class="pre">GetPosition</span></code></p>
+<p>robot thread must obtain the result from the wait function, the docker automatically releases the thread resource requested through the Go function.
+If the return result of the  wait function is not obtained, the thread resource will not be automatically released, which will cause threads to accumulate, and more than 2000 will report an error.
+“too many routine wait, max is 2000”</p>
+<p>A JavaScript example</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">a</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">Go</span><span class="p">(</span><span class="s2">&quot;GetTicker&quot;</span><span class="p">);</span> <span class="c1">//GetTicker Asynchronous multithreaded execution</span>
+    <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">Go</span><span class="p">(</span><span class="s2">&quot;GetDepth&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">c</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">Go</span><span class="p">(</span><span class="s2">&quot;Buy&quot;</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">d</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">Go</span><span class="p">(</span><span class="s2">&quot;GetRecords&quot;</span><span class="p">,</span> <span class="nx">PERIOD_H1</span><span class="p">);</span>
+    <span class="c1">// The above four operations are concurrent multi-threaded asynchronous execution, will not be time-consuming and immediately return</span>
+    <span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nx">wait</span><span class="p">();</span> <span class="c1">// Call wait method wait for return to asynchronous get ticker result</span>
+    <span class="kd">var</span> <span class="nx">depth</span> <span class="o">=</span> <span class="nx">b</span><span class="p">.</span><span class="nx">wait</span><span class="p">();</span> <span class="c1">// Return depth, it is also possible to return null if it fails</span>
+    <span class="kd">var</span> <span class="nx">orderId</span> <span class="o">=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">wait</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span> <span class="c1">// Return the order number, limit 1 second timeout, timeout returns undefined, this object can continue to call wait until the last wait timeout</span>
+    <span class="kd">var</span> <span class="nx">records</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">wait</span><span class="p">();</span> <span class="c1">// Wait for K-line result</span>
+    <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">wait</span><span class="p">();</span>  <span class="c1">// Here waits for an asynchronous operation that has waited and ended, returns null, and logs an error message.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The difference between Python and JavaScript, Python’s wait returns two parameters, the first is the result of the asynchronous API, and the second is whether the asynchronous call is completed.</p>
+<div class="highlight-Python"><div class="highlight"><pre><span></span><span class="n">ret</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">wait</span><span class="p">();</span> <span class="o">//</span> <span class="n">Ok</span> <span class="ow">is</span> <span class="n">bound</span> <span class="n">to</span> <span class="k">return</span> <span class="n">true</span> <span class="n">unless</span> <span class="n">the</span> <span class="n">strategy</span> <span class="ow">is</span> <span class="n">stopped</span>
+<span class="n">ret</span><span class="p">,</span> <span class="n">ok</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span> <span class="o">//</span> <span class="n">Ok</span> <span class="n">returns</span> <span class="bp">False</span><span class="p">,</span> <span class="n">waits</span> <span class="k">for</span> <span class="n">a</span> <span class="n">timeout</span><span class="p">,</span> <span class="ow">or</span> <span class="n">waits</span> <span class="k">for</span> <span class="n">an</span> <span class="n">instance</span> <span class="n">that</span> <span class="n">has</span> <span class="n">ended</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This function only creates multi-threaded execution tasks when it runs on a real market. Backtesting does not support multithreaded concurrent execution of tasks (backtesting is available, but it is also performed sequentially).</p>
 </div>
 </div>
 <div class="section" id="getrawjson">

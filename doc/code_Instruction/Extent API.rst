@@ -65,7 +65,7 @@ For example, the FMZ platform does not currently support margin leverage trading
 - Then we know that the order is interacting with a POST request, so we pass the parameter httpMethod to the order address of the "POST" margin transaction: ' https://api.bitfinex.com/v1/order/new '. Because the FMZ has internally specified the root address, we only need to pass the value of the parameter resource to "/v1/order/new".
 - Then the params parameter is not filled in. The params variable represents the information to be exchanged. We can send all kinds of information with the "&" symbol to send them. We first go to bitfinex to see that the next buy or sell order requires 5 parameters., they are: symbol, amount, price, side, type. We assign these five parameters respectively. If we want to buy Litecoin LTC, the quantity is 1, the price is 10, and the margin trading mode, then we can construct such a string: "symbol=ltc&amount=1&price=10&side=buy&type= Limit".
 
-The final JavaScript example:
+The final JavaScript code:
 
 .. code-block:: JavaScript
 
@@ -82,6 +82,55 @@ An OKEX Example：
 	    Log(ret)
     }
 
+2.5.2 Go
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.Go(Method, Args)
+
+Multi-threaded asynchronous support functions that can convert the operations of all supported functions into asynchronous concurrency. 
+
+**Parameter value:**
+
+.. sourcecode:: http
+
+    Method : a function name.
+    Args   : the args of method.
+
+Supported Functions: ``GetTicker``, ``GetDepth``, ``GetTrades``, ``GetRecords``, ``GetAccount``, ``GetOrders``, ``GetOrder``, ``CancelOrder``, ``Buy``, ``Sell``, ``GetPosition``
+
+robot thread must obtain the result from the wait function, the docker automatically releases the thread resource requested through the Go function.
+If the return result of the  wait function is not obtained, the thread resource will not be automatically released, which will cause threads to accumulate, and more than 2000 will report an error.
+"too many routine wait, max is 2000" 
+
+A JavaScript example
+
+.. code-block:: JavaScript
+
+    function main(){
+        var a = exchange.Go("GetTicker"); //GetTicker Asynchronous multithreaded execution 
+        var b = exchange.Go("GetDepth"); 
+        var c = exchange.Go("Buy", 1000, 0.1); 
+        var d = exchange.Go("GetRecords", PERIOD_H1);
+        // The above four operations are concurrent multi-threaded asynchronous execution, will not be time-consuming and immediately return
+        var ticker = a.wait(); // Call wait method wait for return to asynchronous get ticker result
+        var depth = b.wait(); // Return depth, it is also possible to return null if it fails 
+        var orderId = c.wait(1000); // Return the order number, limit 1 second timeout, timeout returns undefined, this object can continue to call wait until the last wait timeout
+        var records = d.wait(); // Wait for K-line result
+        var ret = d.wait();  // Here waits for an asynchronous operation that has waited and ended, returns null, and logs an error message.
+    }
+
+The difference between Python and JavaScript, Python's wait returns two parameters, the first is the result of the asynchronous API, and the second is whether the asynchronous call is completed.
+
+.. code-block:: Python
+
+    ret, ok = d.wait(); // Ok is bound to return true unless the strategy is stopped
+    ret, ok = d.wait(100); // Ok returns False, waits for a timeout, or waits for an instance that has ended
+
+.. note::
+
+    This function only creates multi-threaded execution tasks when it runs on a real market. Backtesting does not support multithreaded concurrent execution of tasks (backtesting is available, but it is also performed sequentially).
 
 2.5.2 GetRawJSON
 >>>>>>>>>>>>>>>>>>
