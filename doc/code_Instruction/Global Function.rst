@@ -339,6 +339,72 @@ Return value: bool type, return true if successful
     }
 
 
+2.6.16 Dial
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    Dial(Address, Timeout)
+
+Original Socket access, support tcp, udp, tls, unix protocol.
+
+Parameter value: Address is string type, fill in the address, TimeOut is the timeout
+
+A JavaScript example:
+
+.. code-block:: JavaScript
+
+    function main(){
+        var client = Dial("tls://www.baidu.com:443"); // Dial supports tcp://, udp://, tls://, unix:// protocol, plus one parameter to specify the number of seconds to timeout
+        if (client) {
+            client.write("GET / HTTP/1.1\nConnection: Closed\n\n"); // Write can be followed by a number parameter to specify the timeout, write to return the number of bytes successfully sent
+            while (true) {
+                var buf = client.read();// Read can be followed by a number parameter to specify a timeout, return null to indicate an error or timeout, or the socket is already closed
+                if (!buf) {
+                    break;
+                }
+                Log(buf);
+            }
+        client.close();
+        }
+    }
+
+Support websocket protocol.
+
+A JavaScript example of connecting to binance websocket ticker.
+
+.. code-block:: JavaScript
+
+    function main() {
+        LogStatus("connecting...");
+        var client = Dial("wss://stream.binance.com:9443/ws/!ticker@arr");
+        if (!client) {
+            Log("Connection failed, program exited");
+            return
+        }
+        Log("The connection is successful and the disconnected line is automatically reconnected")
+        while (true) {
+            var buf = client.read() // Read only returns data obtained after calling read
+            if (!buf) {
+                break;
+            }
+            var table = {
+                type: 'table',
+                title: 'Quotes chart',
+                cols: ['Currency', 'highest', 'lowest', 'buy one', 'sell one', ' Last traded price', 'volume', 'Update time'],
+                rows: [],
+            };
+            var obj = JSON.parse(buf);
+            _.each(obj, function(ticker) {
+                table.rows.push([ticker.s, ticker.h, ticker.l, ticker.b, ticker.a, ticker.c, ticker.q, _D(ticker.E)])
+            });
+            LogStatus('`' + JSON.stringify(table) + '`')
+        }
+        client.close();
+    }
+
+
+
 2.6.16 HttpQuery
 >>>>>>>>>>>>>>>>>>
 

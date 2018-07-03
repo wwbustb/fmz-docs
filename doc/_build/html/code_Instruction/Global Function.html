@@ -109,6 +109,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#getos">2.6.13 GetOS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getpid">2.6.14 GetPid</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#mail">2.6.15 Mail</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dial">2.6.16 Dial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#httpquery">2.6.16 HttpQuery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#md5">2.6.17 MD5</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hash">2.6.18 Hash</a></li>
@@ -437,6 +438,62 @@ it will return <code class="docutils literal"><span class="pre">null</span></cod
 <p>Return value: bool type, return true if successful</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
     <span class="nx">Mail</span><span class="p">(</span><span class="s2">&quot;smtp.163.com&quot;</span><span class="p">,</span> <span class="s2">&quot;test@163.com&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span> <span class="s2">&quot;usr@163.com&quot;</span><span class="p">,</span> <span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;body&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dial">
+<h2>2.6.16 Dial<a class="headerlink" href="#dial" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Dial</span><span class="p">(</span><span class="nx">Address</span><span class="p">,</span> <span class="nx">Timeout</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Original Socket access, support tcp, udp, tls, unix protocol.</p>
+<p>Parameter value: Address is string type, fill in the address, TimeOut is the timeout</p>
+<p>A JavaScript example:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">Dial</span><span class="p">(</span><span class="s2">&quot;tls://www.baidu.com:443&quot;</span><span class="p">);</span> <span class="c1">// Dial supports tcp://, udp://, tls://, unix:// protocol, plus one parameter to specify the number of seconds to timeout</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">client</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">client</span><span class="p">.</span><span class="nx">write</span><span class="p">(</span><span class="s2">&quot;GET / HTTP/1.1\nConnection: Closed\n\n&quot;</span><span class="p">);</span> <span class="c1">// Write can be followed by a number parameter to specify the timeout, write to return the number of bytes successfully sent</span>
+        <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">buf</span> <span class="o">=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">read</span><span class="p">();</span><span class="c1">// Read can be followed by a number parameter to specify a timeout, return null to indicate an error or timeout, or the socket is already closed</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">buf</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="nx">Log</span><span class="p">(</span><span class="nx">buf</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Support websocket protocol.</p>
+<p>A JavaScript example of connecting to binance websocket ticker.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">LogStatus</span><span class="p">(</span><span class="s2">&quot;connecting...&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">Dial</span><span class="p">(</span><span class="s2">&quot;wss://stream.binance.com:9443/ws/!ticker@arr&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">client</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;Connection failed, program exited&quot;</span><span class="p">);</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;The connection is successful and the disconnected line is automatically reconnected&quot;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">buf</span> <span class="o">=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">read</span><span class="p">()</span> <span class="c1">// Read only returns data obtained after calling read</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">buf</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span>
+            <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Quotes chart&#39;</span><span class="p">,</span>
+            <span class="nx">cols</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;Currency&#39;</span><span class="p">,</span> <span class="s1">&#39;highest&#39;</span><span class="p">,</span> <span class="s1">&#39;lowest&#39;</span><span class="p">,</span> <span class="s1">&#39;buy one&#39;</span><span class="p">,</span> <span class="s1">&#39;sell one&#39;</span><span class="p">,</span> <span class="s1">&#39; Last traded price&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">,</span> <span class="s1">&#39;Update time&#39;</span><span class="p">],</span>
+            <span class="nx">rows</span><span class="o">:</span> <span class="p">[],</span>
+        <span class="p">};</span>
+        <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">buf</span><span class="p">);</span>
+        <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ticker</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">table</span><span class="p">.</span><span class="nx">rows</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">s</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">h</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">l</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">b</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">c</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">q</span><span class="p">,</span> <span class="nx">_D</span><span class="p">(</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">E</span><span class="p">)])</span>
+        <span class="p">});</span>
+        <span class="nx">LogStatus</span><span class="p">(</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">table</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;`&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
 <span class="p">}</span>
 </pre></div>
 </div>
