@@ -263,7 +263,43 @@ Return value: number type
 If you use exchange.SetRate() to set an exchange rate value, such as 0.85(the rate of EUR and USD), 
 then all exchange prices, depth, order price and all other price information in the current exchange currency represented by the exchange object will be multiplied by the setting.
 
-2.5.9 Log
+2.5.8 SetProxy
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+     
+     exchange.SetProxy()
+
+Switch to Proxy Server to Access Exchange 
+
+Each exchange object (exchanges[n]) can set up an agent. After setting up the agent, the access exchange API will be accessed through the agent.
+
+.. code-block:: JavaScript
+
+    // Take the exchange of the main exchange object as the first added exchange object, ie: exchanges[0] as an example.
+    exchange.SetProxy("socks5://127.0.0.1:8889")                      // Set proxy, no username, no password.
+    exchange.SetProxy("socks5://username:password@127.0.0.1:8889")    // Set up the proxy, enter the username and password 
+    exchange.SetProxy("")                                            // Switch to normal mode without using a proxy.
+
+2.5.9 SetTimeout
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+     
+     exchange.SetTimeout(time)
+
+Set timeout for exchange's rest request.
+
+Only the rest request is used to set the timeout time.
+
+For example: ``exchange.SetTimeout(3000)``, set the exchange exchange object, send a rest request starts timing, exceeds 3 seconds, timeout returns null.
+
+
+.. code-block:: JavaScript
+
+    exchange.SetTimeout()
+
+2.5.10 Log
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript

@@ -576,3 +576,44 @@ Specific instructions for use: built-in function _Cross analysis and instruction
         Log("_Cross(arr2, arr1) : ", _Cross(arr2, arr1))
     }
 
+2.6.26 TA Indicator function
+>>>>>>>>>>>>>>>>>>
+
+TA-Lib Indicator Library. support ``MACD``,``EMA``,``KDJ``,``ATR``,``RSI``, etc...
+
+Need to add TA. or talib. prefix when calling indicator function.
+
+For more details TA-Lib functions, check on  http://mrjbq7.github.io/ta-lib/ 
+
+You can also install TA-lib library of Python by yourself.
+
+JavaScript example:
+
+.. code-block:: JavaScript
+
+    function main(){
+        var records = exchange.GetRecords();
+        var macd = TA.MACD(records);
+        Log("DIF:", macd[0], "DEA:", macd[1], "MACD:", macd[2]);
+        var atr = TA.ATR(records, 14);
+        // Print out the last row of values
+        Log(macd[0][records.length-1], macd[1][records.length-1],
+        macd[2][records.length-1]);
+        Log(atr[atr.length-1]);
+        Log(talib.MACD(records));
+        Log(talib.MACD(records, 12, 26, 9));
+        Log(talib.OBV(records));
+        // Talib can also pass in an array of numbers, which can be passed in successively
+        // Such as: OBV(Records[Close], Records[Volume]), need Close, Volume two array parameters
+        Log(talib.OBV([1,2,3], [7.1, 6.2, 3,3]));
+        // You can also directly pass in an array of records containing the Close, Volume property
+        Log(talib.OBV(records));
+        Log(TA.Highest(records, 30, 'High'));
+        Log(TA.Highest([1,2,3,4], 0));
+        // For Python, the system extends the properties of the array returned by GetRecords, adding Open, High, Low, Close, Volume, to facilitate talib calls, such as
+        talib.MACD(records.Close); 
+        /*For Python, the system expands the properties of the array returned by GetRecords, adds Open, High, Low, Close, Volume, 
+        and facilitates talib calls. For example, the Close property returns the Close property of all records members as a numpy array passed to talib. 
+        The same as other properties*/
+    }
+

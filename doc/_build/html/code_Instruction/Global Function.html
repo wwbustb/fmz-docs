@@ -119,7 +119,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#g">2.6.22 _G</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#d">2.6.23 _D</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#n">2.6.24 _N</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#cross">2.6.24 _Cross</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cross">2.6.25 _Cross</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ta-indicator-function">2.6.26 TA Indicator function</a></li>
 </ul>
 </li>
 </ul>
@@ -597,7 +598,7 @@ default retry interval is 3 seconds, you can call <code class="docutils literal"
 <p>For example <code class="docutils literal"><span class="pre">_N</span> <span class="pre">(3.1415,</span> <span class="pre">2)</span></code> will delete the value after the two decimal points, return “3.14”. <code class="docutils literal"><span class="pre">_N(1321,-2)</span></code> will return “1300”.</p>
 </div>
 <div class="section" id="cross">
-<h2>2.6.24 _Cross<a class="headerlink" href="#cross" title="Permalink to this headline">¶</a></h2>
+<h2>2.6.25 _Cross<a class="headerlink" href="#cross" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">_Cross</span><span class="p">(</span><span class="nx">arr1</span><span class="p">,</span> <span class="nx">arr2</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -611,6 +612,41 @@ Can be used in MACD strategy.</p>
 <span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
     <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;_Cross(arr1, arr2) : &quot;</span><span class="p">,</span> <span class="nx">_Cross</span><span class="p">(</span><span class="nx">arr1</span><span class="p">,</span> <span class="nx">arr2</span><span class="p">))</span>
     <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;_Cross(arr2, arr1) : &quot;</span><span class="p">,</span> <span class="nx">_Cross</span><span class="p">(</span><span class="nx">arr2</span><span class="p">,</span> <span class="nx">arr1</span><span class="p">))</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ta-indicator-function">
+<h2>2.6.26 TA Indicator function<a class="headerlink" href="#ta-indicator-function" title="Permalink to this headline">¶</a></h2>
+<p>TA-Lib Indicator Library. support <code class="docutils literal"><span class="pre">MACD</span></code>,``EMA``,``KDJ``,``ATR``,``RSI``, etc…</p>
+<p>Need to add TA. or talib. prefix when calling indicator function.</p>
+<p>For more details TA-Lib functions, check on  <a class="reference external" href="http://mrjbq7.github.io/ta-lib/">http://mrjbq7.github.io/ta-lib/</a></p>
+<p>You can also install TA-lib library of Python by yourself.</p>
+<p>JavaScript example:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="kd">var</span> <span class="nx">records</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetRecords</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">macd</span> <span class="o">=</span> <span class="nx">TA</span><span class="p">.</span><span class="nx">MACD</span><span class="p">(</span><span class="nx">records</span><span class="p">);</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;DIF:&quot;</span><span class="p">,</span> <span class="nx">macd</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;DEA:&quot;</span><span class="p">,</span> <span class="nx">macd</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s2">&quot;MACD:&quot;</span><span class="p">,</span> <span class="nx">macd</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="kd">var</span> <span class="nx">atr</span> <span class="o">=</span> <span class="nx">TA</span><span class="p">.</span><span class="nx">ATR</span><span class="p">(</span><span class="nx">records</span><span class="p">,</span> <span class="mi">14</span><span class="p">);</span>
+    <span class="c1">// Print out the last row of values</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">macd</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="nx">records</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nx">macd</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="nx">records</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+    <span class="nx">macd</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="nx">records</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">atr</span><span class="p">[</span><span class="nx">atr</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">talib</span><span class="p">.</span><span class="nx">MACD</span><span class="p">(</span><span class="nx">records</span><span class="p">));</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">talib</span><span class="p">.</span><span class="nx">MACD</span><span class="p">(</span><span class="nx">records</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">26</span><span class="p">,</span> <span class="mi">9</span><span class="p">));</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">talib</span><span class="p">.</span><span class="nx">OBV</span><span class="p">(</span><span class="nx">records</span><span class="p">));</span>
+    <span class="c1">// Talib can also pass in an array of numbers, which can be passed in successively</span>
+    <span class="c1">// Such as: OBV(Records[Close], Records[Volume]), need Close, Volume two array parameters</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">talib</span><span class="p">.</span><span class="nx">OBV</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.1</span><span class="p">,</span> <span class="mf">6.2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]));</span>
+    <span class="c1">// You can also directly pass in an array of records containing the Close, Volume property</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">talib</span><span class="p">.</span><span class="nx">OBV</span><span class="p">(</span><span class="nx">records</span><span class="p">));</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">TA</span><span class="p">.</span><span class="nx">Highest</span><span class="p">(</span><span class="nx">records</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">));</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">TA</span><span class="p">.</span><span class="nx">Highest</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> <span class="mi">0</span><span class="p">));</span>
+    <span class="c1">// For Python, the system extends the properties of the array returned by GetRecords, adding Open, High, Low, Close, Volume, to facilitate talib calls, such as</span>
+    <span class="nx">talib</span><span class="p">.</span><span class="nx">MACD</span><span class="p">(</span><span class="nx">records</span><span class="p">.</span><span class="nx">Close</span><span class="p">);</span>
+    <span class="cm">/*For Python, the system expands the properties of the array returned by GetRecords, adds Open, High, Low, Close, Volume,</span>
+<span class="cm">    and facilitates talib calls. For example, the Close property returns the Close property of all records members as a numpy array passed to talib.</span>
+<span class="cm">    The same as other properties*/</span>
 <span class="p">}</span>
 </pre></div>
 </div>

@@ -28,6 +28,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2.6 Global Function" href="Global Function.html" />
     <link rel="prev" title="2.4 Trade API" href="Trade API.html" /> 
 
   
@@ -103,9 +104,12 @@
 <li class="toctree-l2"><a class="reference internal" href="#setprecision">2.5.6 SetPrecision</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getrate">2.5.7 GetRate</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setrate">2.5.8 SetRate</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#log">2.5.9 Log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setproxy">2.5.8 SetProxy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#settimeout">2.5.9 SetTimeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#log">2.5.10 Log</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Global Function.html">2.6 Global Function</a></li>
 </ul>
 
             
@@ -370,8 +374,34 @@ that’s why you should care about precision.</p>
 <p>If you use exchange.SetRate() to set an exchange rate value, such as 0.85(the rate of EUR and USD),
 then all exchange prices, depth, order price and all other price information in the current exchange currency represented by the exchange object will be multiplied by the setting.</p>
 </div>
+<div class="section" id="setproxy">
+<h2>2.5.8 SetProxy<a class="headerlink" href="#setproxy" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetProxy</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Switch to Proxy Server to Access Exchange</p>
+<p>Each exchange object (exchanges[n]) can set up an agent. After setting up the agent, the access exchange API will be accessed through the agent.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="c1">// Take the exchange of the main exchange object as the first added exchange object, ie: exchanges[0] as an example.</span>
+<span class="nx">exchange</span><span class="p">.</span><span class="nx">SetProxy</span><span class="p">(</span><span class="s2">&quot;socks5://127.0.0.1:8889&quot;</span><span class="p">)</span>                      <span class="c1">// Set proxy, no username, no password.</span>
+<span class="nx">exchange</span><span class="p">.</span><span class="nx">SetProxy</span><span class="p">(</span><span class="s2">&quot;socks5://username:password@127.0.0.1:8889&quot;</span><span class="p">)</span>    <span class="c1">// Set up the proxy, enter the username and password</span>
+<span class="nx">exchange</span><span class="p">.</span><span class="nx">SetProxy</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>                                            <span class="c1">// Switch to normal mode without using a proxy.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="settimeout">
+<h2>2.5.9 SetTimeout<a class="headerlink" href="#settimeout" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetTimeout</span><span class="p">(</span><span class="nx">time</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set timeout for exchange’s rest request.</p>
+<p>Only the rest request is used to set the timeout time.</p>
+<p>For example: <code class="docutils literal"><span class="pre">exchange.SetTimeout(3000)</span></code>, set the exchange exchange object, send a rest request starts timing, exceeds 3 seconds, timeout returns null.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetTimeout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="log">
-<h2>2.5.9 Log<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h2>
+<h2>2.5.10 Log<a class="headerlink" href="#log" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">Log</span><span class="p">(</span><span class="nx">logType</span><span class="p">,</span> <span class="nx">orderId</span><span class="p">,</span> <span class="nx">price</span><span class="p">,</span> <span class="nx">amount</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -398,6 +428,8 @@ amount  : quantity
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Global Function.html" class="btn btn-neutral float-right" title="2.6 Global Function" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="Trade API.html" class="btn btn-neutral" title="2.4 Trade API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
