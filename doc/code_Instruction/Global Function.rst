@@ -649,7 +649,7 @@ TA-Lib Indicator Library. support ``MACD``,``EMA``,``KDJ``,``ATR``,``RSI``, etc.
 
 Need to add TA. or talib. prefix when calling indicator function.
 
-For more details TA-Lib functions, check on  http://mrjbq7.github.io/ta-lib/ 
+For more details about TA-Lib functions, check on  http://mrjbq7.github.io/ta-lib/ 
 
 You can also install TA-lib library of Python by yourself.
 

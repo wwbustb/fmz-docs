@@ -290,7 +290,7 @@ Each exchange object (exchanges[n]) can set up an agent. After setting up the ag
 
 Set timeout for exchange's rest request.
 
-Only the rest request is used to set the timeout time.
+Only the REST request is used to set the timeout time.
 
 For example: ``exchange.SetTimeout(3000)``, set the exchange exchange object, send a rest request starts timing, exceeds 3 seconds, timeout returns null.
 

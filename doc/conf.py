@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# BotVS documentation build configuration file, created by
-# sphinx-quickstart on Thu Jun 28 10:48:08 2018.
+# FMZ docs documentation build configuration file, created by
+# sphinx-quickstart on Wed Jul  4 17:49:21 2018.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'BotVS'
+project = 'FMZ docs'
 copyright = '2018, xiaocao'
 author = 'xiaocao'
 
@@ -115,7 +115,7 @@ html_sidebars = {
 # -- Options for HTMLHelp output ------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'BotVSdoc'
+htmlhelp_basename = 'FMZdocsdoc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -142,7 +142,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'BotVS.tex', 'BotVS Documentation',
+    (master_doc, 'FMZdocs.tex', 'FMZ docs Documentation',
      'xiaocao', 'manual'),
 ]
 
@@ -152,7 +152,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'botvs', 'BotVS Documentation',
+    (master_doc, 'fmzdocs', 'FMZ docs Documentation',
      [author], 1)
 ]
 
@@ -163,8 +163,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'BotVS', 'BotVS Documentation',
-     author, 'BotVS', 'One line description of project.',
+    (master_doc, 'FMZdocs', 'FMZ docs Documentation',
+     author, 'FMZdocs', 'One line description of project.',
      'Miscellaneous'),
 ]
 

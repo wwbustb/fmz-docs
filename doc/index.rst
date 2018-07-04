@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Read BotVS's API documentation!
+Welcome to Read FMZ's API documentation!
 ======================================
 
 The main documentation for the site is organized into a couple sections:
@@ -11,12 +11,18 @@ The main documentation for the site is organized into a couple sections:
 
 .. toctree::
    :maxdepth: 3
-   :caption: Basic Instruction
+   :caption: 1. Basic Instruction
 
    getting_started
 
 .. toctree::
    :maxdepth: 3
-   :caption: API Instruction
+   :caption: 2.  API Instruction
 
    code_Instruction/index
+
+.. toctree::
+   :maxdepth: 3
+   :caption: 3. Complete Examples
+
+   example

@@ -1,0 +1,580 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3.1 A Moving Average Strategy example in 30 lines &mdash; FMZ docs 0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="2.6 Global Function" href="code_Instruction/Global Function.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FMZ docs
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">1. Basic Instruction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">1.1 Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
+</ul>
+<p class="caption"><span class="caption-text">2.  API Instruction</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="code_Instruction/Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_Instruction/Exchange Variable.html">2.2 Exchange</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_Instruction/Market API.html">2.3 Market API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_Instruction/Trade API.html">2.4 Trade API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_Instruction/Extent API.html">2.5 Extended API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code_Instruction/Global Function.html">2.6 Global Function</a></li>
+</ul>
+<p class="caption"><span class="caption-text">3. Complete Examples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3.1 A Moving Average Strategy example in 30 lines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#iceberg-buy-order">3.2 Iceberg Buy Order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#a-dual-thrust-okex-feature">3.3 A Dual Thrust OKEX Feature</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FMZ docs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>3.1 A Moving Average Strategy example in 30 lines</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/example.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="a-moving-average-strategy-example-in-30-lines">
+<h1>3.1 A Moving Average Strategy example in 30 lines<a class="headerlink" href="#a-moving-average-strategy-example-in-30-lines" title="Permalink to this headline">¶</a></h1>
+<p>The moving average (MA) is a simple technical analysis tool that smooths out price data by creating a constantly updated average price.</p>
+<p>Check on <a class="reference external" href="https://www.fmz.com/strategy/103070">https://www.fmz.com/strategy/103070</a> for parameters configs.The global variables <code class="docutils literal"><span class="pre">FastPeriod</span></code>,``SlowPeriod``,etc… are defined in configs.</p>
+<p>Source code:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="kd">var</span> <span class="nx">initAccount</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">);</span><span class="c1">//using _C() to retry</span>
+<span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">();</span>
+<span class="c1">//calc InitValue to log profit</span>
+<span class="kd">var</span> <span class="nx">InitValue</span> <span class="o">=</span> <span class="p">(</span><span class="nx">initAccount</span><span class="p">.</span><span class="nx">Stocks</span> <span class="o">+</span> <span class="nx">initAccount</span><span class="p">.</span><span class="nx">FrozenStocks</span><span class="p">)</span><span class="o">*</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Last</span> <span class="o">\</span>
+                <span class="o">+</span> <span class="nx">initAccount</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">+</span> <span class="nx">initAccount</span><span class="p">.</span><span class="nx">FrozenBalance</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">records</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetRecords</span><span class="p">);</span>
+    <span class="nx">ticker</span> <span class="o">=</span><span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">FastRecords</span> <span class="o">=</span> <span class="nx">TA</span><span class="p">.</span><span class="nx">MA</span><span class="p">(</span><span class="nx">records</span><span class="p">,</span><span class="nx">FastPeriod</span><span class="p">);</span><span class="c1">// using MA of TA-Lib</span>
+    <span class="kd">var</span> <span class="nx">SlowRecords</span> <span class="o">=</span> <span class="nx">TA</span><span class="p">.</span><span class="nx">MA</span><span class="p">(</span><span class="nx">records</span><span class="p">,</span><span class="nx">SlowPeriod</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">NowAccount</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">n</span> <span class="o">=</span> <span class="nx">_Cross</span><span class="p">(</span><span class="nx">FastRecords</span><span class="p">,</span> <span class="nx">SlowRecords</span><span class="p">);</span><span class="c1">// using _Cross(), check on global function</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">EnterPeriod</span> <span class="o">&amp;&amp;</span> <span class="nx">NowAccount</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">Price</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Sell</span><span class="o">+</span><span class="nx">Slippage</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">// add Slippage to make sure order can be done</span>
+        <span class="kd">var</span> <span class="nx">Amount</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">(</span><span class="mf">0.99</span><span class="o">*</span><span class="nx">NowAccount</span><span class="p">.</span><span class="nx">Balance</span><span class="o">/</span><span class="nx">Price</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">Amount</span><span class="o">&gt;</span><span class="mf">0.1</span><span class="p">){</span>
+           <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">Price</span><span class="p">,</span> <span class="nx">Amount</span><span class="p">);</span>
+           <span class="c1">//Cancel the pending order</span>
+           <span class="k">if</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrders</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">Status</span> <span class="o">==</span> <span class="nx">ORDER_STATE_PENDING</span><span class="p">){</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">id</span><span class="p">);}</span>
+           <span class="nx">LogProfit</span><span class="p">((</span><span class="nx">NowAccount</span><span class="p">.</span><span class="nx">Stocks</span> <span class="o">+</span> <span class="nx">NowAccount</span><span class="p">.</span><span class="nx">FrozenStocks</span><span class="p">)</span><span class="o">*</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Last</span><span class="o">\</span>
+                     <span class="o">+</span> <span class="nx">NowAccount</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">+</span> <span class="nx">NowAccount</span><span class="p">.</span><span class="nx">FrozenBalance</span> <span class="o">-</span> <span class="nx">InitValue</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">n</span> <span class="o">&lt;=</span> <span class="o">-</span><span class="nx">EnterPeriod</span> <span class="o">&amp;&amp;</span> <span class="nx">NowAccount</span><span class="p">.</span><span class="nx">Stocks</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">Price</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Buy</span><span class="o">-</span><span class="nx">Slippage</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">Amount</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">NowAccount</span><span class="p">.</span><span class="nx">Stocks</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="nx">Amount</span><span class="o">&gt;</span><span class="mf">0.1</span><span class="p">){</span>
+            <span class="kd">var</span> <span class="nx">id</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">(</span><span class="nx">Price</span><span class="p">,</span> <span class="nx">Amount</span><span class="p">);</span>
+            <span class="k">if</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrders</span><span class="p">(</span><span class="nx">id</span><span class="p">).</span><span class="nx">Status</span> <span class="o">==</span> <span class="nx">ORDER_STATE_PENDING</span><span class="p">){</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">id</span><span class="p">);}</span>
+            <span class="nx">LogProfit</span><span class="p">((</span><span class="nx">NowAccount</span><span class="p">.</span><span class="nx">Stocks</span> <span class="o">+</span> <span class="nx">NowAccount</span><span class="p">.</span><span class="nx">FrozenStocks</span><span class="p">)</span><span class="o">*</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Last</span><span class="o">\</span>
+                     <span class="o">+</span> <span class="nx">NowAccount</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">+</span> <span class="nx">NowAccount</span><span class="p">.</span><span class="nx">FrozenBalance</span> <span class="o">-</span> <span class="nx">InitValue</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nx">Sleep</span><span class="p">(</span><span class="nx">Interval</span><span class="o">*</span><span class="mi">1000</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>}</p>
+</div>
+<div class="section" id="iceberg-buy-order">
+<h1>3.2 Iceberg Buy Order<a class="headerlink" href="#iceberg-buy-order" title="Permalink to this headline">¶</a></h1>
+<p>Source code:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">CancelPendingOrders</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">orders</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrders</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">orders</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">orders</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">orders</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">Id</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">&lt;</span> <span class="p">(</span><span class="nx">orders</span><span class="p">.</span><span class="nx">length</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nx">Sleep</span><span class="p">(</span><span class="nx">Interval</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">LastBuyPrice</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">InitAccount</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">dispatch</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">account</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">LastBuyPrice</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrders</span><span class="p">).</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Last</span> <span class="o">&gt;</span> <span class="nx">LastBuyPrice</span> <span class="o">&amp;&amp;</span> <span class="p">((</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Last</span> <span class="o">-</span> <span class="nx">LastBuyPrice</span><span class="p">)</span> <span class="o">/</span> <span class="nx">LastBuyPrice</span><span class="p">)</span> <span class="o">&gt;</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="nx">EntrustDepth</span><span class="o">/</span><span class="mi">100</span><span class="p">)))</span> <span class="p">{</span>
+                <span class="nx">Log</span><span class="p">(</span><span class="s1">&#39;deviate to much, newest last price:&#39;</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">Last</span><span class="p">,</span> <span class="s1">&#39;order buy price&#39;</span><span class="p">,</span> <span class="nx">LastBuyPrice</span><span class="p">);</span>
+                <span class="nx">CancelPendingOrders</span><span class="p">();</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">account</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">);</span>
+            <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;order finised, total cost:&quot;</span><span class="p">,</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">InitAccount</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">-</span> <span class="nx">account</span><span class="p">.</span><span class="nx">Balance</span><span class="p">),</span> <span class="s2">&quot;avg buy price:&quot;</span><span class="p">,</span> <span class="nx">_N</span><span class="p">((</span><span class="nx">InitAccount</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">-</span> <span class="nx">account</span><span class="p">.</span><span class="nx">Balance</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nx">account</span><span class="p">.</span><span class="nx">Stocks</span> <span class="o">-</span> <span class="nx">InitAccount</span><span class="p">.</span><span class="nx">Stocks</span><span class="p">)));</span>
+        <span class="p">}</span>
+        <span class="nx">LastBuyPrice</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">BuyPrice</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">Buy</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="nx">EntrustDepth</span><span class="o">/</span><span class="mi">100</span><span class="p">),</span><span class="nx">PricePerision</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">BuyPrice</span> <span class="o">&gt;</span> <span class="nx">MaxBuyPrice</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">account</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">account</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">);</span>
+    <span class="p">}</span>
+
+
+    <span class="k">if</span> <span class="p">((</span><span class="nx">InitAccount</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">-</span> <span class="nx">account</span><span class="p">.</span><span class="nx">Balance</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nx">TotalBuyNet</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kd">var</span> <span class="nx">RandomAvgBuyOnce</span> <span class="o">=</span> <span class="p">(</span><span class="nx">AvgBuyOnce</span> <span class="o">*</span> <span class="p">((</span><span class="mi">100</span> <span class="o">-</span> <span class="nx">FloatPoint</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">))</span> <span class="o">+</span> <span class="p">(((</span><span class="nx">FloatPoint</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="nx">AvgBuyOnce</span> <span class="o">*</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">());</span>
+    <span class="kd">var</span> <span class="nx">UsedMoney</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">account</span><span class="p">.</span><span class="nx">Balance</span><span class="p">,</span> <span class="nx">RandomAvgBuyOnce</span><span class="p">,</span> <span class="nx">TotalBuyNet</span> <span class="o">-</span> <span class="p">(</span><span class="nx">InitAccount</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">-</span> <span class="nx">account</span><span class="p">.</span><span class="nx">Balance</span><span class="p">));</span>
+
+    <span class="kd">var</span> <span class="nx">BuyAmount</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">UsedMoney</span> <span class="o">/</span> <span class="nx">BuyPrice</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">BuyAmount</span> <span class="o">&lt;</span> <span class="nx">MinStock</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">LastBuyPrice</span> <span class="o">=</span> <span class="nx">BuyPrice</span><span class="p">;</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">BuyPrice</span><span class="p">,</span> <span class="nx">BuyAmount</span><span class="p">,</span> <span class="s1">&#39;Cost: &#39;</span><span class="p">,</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">UsedMoney</span><span class="p">),</span> <span class="s1">&#39;last price&#39;</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">Last</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">CancelPendingOrders</span><span class="p">();</span>
+    <span class="nx">InitAccount</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">);</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="nx">InitAccount</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">InitAccount</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">&lt;</span> <span class="nx">TotalBuyNet</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="s2">&quot;balance not enough&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">LoopInterval</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">LoopInterval</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nx">dispatch</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="nx">LoopInterval</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;All Done&quot;</span><span class="p">,</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-dual-thrust-okex-feature">
+<h1>3.3 A Dual Thrust OKEX Feature<a class="headerlink" href="#a-dual-thrust-okex-feature" title="Permalink to this headline">¶</a></h1>
+<p>A classic breakout strategy, Check on <a class="reference external" href="https://www.fmz.com/strategy/103247">https://www.fmz.com/strategy/103247</a> for configs.</p>
+<p>You can learn how to trade features and draw charts from the source code.</p>
+<p>learn more on <a class="reference external" href="https://www.quantconnect.com/tutorials/strategy-library/dual-thrust-trading-algorithm">https://www.quantconnect.com/tutorials/strategy-library/dual-thrust-trading-algorithm</a></p>
+<p>Source code:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">ChartCfg</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">__isStock</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">title</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Dual Thrust Up-Down Track&#39;</span>
+    <span class="p">},</span>
+    <span class="nx">yAxis</span><span class="o">:</span> <span class="p">{</span>
+        <span class="nx">plotLines</span><span class="o">:</span> <span class="p">[{</span><span class="nx">value</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span>
+            <span class="nx">width</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="nx">label</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Up Track&#39;</span><span class="p">,</span>
+                <span class="nx">align</span><span class="o">:</span> <span class="s1">&#39;center&#39;</span><span class="p">}</span>
+                <span class="p">},</span>
+            <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span>
+            <span class="nx">width</span><span class="o">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="nx">label</span><span class="o">:</span> <span class="p">{</span>
+                <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Down Track&#39;</span><span class="p">,</span>
+                <span class="nx">align</span><span class="o">:</span> <span class="s1">&#39;center&#39;</span><span class="p">},</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="nx">series</span><span class="o">:</span> <span class="p">[{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;candlestick&#39;</span><span class="p">,</span>
+        <span class="nx">name</span><span class="o">:</span> <span class="s1">&#39;current cycle&#39;</span><span class="p">,</span>
+        <span class="nx">id</span><span class="o">:</span> <span class="s1">&#39;primary&#39;</span><span class="p">,</span>
+        <span class="nx">data</span><span class="o">:</span> <span class="p">[]</span>
+        <span class="p">},</span>
+        <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;flags&#39;</span><span class="p">,</span>
+        <span class="nx">onSeries</span><span class="o">:</span> <span class="s1">&#39;primary&#39;</span><span class="p">,</span>
+        <span class="nx">data</span><span class="o">:</span> <span class="p">[],</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">STATE_IDLE</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">STATE_LONG</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">STATE_SHORT</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">State</span> <span class="o">=</span> <span class="nx">STATE_IDLE</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">LastBarTime</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">UpTrack</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">BottomTrack</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">chart</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">InitAccount</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">LastAccount</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">Counter</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="nx">w</span><span class="o">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="nx">l</span><span class="o">:</span> <span class="mi">0</span>
+<span class="p">};</span>
+
+<span class="kd">function</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">v</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">Decimal</span><span class="p">(</span><span class="nx">v</span><span class="p">).</span><span class="nx">toSD</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">).</span><span class="nx">toNumber</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">GetPosition</span><span class="p">(</span><span class="nx">posType</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">positions</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetPosition</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">positions</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">positions</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">Type</span> <span class="o">===</span> <span class="nx">posType</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="p">[</span><span class="nx">positions</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">Price</span><span class="p">,</span> <span class="nx">positions</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">Amount</span><span class="p">];</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">CancelPendingOrders</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">orders</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrders</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">orders</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">orders</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">Id</span><span class="p">);</span>
+            <span class="nx">Sleep</span><span class="p">(</span><span class="nx">Interval</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">orders</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">Trade</span><span class="p">(</span><span class="nx">currentState</span><span class="p">,</span> <span class="nx">nextState</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">pfn</span> <span class="o">=</span> <span class="nx">nextState</span> <span class="o">===</span> <span class="nx">STATE_LONG</span> <span class="o">?</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span> <span class="o">:</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">currentState</span> <span class="o">!==</span> <span class="nx">STATE_IDLE</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetDirection</span><span class="p">(</span><span class="nx">currentState</span> <span class="o">===</span> <span class="nx">STATE_LONG</span> <span class="o">?</span> <span class="s2">&quot;closebuy&quot;</span> <span class="o">:</span> <span class="s2">&quot;closesell&quot;</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">amount</span> <span class="o">=</span> <span class="nx">GetPosition</span><span class="p">(</span><span class="nx">currentState</span> <span class="o">===</span> <span class="nx">STATE_LONG</span> <span class="o">?</span> <span class="nx">PD_LONG</span> <span class="o">:</span> <span class="nx">PD_SHORT</span><span class="p">)[</span><span class="mi">1</span><span class="p">];</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">amount</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="c1">// pfn(amount);</span>
+            <span class="nx">pfn</span><span class="p">(</span><span class="nx">nextState</span> <span class="o">===</span> <span class="nx">STATE_LONG</span> <span class="o">?</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">).</span><span class="nx">Sell</span> <span class="o">*</span> <span class="mf">1.001</span> <span class="o">:</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">).</span><span class="nx">Buy</span> <span class="o">*</span> <span class="mf">0.999</span><span class="p">,</span> <span class="nx">amount</span><span class="p">);</span>
+            <span class="nx">Sleep</span><span class="p">(</span><span class="nx">Interval</span><span class="p">);</span>
+            <span class="nx">CancelPendingOrders</span><span class="p">();</span>
+        <span class="p">}</span>
+        <span class="kd">var</span> <span class="nx">account</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">();</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nx">account</span><span class="p">.</span><span class="nx">Stocks</span> <span class="o">&gt;</span> <span class="nx">LastAccount</span><span class="p">.</span><span class="nx">Stocks</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">Counter</span><span class="p">.</span><span class="nx">w</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nx">Counter</span><span class="p">.</span><span class="nx">l</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="nx">LogProfit</span><span class="p">(</span><span class="nx">_N</span><span class="p">(</span><span class="nx">account</span><span class="p">.</span><span class="nx">Stocks</span> <span class="o">-</span> <span class="nx">InitAccount</span><span class="p">.</span><span class="nx">Stocks</span><span class="p">),</span> <span class="s2">&quot;Profit rate:&quot;</span><span class="p">,</span> <span class="nx">_N</span><span class="p">((</span><span class="nx">account</span><span class="p">.</span><span class="nx">Stocks</span> <span class="o">-</span> <span class="nx">InitAccount</span><span class="p">.</span><span class="nx">Stocks</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="nx">InitAccount</span><span class="p">.</span><span class="nx">Stocks</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;%&#39;</span><span class="p">);</span>
+        <span class="nx">LastAccount</span> <span class="o">=</span> <span class="nx">account</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetDirection</span><span class="p">(</span><span class="nx">nextState</span> <span class="o">===</span> <span class="nx">STATE_LONG</span> <span class="o">?</span> <span class="s2">&quot;buy&quot;</span> <span class="o">:</span> <span class="s2">&quot;sell&quot;</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">pos</span> <span class="o">=</span> <span class="nx">GetPosition</span><span class="p">(</span><span class="nx">nextState</span> <span class="o">===</span> <span class="nx">STATE_LONG</span> <span class="o">?</span> <span class="nx">PD_LONG</span> <span class="o">:</span> <span class="nx">PD_SHORT</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="nx">AmountOP</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;Average Price&quot;</span><span class="p">,</span> <span class="nx">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">&quot;amount:&quot;</span><span class="p">,</span> <span class="nx">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="c1">// pfn(AmountOP-pos[1]);</span>
+        <span class="nx">pfn</span><span class="p">(</span><span class="nx">nextState</span> <span class="o">===</span> <span class="nx">STATE_LONG</span> <span class="o">?</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">).</span><span class="nx">Sell</span> <span class="o">*</span> <span class="mf">1.001</span> <span class="o">:</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">).</span><span class="nx">Buy</span> <span class="o">*</span> <span class="mf">0.999</span><span class="p">,</span> <span class="nx">AmountOP</span><span class="o">-</span><span class="nx">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="nx">Interval</span><span class="p">);</span>
+        <span class="nx">CancelPendingOrders</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onTick</span><span class="p">(</span><span class="nx">exchange</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">records</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetRecords</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">records</span> <span class="o">||</span> <span class="nx">records</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="nx">NPeriod</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="kd">var</span> <span class="nx">Bar</span> <span class="o">=</span> <span class="nx">records</span><span class="p">[</span><span class="nx">records</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">LastBarTime</span> <span class="o">!==</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Time</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">HH</span> <span class="o">=</span> <span class="nx">TA</span><span class="p">.</span><span class="nx">Highest</span><span class="p">(</span><span class="nx">records</span><span class="p">,</span> <span class="nx">NPeriod</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">HC</span> <span class="o">=</span> <span class="nx">TA</span><span class="p">.</span><span class="nx">Highest</span><span class="p">(</span><span class="nx">records</span><span class="p">,</span> <span class="nx">NPeriod</span><span class="p">,</span> <span class="s1">&#39;Close&#39;</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">LL</span> <span class="o">=</span> <span class="nx">TA</span><span class="p">.</span><span class="nx">Lowest</span><span class="p">(</span><span class="nx">records</span><span class="p">,</span> <span class="nx">NPeriod</span><span class="p">,</span> <span class="s1">&#39;Low&#39;</span><span class="p">);</span>
+        <span class="kd">var</span> <span class="nx">LC</span> <span class="o">=</span> <span class="nx">TA</span><span class="p">.</span><span class="nx">Lowest</span><span class="p">(</span><span class="nx">records</span><span class="p">,</span> <span class="nx">NPeriod</span><span class="p">,</span> <span class="s1">&#39;Close&#39;</span><span class="p">);</span>
+
+        <span class="kd">var</span> <span class="nx">Range</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">HH</span> <span class="o">-</span> <span class="nx">LC</span><span class="p">,</span> <span class="nx">HC</span> <span class="o">-</span> <span class="nx">LL</span><span class="p">);</span>
+
+        <span class="nx">UpTrack</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">Bar</span><span class="p">.</span><span class="nx">Open</span> <span class="o">+</span> <span class="p">(</span><span class="nx">Ks</span> <span class="o">*</span> <span class="nx">Range</span><span class="p">));</span>
+        <span class="nx">DownTrack</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">(</span><span class="nx">Bar</span><span class="p">.</span><span class="nx">Open</span> <span class="o">-</span> <span class="p">(</span><span class="nx">Kx</span> <span class="o">*</span> <span class="nx">Range</span><span class="p">));</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">LastBarTime</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kd">var</span> <span class="nx">PreBar</span> <span class="o">=</span> <span class="nx">records</span><span class="p">[</span><span class="nx">records</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">2</span><span class="p">];</span>
+            <span class="nx">chart</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="nx">PreBar</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">PreBar</span><span class="p">.</span><span class="nx">Open</span><span class="p">,</span> <span class="nx">PreBar</span><span class="p">.</span><span class="nx">High</span><span class="p">,</span> <span class="nx">PreBar</span><span class="p">.</span><span class="nx">Low</span><span class="p">,</span> <span class="nx">PreBar</span><span class="p">.</span><span class="nx">Close</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">records</span><span class="p">.</span><span class="nx">length</span><span class="p">,</span> <span class="nx">NPeriod</span> <span class="o">*</span> <span class="mi">3</span><span class="p">);</span> <span class="nx">i</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">records</span><span class="p">[</span><span class="nx">records</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="nx">i</span><span class="p">];</span>
+                <span class="nx">chart</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="nx">b</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">b</span><span class="p">.</span><span class="nx">Open</span><span class="p">,</span> <span class="nx">b</span><span class="p">.</span><span class="nx">High</span><span class="p">,</span> <span class="nx">b</span><span class="p">.</span><span class="nx">Low</span><span class="p">,</span> <span class="nx">b</span><span class="p">.</span><span class="nx">Close</span><span class="p">]);</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="nx">chart</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="nx">Bar</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Open</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">High</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Low</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Close</span><span class="p">]);</span>
+        <span class="nx">ChartCfg</span><span class="p">.</span><span class="nx">yAxis</span><span class="p">.</span><span class="nx">plotLines</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">UpTrack</span><span class="p">;</span>
+        <span class="nx">ChartCfg</span><span class="p">.</span><span class="nx">yAxis</span><span class="p">.</span><span class="nx">plotLines</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">value</span> <span class="o">=</span> <span class="nx">DownTrack</span><span class="p">;</span>
+        <span class="nx">ChartCfg</span><span class="p">.</span><span class="nx">subtitle</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;Up Track: &#39;</span> <span class="o">+</span> <span class="nx">UpTrack</span> <span class="o">+</span> <span class="s1">&#39;  Down Track: &#39;</span> <span class="o">+</span> <span class="nx">DownTrack</span>
+        <span class="p">};</span>
+        <span class="nx">chart</span><span class="p">.</span><span class="nx">update</span><span class="p">(</span><span class="nx">ChartCfg</span><span class="p">);</span>
+        <span class="nx">chart</span><span class="p">.</span><span class="nx">reset</span><span class="p">(</span><span class="nx">PeriodShow</span><span class="p">);</span>
+
+        <span class="nx">LastBarTime</span> <span class="o">=</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Time</span><span class="p">;</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">chart</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="nx">Bar</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Open</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">High</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Low</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Close</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nx">LogStatus</span><span class="p">(</span><span class="s2">&quot;Price:&quot;</span><span class="p">,</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Close</span><span class="p">,</span> <span class="s2">&quot;Up:&quot;</span><span class="p">,</span> <span class="nx">UpTrack</span><span class="p">,</span> <span class="s2">&quot;Down:&quot;</span><span class="p">,</span> <span class="nx">DownTrack</span><span class="p">,</span> <span class="s2">&quot;Wins: &quot;</span><span class="p">,</span> <span class="nx">Counter</span><span class="p">.</span><span class="nx">w</span><span class="p">,</span> <span class="s2">&quot;Losses:&quot;</span><span class="p">,</span> <span class="nx">Counter</span><span class="p">.</span><span class="nx">l</span><span class="p">,</span> <span class="s2">&quot;Date:&quot;</span><span class="p">,</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">());</span>
+    <span class="kd">var</span> <span class="nx">msg</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">State</span> <span class="o">===</span> <span class="nx">STATE_IDLE</span> <span class="o">||</span> <span class="nx">State</span> <span class="o">===</span> <span class="nx">STATE_SHORT</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">Bar</span><span class="p">.</span><span class="nx">Close</span> <span class="o">&gt;=</span> <span class="nx">UpTrack</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">msg</span>  <span class="o">=</span> <span class="s1">&#39;Long Price: &#39;</span> <span class="o">+</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Close</span> <span class="o">+</span> <span class="s1">&#39; Up Track:&#39;</span> <span class="o">+</span> <span class="nx">UpTrack</span><span class="p">;</span>
+            <span class="nx">Log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+            <span class="nx">Trade</span><span class="p">(</span><span class="nx">State</span><span class="p">,</span> <span class="nx">STATE_LONG</span><span class="p">);</span>
+            <span class="nx">State</span> <span class="o">=</span> <span class="nx">STATE_LONG</span><span class="p">;</span>
+            <span class="nx">chart</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="nx">Bar</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="nx">shape</span><span class="o">:</span> <span class="s1">&#39;flag&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Long&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="nx">msg</span><span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">State</span> <span class="o">===</span> <span class="nx">STATE_IDLE</span> <span class="o">||</span> <span class="nx">State</span> <span class="o">===</span> <span class="nx">STATE_LONG</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">Bar</span><span class="p">.</span><span class="nx">Close</span> <span class="o">&lt;=</span> <span class="nx">DownTrack</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">msg</span> <span class="o">=</span> <span class="s1">&#39;Short Price: &#39;</span> <span class="o">+</span> <span class="nx">Bar</span><span class="p">.</span><span class="nx">Close</span> <span class="o">+</span> <span class="s1">&#39; Down Track:&#39;</span> <span class="o">+</span> <span class="nx">DownTrack</span><span class="p">;</span>
+            <span class="nx">Log</span><span class="p">(</span><span class="nx">msg</span><span class="p">);</span>
+            <span class="nx">Trade</span><span class="p">(</span><span class="nx">State</span><span class="p">,</span> <span class="nx">STATE_SHORT</span><span class="p">);</span>
+            <span class="nx">chart</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">{</span><span class="nx">x</span><span class="o">:</span><span class="nx">Bar</span><span class="p">.</span><span class="nx">Time</span><span class="p">,</span> <span class="nx">color</span><span class="o">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="nx">shape</span><span class="o">:</span> <span class="s1">&#39;circlepin&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Short&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="nx">msg</span><span class="p">});</span>
+            <span class="nx">State</span> <span class="o">=</span> <span class="nx">STATE_SHORT</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onexit</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">pos</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetPosition</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">pos</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;Warning, has positions when exiting&quot;</span><span class="p">,</span> <span class="nx">pos</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetName</span><span class="p">()</span> <span class="o">!==</span> <span class="s1">&#39;Futures_OKCoin&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="s2">&quot;Only support OKEX features&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetRate</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetContractType</span><span class="p">([</span><span class="s2">&quot;this_week&quot;</span><span class="p">,</span> <span class="s2">&quot;next_week&quot;</span><span class="p">,</span> <span class="s2">&quot;quarter&quot;</span><span class="p">][</span><span class="nx">ContractTypeIdx</span><span class="p">]);</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetMarginLevel</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">][</span><span class="nx">MarginLevelIdx</span><span class="p">]);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetPosition</span><span class="p">().</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">throw</span> <span class="s2">&quot;Can&#39;t have Positions when start.&quot;</span><span class="p">;}</span>
+
+    <span class="nx">CancelPendingOrders</span><span class="p">();</span>
+
+    <span class="nx">InitAccount</span> <span class="o">=</span> <span class="nx">LastAccount</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">();</span>
+    <span class="nx">LoopInterval</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nx">LoopInterval</span><span class="p">);</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s1">&#39;Exchange Name:&#39;</span><span class="p">,</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetName</span><span class="p">(),</span> <span class="nx">InitAccount</span><span class="p">);</span>
+    <span class="nx">LogStatus</span><span class="p">(</span><span class="s2">&quot;Ready...&quot;</span><span class="p">);</span>
+
+    <span class="nx">LogProfitReset</span><span class="p">();</span>
+    <span class="nx">chart</span> <span class="o">=</span> <span class="nx">Chart</span><span class="p">(</span><span class="nx">ChartCfg</span><span class="p">);</span>
+    <span class="nx">chart</span><span class="p">.</span><span class="nx">reset</span><span class="p">();</span>
+
+    <span class="nx">LoopInterval</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">max</span><span class="p">(</span><span class="nx">LoopInterval</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">onTick</span><span class="p">(</span><span class="nx">exchange</span><span class="p">);</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="nx">LoopInterval</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="code_Instruction/Global Function.html" class="btn btn-neutral" title="2.6 Global Function" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, xiaocao.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

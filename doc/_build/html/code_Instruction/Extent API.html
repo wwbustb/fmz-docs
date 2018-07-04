@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>2.5 Extended API &mdash; BotVS 0.1 documentation</title>
+  <title>2.5 Extended API &mdash; FMZ docs 0.1 documentation</title>
   
 
   
@@ -48,7 +48,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> BotVS
+            <a href="../index.html" class="icon icon-home"> FMZ docs
           
 
           
@@ -82,12 +82,12 @@
               
             
             
-              <p class="caption"><span class="caption-text">Basic Instruction</span></p>
+              <p class="caption"><span class="caption-text">1. Basic Instruction</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">1.1 Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
 </ul>
-<p class="caption"><span class="caption-text">API Instruction</span></p>
+<p class="caption"><span class="caption-text">2.  API Instruction</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Typical Strategy structure.html">2.1 Typical Strategy structure</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Exchange Variable.html">2.2 Exchange</a></li>
@@ -111,6 +111,12 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Global Function.html">2.6 Global Function</a></li>
 </ul>
+<p class="caption"><span class="caption-text">3. Complete Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../example.html">3.1 A Moving Average Strategy example in 30 lines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html#iceberg-buy-order">3.2 Iceberg Buy Order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html#a-dual-thrust-okex-feature">3.3 A Dual Thrust OKEX Feature</a></li>
+</ul>
 
             
           
@@ -124,7 +130,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">BotVS</a>
+          <a href="../index.html">FMZ docs</a>
         
       </nav>
 
@@ -394,7 +400,7 @@ then all exchange prices, depth, order price and all other price information in 
 </pre></div>
 </div>
 <p>Set timeout for exchange’s rest request.</p>
-<p>Only the rest request is used to set the timeout time.</p>
+<p>Only the REST request is used to set the timeout time.</p>
 <p>For example: <code class="docutils literal"><span class="pre">exchange.SetTimeout(3000)</span></code>, set the exchange exchange object, send a rest request starts timing, exceeds 3 seconds, timeout returns null.</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetTimeout</span><span class="p">()</span>
 </pre></div>
