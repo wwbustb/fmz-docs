@@ -3,7 +3,7 @@
 
 The moving average (MA) is a simple technical analysis tool that smooths out price data by creating a constantly updated average price. 
 
-Check on https://www.fmz.com/strategy/103070 for parameters configs.The global variables ``FastPeriod``,``SlowPeriod``,etc... are defined in configs.
+Check on https://www.fmz.com/strategy/103070 for parameters configs.The global variables ``FastPeriod``, ``SlowPeriod``,etc... are defined in configs.
 
 Source code:
 

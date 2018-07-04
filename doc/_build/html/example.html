@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3.1 A Moving Average Strategy example in 30 lines &mdash; FMZ docs 0.1 documentation</title>
+  <title>3.1 Moving Average Strategy &mdash; FMZ docs 0.1 documentation</title>
   
 
   
@@ -97,9 +97,9 @@
 </ul>
 <p class="caption"><span class="caption-text">3. Complete Examples</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">3.1 A Moving Average Strategy example in 30 lines</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3.1 Moving Average Strategy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#iceberg-buy-order">3.2 Iceberg Buy Order</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#a-dual-thrust-okex-feature">3.3 A Dual Thrust OKEX Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#dual-thrust-okex-feature">3.3 Dual Thrust OKEX Feature</a></li>
 </ul>
 
             
@@ -145,7 +145,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>3.1 A Moving Average Strategy example in 30 lines</li>
+      <li>3.1 Moving Average Strategy</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -164,10 +164,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="a-moving-average-strategy-example-in-30-lines">
-<h1>3.1 A Moving Average Strategy example in 30 lines<a class="headerlink" href="#a-moving-average-strategy-example-in-30-lines" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="moving-average-strategy">
+<h1>3.1 Moving Average Strategy<a class="headerlink" href="#moving-average-strategy" title="Permalink to this headline">¶</a></h1>
 <p>The moving average (MA) is a simple technical analysis tool that smooths out price data by creating a constantly updated average price.</p>
-<p>Check on <a class="reference external" href="https://www.fmz.com/strategy/103070">https://www.fmz.com/strategy/103070</a> for parameters configs.The global variables <code class="docutils literal"><span class="pre">FastPeriod</span></code>,``SlowPeriod``,etc… are defined in configs.</p>
+<p>Check on <a class="reference external" href="https://www.fmz.com/strategy/103070">https://www.fmz.com/strategy/103070</a> for parameters configs.The global variables <code class="docutils literal"><span class="pre">FastPeriod</span></code>, <code class="docutils literal"><span class="pre">SlowPeriod</span></code>,etc… are defined in configs.</p>
 <p>Source code:</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
 <span class="kd">var</span> <span class="nx">initAccount</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">);</span><span class="c1">//using _C() to retry</span>
@@ -211,6 +211,7 @@
 </div>
 <div class="section" id="iceberg-buy-order">
 <h1>3.2 Iceberg Buy Order<a class="headerlink" href="#iceberg-buy-order" title="Permalink to this headline">¶</a></h1>
+<p>Check on <a class="reference external" href="https://www.fmz.com/strategy/103319">https://www.fmz.com/strategy/103319</a></p>
 <p>Source code:</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">CancelPendingOrders</span><span class="p">()</span> <span class="p">{</span>
     <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
@@ -291,8 +292,8 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="a-dual-thrust-okex-feature">
-<h1>3.3 A Dual Thrust OKEX Feature<a class="headerlink" href="#a-dual-thrust-okex-feature" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="dual-thrust-okex-feature">
+<h1>3.3 Dual Thrust OKEX Feature<a class="headerlink" href="#dual-thrust-okex-feature" title="Permalink to this headline">¶</a></h1>
 <p>A classic breakout strategy, Check on <a class="reference external" href="https://www.fmz.com/strategy/103247">https://www.fmz.com/strategy/103247</a> for configs.</p>
 <p>You can learn how to trade features and draw charts from the source code.</p>
 <p>learn more on <a class="reference external" href="https://www.quantconnect.com/tutorials/strategy-library/dual-thrust-trading-algorithm">https://www.quantconnect.com/tutorials/strategy-library/dual-thrust-trading-algorithm</a></p>
