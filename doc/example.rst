@@ -1,4 +1,4 @@
-3.1 A Moving Average Strategy example in 30 lines
+3.1 Moving Average Strategy
 =======================
 
 The moving average (MA) is a simple technical analysis tool that smooths out price data by creating a constantly updated average price. 
@@ -132,7 +132,7 @@ Source code:
     }
 
 
-3.3 A Dual Thrust OKEX Feature
+3.3 Dual Thrust OKEX Feature
 =======================
 
 A classic breakout strategy, Check on https://www.fmz.com/strategy/103247 for configs.
