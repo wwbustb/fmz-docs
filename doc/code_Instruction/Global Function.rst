@@ -683,8 +683,74 @@ JavaScript example:
         The same as other properties*/
     }
 
+2.6.27 Chart
+>>>>>>>>>>>>>>>>>>
 
-2.6.26 Third-party Library
+.. code-block:: JavaScript
+
+    Chart({…})
+
+Will draw a figure in you robot management page.
+
+Chart is based on HighStocks. check on http://api.highcharts.com/highstock for more details.
+
+The parameter is a HighCharts.StockChart parameter that can be JSON-serialized and has a ``__isStock`` attribute that is not exist in the original one.
+If ``__isStock`` is ``false``, chart will displayed as an ordinary chart.
+
+The return object can call ``add([series index(like 0), data])`` to add data to the specified index series, 
+call ``reset()`` to clear the chart data, reset can take a number parameter, specify the number of reservations
+
+You can call ``add([series index, data, index of data in the series])`` to change the data,
+Can be negative, -1 refers to the last, -2 is the second to last, such as:
+``Chart.add([0, 13.5, -1])``, change the data of the first-to-last point of series[0].data.
+
+Supports the display of multiple charts. You only need to pass in array parameters like ``var chart = Chart([{...}, {...}, {...}])``. 
+
+A JavaScript example of using Chart to draw a spread price of two coins.two exchanges need to be added before run the robot.
+
+.. code-block:: JavaScript
+
+    // This chart is an object in the JS language. Before using the Chart function, we need to declare an object variable chart that configures the chart.
+    var chart = {
+        // Whether the mark is a general chart, if you are interested, you can change it to false and run it.
+        __isStock: true,                                    
+        tooltip: {xDateFormat: '%Y-%m-%d %H:%M:%S, %A'},    // Zoom tool
+        title : { text : 'Spread Analysis Chart'},          // title
+        rangeSelector: {                                    // Selection range
+            buttons:  [{type: 'hour',count: 1, text: '1h'}, {type: 'hour',count: 3, text: '3h'}, {type: 'hour', count: 8, text: '8h'}, {type: 'all',text: 'All'}],
+            selected: 0,
+            inputEnabled: false
+        },
+        xAxis: { type: 'datetime'},                         // The horizontal axis of the coordinate axis is the x axis and the current setting type is :time
+        yAxis : {                                           // The vertical axis of the axis is the y axis, and the default value is adjusted with the data size.
+            title: {text: 'Spread'},                        // title
+            opposite: false,                                // Whether to enable the right vertical axis
+        },
+        series : [                                          // Data series, this attribute is saved for each data series (line, K-line graph, label, etc...)
+            {name : "line1", id : "Line 1,buy1Price", data : []},  // The index is 0, the data array is stored in the index series of data
+            {name : "line2", id : "Line 2,lastPrice", dashStyle : 'shortdash', data : []}, 
+            // The index is 1, dashStyle is set: 'shortdash' ie: Set the dotted line.
+        ]
+    };
+    function main(){
+        var ObjChart = Chart(chart);                 // Call the Chart function to initialize the chart.
+        ObjChart.reset();                            // Empty the chart
+        while(true){
+            var nowTime = new Date().getTime();      // Get the timestamp of this poll, which is a millisecond timestamp. Used to determine the position of the X axis written to the chart.
+            var tickerOne = _C(exchanges[0].GetTicker);  // Get market data
+            var tickerTwo = _C(exchanges[1].GetTicker);
+            ObjChart.add([0, [nowTime, tickerOne.Last]]); // Use the timestamp as the X value and buy the price as the Y value to pass the index 0 data sequence.
+            ObjChart.add([1, [nowTime, tickerTwo.Last]]); // Same as above
+            ObjChart.update(chart);                  // Update the chart to show it.
+            Sleep(2000);
+        }
+    }
+
+
+
+
+
+2.6.28 Third-party Library
 >>>>>>>>>>>>>>>>>>
 
 JavaScript:
@@ -697,3 +763,7 @@ JavaScript:
 C++:
 
  - https://nlohmann.github.io/json/
+
+Python:
+
+ - install any libray you want. 
