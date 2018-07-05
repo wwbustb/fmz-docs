@@ -46,7 +46,7 @@ If you are new to trading, you need to understand a few basic concepts:
 KEY-WORD: "Futures", "Spot", "Stock", "Position", "Long", "Short", "Balance", "Margin Call", "Hedge", 
 "K Line", "MACD", "Ask / Bid".
 
-1.3.1 A quick look of the main page of FMZ
+1.3.1 A quick look of the main page
 >>>>>>>>>>>>>>>>>>
 
 After learning the most basic concepts, let’s start using FMZ to explore the quantitative world. 
