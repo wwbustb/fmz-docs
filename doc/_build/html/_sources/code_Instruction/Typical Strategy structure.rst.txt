@@ -33,6 +33,6 @@ For example, if You want buy one amount of order at the price 100 every second. 
     function main(){
         while(true){
             onTick();
-            Sleep(1000);//Pause time is optional, Units are Millisecond（1 second=1000millisecond 
+            Sleep(1000);//Pause time is optional, Units are Millisecond（1 second = 1000ms) 
         }
     }

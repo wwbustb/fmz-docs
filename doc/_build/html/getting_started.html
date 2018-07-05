@@ -98,9 +98,9 @@
 </ul>
 <p class="caption"><span class="caption-text">3. Complete Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="example.html">3.1 A Moving Average Strategy example in 30 lines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">3.1 Moving Average Strategy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="example.html#iceberg-buy-order">3.2 Iceberg Buy Order</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example.html#a-dual-thrust-okex-feature">3.3 A Dual Thrust OKEX Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#dual-thrust-okex-feature">3.3 Dual Thrust OKEX Feature</a></li>
 </ul>
 
             
@@ -170,13 +170,13 @@
 <p>What if I don’t have any program developing or financial skills? Can I still make quantitative trading on this platform?</p>
 <p>Absolutely, our platform has a complete tutorial for beginners. Only need studying a couple of days, you are good to go.   Botvs for rookies</p>
 <p><strong>What kinds of programming languages can I use to achieve my strategies?</strong></p>
-<p>FMZ supports <cite>JavaScript</cite>, <cite>Python</cite>, <cite>C++</cite> for coding your strategies.  JavaScript Tutorial             Python Tutorial. (One of these two main programming tools will meet the most requirement)</p>
+<p>FMZ supports <cite>JavaScript</cite>, <cite>Python</cite>, <cite>C++</cite> for coding your strategies. (JavaScript and Python are recommended)</p>
 <p><strong>What is The docker?</strong></p>
 <p>The docker is a program that runs on your own Internet Server, which in charge of the Data request, Data reception, Network link, Log review etc.
 You can treat it like your strategy’s executor. Even if the FMZ server offline (breakdown, etc.),
 it will have no influence on your manager for function properly.</p>
 <p>The Manager can run on variety of operating system.
-Such as <cite>Windows</cite>, <cite>Linux</cite>, <cite>Mac OS</cite>, <cite>Android</cite>, <cite>Raspbian</cite>, etc.               The manager Installation</p>
+Such as <cite>Windows</cite>, <cite>Linux</cite>, <cite>Mac OS</cite>, <cite>Android</cite>, <cite>Raspbian</cite>, etc.</p>
 </div>
 <div class="section" id="the-backtest-system">
 <h1>1.2     The Backtest System<a class="headerlink" href="#the-backtest-system" title="Permalink to this headline">¶</a></h1>
@@ -184,8 +184,8 @@ Such as <cite>Windows</cite>, <cite>Linux</cite>, <cite>Mac OS</cite>, <cite>And
 <p>When you completed a quantitative strategy, how do you know that the logic, amount and direction of profit of this strategy goes? Does it work? Apparently, we wouldn’t use the real money to test our strategies on the real market. But we could use the historical data to test it, see how it works out on the time, profit, and asset management in the past. It is winning or losing?             How to use the Backtest System?</p>
 <p><strong>Does the number from the backtest system accurate? The results can be trusted?</strong></p>
 <p>FMZ divides the backtest system into real market level and simulation level.
-The real market level contains the whole completed historical data back testing.
-The simulation level contains the candle bar graph data at regular intervals.
+The real market level contains the whole completed historical data back testing.</p>
+<p>The simulation level contains the k-lines data at regular intervals.
 Both level are based on the real market historical data. Only the real market level is more accurate and the results are more reliable.</p>
 <p><strong>The simulation level Backtest System explanation.</strong></p>
 <p>Notice that backtesting is the strategy only preform in the past. Historical data doesn’t represent the future. History may replay, it also may lead to the black swan. Please treat the backtest results reasonable and objectively.</p>

@@ -7,7 +7,7 @@ Absolutely, our platform has a complete tutorial for beginners. Only need studyi
 
 **What kinds of programming languages can I use to achieve my strategies?**
 
-FMZ supports `JavaScript`, `Python`, `C++` for coding your strategies.	JavaScript Tutorial		Python Tutorial. (One of these two main programming tools will meet the most requirement)
+FMZ supports `JavaScript`, `Python`, `C++` for coding your strategies. (JavaScript and Python are recommended)
 
 **What is The docker?**
 
@@ -16,7 +16,7 @@ You can treat it like your strategy’s executor. Even if the FMZ server offline
 it will have no influence on your manager for function properly. 
 
 The Manager can run on variety of operating system. 
-Such as `Windows`, `Linux`, `Mac OS`, `Android`, `Raspbian`, etc.		The manager Installation
+Such as `Windows`, `Linux`, `Mac OS`, `Android`, `Raspbian`, etc.
 
 1.2	The Backtest System
 =======================
@@ -29,7 +29,8 @@ When you completed a quantitative strategy, how do you know that the logic, amou
 
 FMZ divides the backtest system into real market level and simulation level. 
 The real market level contains the whole completed historical data back testing. 
-The simulation level contains the candle bar graph data at regular intervals. 
+
+The simulation level contains the k-lines data at regular intervals. 
 Both level are based on the real market historical data. Only the real market level is more accurate and the results are more reliable.
 
 **The simulation level Backtest System explanation.**

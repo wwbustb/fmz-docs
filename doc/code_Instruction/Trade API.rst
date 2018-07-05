@@ -349,7 +349,7 @@ Get the current position information, only for Futures trade. OKEX can pass a pa
 
 Return value: position array
 
-BTC Futures support: OKEX, BitMEX.
+BTC Futures support: ``OKEX``, ``BitMEX``.
 
 The position structure contains the following variables:
 

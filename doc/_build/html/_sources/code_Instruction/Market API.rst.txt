@@ -6,7 +6,7 @@ which are called from object ``exchange`` or ``exchanges[x]``,for example：``ex
 
 .. warning::
 
-    When calling any API function that accesses the exchange API (such as ``GetTicker()``, ``Buy()``, ``CancelOrder()``, etc.), it may get access failure due to exchange server problem, the network transmission problem, and so on.
+    When calling any API function that accesses the exchange API (such as ``GetTicker()``, ``Buy()``, ``CancelOrder()``, etc...), it may get access failure due to exchange server problem, the network transmission problem, and so on.
     In this case, ``GetTicker()`` will return ``null``, which may cause the stop of your programe.  a JavaScript example to do fault tolerance as below.
 
     .. code-block:: JavaScript
@@ -16,6 +16,8 @@ which are called from object ``exchange`` or ``exchanges[x]``,for example：``ex
             // Retry, or other processing logic.
         }
     A deflaut retry function is ``_C()``
+
+
 
 2.3.1 GetTicker
 >>>>>>>>>>>>>>>>>>
@@ -105,6 +107,7 @@ For Python the code is basically the same:
     - For JavaScript: ``var priceChange = praseFloat(ticker.Info.priceChange);``
     - For Python: ``priceChange = float(ticker.Info["priceChange"])``.
 
+
 2.3.2 GetDepth
 >>>>>>>>>>>>>>>>>>
 
@@ -174,6 +177,11 @@ A useful JavaScript example using depth:
             exchange.Buy(price, 10);
         }    
     }
+
+.. note::
+
+    ``GetDepth()`` doesn't return real depth at backtesting.
+
 
 2.3.3 GetTrades
 >>>>>>>>>>>>>>>>>>

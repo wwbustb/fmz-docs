@@ -7,7 +7,7 @@ Most of the time, your code can be wrote by the API above.
 2.5.1 IO
 >>>>>>>>>>>>>>>>>>
 
-exchange.IO() has different usages depends on  pramaeters.
+exchange.IO() has different usages depends on parameters.
 
 **Change trading pair**
 
@@ -19,7 +19,7 @@ Parameter value: ``symbol`` , trading pair to switch.
 
 Example:``exchange.IO("currency", "LTC_USDT")``, which will switch the default trading pairs configured by the robot when it was created to ``LTC_USDT``.
 
-A JavaScript example of using IO to trade several trading pairs:
+A JavaScript example of using ``IO`` to trade several trading pairs:
 
 .. code-block:: JavaScript
     
@@ -78,8 +78,8 @@ An OKEX Example：
 .. code-block:: JavaScript
 
     function main(){
-        var ret = exchange.IO("api", "POST", "/api/v1/future_position.do", "symbol=eth_usd&contract_type=this_week")
-	    Log(ret)
+        var ret = exchange.IO("api", "POST", "/api/v1/future_position.do", "symbol=eth_usd&contract_type=this_week");
+	    Log(ret);
     }
 
 2.5.2 Go

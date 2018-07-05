@@ -104,9 +104,9 @@
 </ul>
 <p class="caption"><span class="caption-text">3. Complete Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../example.html">3.1 A Moving Average Strategy example in 30 lines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html">3.1 Moving Average Strategy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../example.html#iceberg-buy-order">3.2 Iceberg Buy Order</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../example.html#a-dual-thrust-okex-feature">3.3 A Dual Thrust OKEX Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html#dual-thrust-okex-feature">3.3 Dual Thrust OKEX Feature</a></li>
 </ul>
 
             
@@ -179,7 +179,7 @@
 which are called from object <code class="docutils literal"><span class="pre">exchange</span></code> or <code class="docutils literal"><span class="pre">exchanges[x]</span></code>,for example：<code class="docutils literal"><span class="pre">exchange.GetTicker()</span></code> or <code class="docutils literal"><span class="pre">exchanges[0].GetTicker()</span></code> means return the market quotations.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p>When calling any API function that accesses the exchange API (such as <code class="docutils literal"><span class="pre">GetTicker()</span></code>, <code class="docutils literal"><span class="pre">Buy()</span></code>, <code class="docutils literal"><span class="pre">CancelOrder()</span></code>, etc.), it may get access failure due to exchange server problem, the network transmission problem, and so on.
+<p>When calling any API function that accesses the exchange API (such as <code class="docutils literal"><span class="pre">GetTicker()</span></code>, <code class="docutils literal"><span class="pre">Buy()</span></code>, <code class="docutils literal"><span class="pre">CancelOrder()</span></code>, etc…), it may get access failure due to exchange server problem, the network transmission problem, and so on.
 In this case, <code class="docutils literal"><span class="pre">GetTicker()</span></code> will return <code class="docutils literal"><span class="pre">null</span></code>, which may cause the stop of your programe.  a JavaScript example to do fault tolerance as below.</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">ticker</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">GetTicker</span><span class="p">()</span>
 <span class="k">if</span><span class="p">(</span><span class="nx">ticker</span> <span class="o">==</span> <span class="kc">null</span><span class="p">){</span>
@@ -396,6 +396,10 @@ In this case, <code class="docutils literal"><span class="pre">GetTicker()</span
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">GetDepth()</span></code> doesn’t return real depth at backtesting.</p>
 </div>
 </div>
 <div class="section" id="gettrades">

@@ -113,9 +113,9 @@
 </ul>
 <p class="caption"><span class="caption-text">3. Complete Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../example.html">3.1 A Moving Average Strategy example in 30 lines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html">3.1 Moving Average Strategy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../example.html#iceberg-buy-order">3.2 Iceberg Buy Order</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../example.html#a-dual-thrust-okex-feature">3.3 A Dual Thrust OKEX Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html#dual-thrust-okex-feature">3.3 Dual Thrust OKEX Feature</a></li>
 </ul>
 
             
@@ -188,14 +188,14 @@
 Most of the time, your code can be wrote by the API above.</p>
 <div class="section" id="io">
 <h2>2.5.1 IO<a class="headerlink" href="#io" title="Permalink to this headline">¶</a></h2>
-<p>exchange.IO() has different usages depends on  pramaeters.</p>
+<p>exchange.IO() has different usages depends on parameters.</p>
 <p><strong>Change trading pair</strong></p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">IO</span><span class="p">(</span><span class="s2">&quot;currency&quot;</span><span class="p">,</span> <span class="nx">symbol</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Parameter value: <code class="docutils literal"><span class="pre">symbol</span></code> , trading pair to switch.</p>
 <p>Example:<code class="docutils literal"><span class="pre">exchange.IO(&quot;currency&quot;,</span> <span class="pre">&quot;LTC_USDT&quot;)</span></code>, which will switch the default trading pairs configured by the robot when it was created to <code class="docutils literal"><span class="pre">LTC_USDT</span></code>.</p>
-<p>A JavaScript example of using IO to trade several trading pairs:</p>
+<p>A JavaScript example of using <code class="docutils literal"><span class="pre">IO</span></code> to trade several trading pairs:</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">symbols</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;BTC_USDT&quot;</span><span class="p">,</span> <span class="s2">&quot;LTC_USDT&quot;</span><span class="p">,</span> <span class="s2">&quot;EOS_USDT&quot;</span><span class="p">,</span> <span class="s2">&quot;ETH_USDT&quot;</span><span class="p">,</span> <span class="s2">&quot;BCC_USDT&quot;</span><span class="p">];</span>
 <span class="kd">var</span> <span class="nx">buyValue</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
 <span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
@@ -239,8 +239,8 @@ For example, the FMZ platform does not currently support margin leverage trading
 </div>
 <p>An OKEX Example：</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
-    <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">IO</span><span class="p">(</span><span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;/api/v1/future_position.do&quot;</span><span class="p">,</span> <span class="s2">&quot;symbol=eth_usd&amp;contract_type=this_week&quot;</span><span class="p">)</span>
-        <span class="nx">Log</span><span class="p">(</span><span class="nx">ret</span><span class="p">)</span>
+    <span class="kd">var</span> <span class="nx">ret</span> <span class="o">=</span> <span class="nx">exchange</span><span class="p">.</span><span class="nx">IO</span><span class="p">(</span><span class="s2">&quot;api&quot;</span><span class="p">,</span> <span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="s2">&quot;/api/v1/future_position.do&quot;</span><span class="p">,</span> <span class="s2">&quot;symbol=eth_usd&amp;contract_type=this_week&quot;</span><span class="p">);</span>
+        <span class="nx">Log</span><span class="p">(</span><span class="nx">ret</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>

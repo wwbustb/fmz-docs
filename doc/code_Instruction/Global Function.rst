@@ -335,7 +335,7 @@ Return value: bool type, return true if successful
 .. code-block:: JavaScript
 
     function main(){
-        Mail("smtp.163.com", "test@163.com", "password", "usr@163.com", "title", "body")
+        Mail("smtp.163.com", "test@163.com", "password", "usr@163.com", "title", "body");
     }
 
 
@@ -645,7 +645,7 @@ Specific instructions for use: built-in function _Cross analysis and instruction
 2.6.26 TA Indicator function
 >>>>>>>>>>>>>>>>>>
 
-TA-Lib Indicator Library. support ``MACD``,``EMA``,``KDJ``,``ATR``,``RSI``, etc...
+TA-Lib Indicator Library. support ``MACD``, ``EMA``, ``KDJ``, ``ATR``, ``RSI``, etc...
 
 Need to add TA. or talib. prefix when calling indicator function.
 

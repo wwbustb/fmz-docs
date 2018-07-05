@@ -50,7 +50,7 @@ Source code:
 3.2 Iceberg Buy Order
 =======================
 
-Check on https://www.fmz.com/strategy/103319
+Check on https://www.fmz.com/strategy/103319.
 
 Source code:
 
