@@ -698,13 +698,13 @@ The parameter is a HighCharts.StockChart parameter that can be JSON-serialized a
 If ``__isStock`` is ``false``, chart will displayed as an ordinary chart.
 
 The return object can call ``add([series index(like 0), data])`` to add data to the specified index series, 
-call ``reset()`` to clear the chart data, reset can take a number parameter, specify the number of reservations
+call ``reset()`` to clear the chart data, reset can take a number parameter, specify the number of reservations.
 
 You can call ``add([series index, data, index of data in the series])`` to change the data,
 Can be negative, -1 refers to the last, -2 is the second to last, such as:
 ``Chart.add([0, 13.5, -1])``, change the data of the first-to-last point of series[0].data.
 
-Supports the display of multiple charts. You only need to pass in array parameters like ``var chart = Chart([{...}, {...}, {...}])``. 
+Supports the display of multiple charts. You only need to pass in array parameters like: ``var chart = Chart([{...}, {...}, {...}])``. 
 
 A JavaScript example of using Chart to draw a spread price of two coins.two exchanges need to be added before run the robot.
 
@@ -733,15 +733,15 @@ A JavaScript example of using Chart to draw a spread price of two coins.two exch
         ]
     };
     function main(){
-        var ObjChart = Chart(chart);                 // Call the Chart function to initialize the chart.
-        ObjChart.reset();                            // Empty the chart
+        var ObjChart = Chart(chart);                      // Call the Chart function to initialize the chart.
+        ObjChart.reset();                                 // Empty the chart
         while(true){
-            var nowTime = new Date().getTime();      // Get the timestamp of this poll, which is a millisecond timestamp. Used to determine the position of the X axis written to the chart.
-            var tickerOne = _C(exchanges[0].GetTicker);  // Get market data
+            var nowTime = new Date().getTime();           // Get the timestamp of this poll, which is a millisecond timestamp. Used to determine the position of the X axis written to the chart.
+            var tickerOne = _C(exchanges[0].GetTicker);   // Get market data
             var tickerTwo = _C(exchanges[1].GetTicker);
             ObjChart.add([0, [nowTime, tickerOne.Last]]); // Use the timestamp as the X value and buy the price as the Y value to pass the index 0 data sequence.
             ObjChart.add([1, [nowTime, tickerTwo.Last]]); // Same as above
-            ObjChart.update(chart);                  // Update the chart to show it.
+            ObjChart.update(chart);                       // Update the chart to show it.
             Sleep(2000);
         }
     }
