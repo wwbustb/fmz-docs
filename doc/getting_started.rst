@@ -38,7 +38,7 @@ Both level are based on the real market historical data. Only the real market le
 Notice that backtesting is the strategy only preform in the past. Historical data doesn’t represent the future. History may replay, it also may lead to the black swan. Please treat the backtest results reasonable and objectively.
 
 
-1.3	FMZ Quantitative Trading Platform Instruction Manual
+1.3	FMZ Instruction Manual
 =======================
 
 If you are new to trading, you need to understand a few basic concepts:
