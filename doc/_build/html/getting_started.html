@@ -86,6 +86,16 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">1.1 Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#the-backtest-system">1.2     The Backtest System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#fmz-quantitative-trading-platform-instruction-manual">1.3     FMZ Quantitative Trading Platform Instruction Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#a-quick-look-of-the-main-page-of-fmz">1.3.1 A quick look of the main page of FMZ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#deploy-the-docker">1.3.2 Deploy the docker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#add-exchanges">1.3.3 Add exchanges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#write-or-copy-a-strategy">1.3.4 Write or copy a strategy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#backtest-your-strategy">1.3.5 Backtest your strategy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-a-robot-on-botvs">1.3.6 Run a robot on BotVs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#charges-notes">1.3.7 Charges Notes</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">2.  API Instruction</span></p>
 <ul>
@@ -98,9 +108,12 @@
 </ul>
 <p class="caption"><span class="caption-text">3. Complete Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="example.html">3.1 Moving Average Strategy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example.html#iceberg-buy-order">3.2 Iceberg Buy Order</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example.html#dual-thrust-okex-feature">3.3 Dual Thrust OKEX Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html">3.1 Use Websocket</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#use-c">3.2 Use C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#sell-all-altcoin-to-btc-in-binance">3.3 Sell ALL AltCoin to BTC in Binance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#moving-average-strategy">3.4 Moving Average Strategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#iceberg-buy-order">3.5 Iceberg Buy Order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example.html#dual-thrust-okex-feature">3.6 Dual Thrust OKEX Feature</a></li>
 </ul>
 
             
@@ -189,6 +202,127 @@ The real market level contains the whole completed historical data back testing.
 Both level are based on the real market historical data. Only the real market level is more accurate and the results are more reliable.</p>
 <p><strong>The simulation level Backtest System explanation.</strong></p>
 <p>Notice that backtesting is the strategy only preform in the past. Historical data doesn’t represent the future. History may replay, it also may lead to the black swan. Please treat the backtest results reasonable and objectively.</p>
+</div>
+<div class="section" id="fmz-quantitative-trading-platform-instruction-manual">
+<h1>1.3     FMZ Quantitative Trading Platform Instruction Manual<a class="headerlink" href="#fmz-quantitative-trading-platform-instruction-manual" title="Permalink to this headline">¶</a></h1>
+<p>If you are new to trading, you need to understand a few basic concepts:</p>
+<p>KEY-WORD: “Futures”, “Spot”, “Stock”, “Position”, “Long”, “Short”, “Balance”, “Margin Call”, “Hedge”,
+“K Line”, “MACD”, “Ask / Bid”.</p>
+<div class="section" id="a-quick-look-of-the-main-page-of-fmz">
+<h2>1.3.1 A quick look of the main page of FMZ<a class="headerlink" href="#a-quick-look-of-the-main-page-of-fmz" title="Permalink to this headline">¶</a></h2>
+<p>After learning the most basic concepts, let’s start using FMZ to explore the quantitative world.
+(Building your own quantitative trading system is a very large project, you need to have considerable computer knowledge and skills, Fortunately, FMZ has done this for you!)</p>
+<p>Register your FMZ account,Log in to <a class="reference external" href="https://www.fmz.com">https://www.fmz.com</a>.</p>
+<img alt="images/main_page.png" src="images/main_page.png" />
+<p>First time to log in the website, it looks like this:</p>
+<img alt="images/page_detail.png" src="images/page_detail.png" />
+</div>
+<div class="section" id="deploy-the-docker">
+<h2>1.3.2 Deploy the docker<a class="headerlink" href="#deploy-the-docker" title="Permalink to this headline">¶</a></h2>
+<p>First of all, FMZ’s framework is very advanced,
+the user’s robot program (that is, the automated trading program) is running on the user’s own computer (of course, it can also be run on the cloud server),
+So, it’s very safe (don’t need worry about the FMZ website breakdown etc.), the user has direct control over the program.</p>
+<p>Docker is a program that run your robots and communicate with FMZ website. You need to run a Docker first before start a real market robot.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It is highly recommended to use the cloud server for runing program stably, such as Amazon or Google Cloud Server.</p>
+</div>
+<p>In the Dashboard page–<code class="docutils literal"><span class="pre">Add</span> <span class="pre">docker</span></code> button, you can link to the download page <a class="reference external" href="https://www.fmz.com/m/add-node">https://www.fmz.com/m/add-node</a>.</p>
+<img alt="images/download_docker.png" src="images/download_docker.png" />
+<p>Here are steps to deploy the dockr in a Linux server:</p>
+<ul class="simple">
+<li>Buy a cloud server (VPS) from Amazon or Google, the lowest and cheapest configuration is enough. you may often has a free try for a long time.</li>
+<li>Login your server, fellow the instruction from your server provider or Google.</li>
+<li>Chose the docker that statisty your system version, most of the time, it is 64Bit.</li>
+<li>For <code class="docutils literal"><span class="pre">centos</span></code>, run <code class="docutils literal"><span class="pre">wget</span> <span class="pre">http://q.botvs.net/dist/robot_linux_amd64.tar.gz</span></code>, command not found? install first <code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span> <span class="pre">wget</span> <span class="pre">-y</span></code>.</li>
+<li>Run <code class="docutils literal"><span class="pre">tar</span> <span class="pre">-xzvf</span> <span class="pre">robot_linux_amd64.tar.gz</span></code> to unzip.</li>
+<li>Run <code class="docutils literal"><span class="pre">./robot</span> <span class="pre">-s</span> <span class="pre">rpcs&#64;a.botvs.com:9902/xxxxxx</span> <span class="pre">-p</span> <span class="pre">yourFMZpassword</span></code>,
+you should see something like <code class="docutils literal"><span class="pre">2018/07/05</span> <span class="pre">05:04:10</span> <span class="pre">Login</span> <span class="pre">OK,</span> <span class="pre">SID:</span> <span class="pre">62086,</span> <span class="pre">PID:</span> <span class="pre">7226,</span> <span class="pre">Name:</span> <span class="pre">host.localdomain</span></code>, which means everything is worked.</li>
+<li><code class="docutils literal"><span class="pre">rpcs&#64;a.botvs.com:9902/xxxxxx</span></code> is unique to every users, find your own on <a class="reference external" href="https://www.fmz.com/m/add-node">https://www.fmz.com/m/add-node</a>.</li>
+<li>Now the docker isn’t run in the background, if you close the SHH client, the docker will stop.</li>
+<li>Press <code class="docutils literal"><span class="pre">ctrl</span> <span class="pre">+</span> <span class="pre">C</span></code> to stop the docker.</li>
+<li>Run <code class="docutils literal"><span class="pre">nohup</span> <span class="pre">./robot</span> <span class="pre">-s</span> <span class="pre">rpcs&#64;a.botvs.com:9902/xxxxxx</span> <span class="pre">-p</span> <span class="pre">yourFMZpassword</span> <span class="pre">&amp;</span></code> to run in the background. this step can also be done by <code class="docutils literal"><span class="pre">Screen</span></code> command.</li>
+<li>Check on <a class="reference external" href="https://www.fmz.com/m/dashboard">https://www.fmz.com/m/dashboard</a>, if everything is OK , you can find the docker deployed.</li>
+</ul>
+<img alt="images/docker_dispaly.png" src="images/docker_dispaly.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">One docker can run many robots, however, you can deploy more than one dockers on different server for speed or request-rate-limit consideration.
+the docker can be specified or auto-distributed when start a robot.</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">There are two public dockers for testing. don’t use them to run your robot on real market.</p>
+</div>
+</div>
+<div class="section" id="add-exchanges">
+<h2>1.3.3 Add exchanges<a class="headerlink" href="#add-exchanges" title="Permalink to this headline">¶</a></h2>
+<p>Add your exchanges at this page: <a class="reference external" href="https://www.fmz.com/m/add-platform">https://www.fmz.com/m/add-platform</a>.</p>
+<p>Now support:</p>
+<div class="highlight-http"><div class="highlight"><pre><span></span>Binance, Bitfinex, Huobi(huobipro), OKEX, Futures_OKCoin(OKEX), Futures_BitMEX, Poloniex, Bitstamp,
+BotVS(FMZ Simulation Exchange),AEX, BigONE, BitFlyer, Bithumb, Bitpie, Bittrex, CoinEx, CoinPlus,
+Coincheck, Coinone, Futures_CTP, Futures_Deribit, Futures_Esunny, GateIO, HitBTC, KEX, Korbit,
+Kraken, LiveCoin, OKCoin_EN, Quoine, WEX, ZB, Zaif.
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">Access</span> <span class="pre">Key</span></code> and <code class="docutils literal"><span class="pre">Secret</span> <span class="pre">Key</span></code> is needed, you should apply on your exchange first.</p>
+<img alt="images/add_platform.png" src="images/add_platform.png" />
+<p>Once the exchange is added, you can find it on Dashboard <a class="reference external" href="https://www.fmz.com/m/dashboard">https://www.fmz.com/m/dashboard</a>.</p>
+<img alt="images/platform_list.png" src="images/platform_list.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">New exchange supported is keep being added. you need to update the lastest docker to support new exchange.</p>
+</div>
+</div>
+<div class="section" id="write-or-copy-a-strategy">
+<h2>1.3.4 Write or copy a strategy<a class="headerlink" href="#write-or-copy-a-strategy" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">There are lots of details this docs doesn’t cover, you can explore by yourself, most of them are simple and clear.
+You can always post on our forum if you have any question.</p>
+</div>
+<p>Write your own strategy by clicking <code class="docutils literal"><span class="pre">Add</span> <span class="pre">Strategy</span></code>.</p>
+<img alt="images/add_strategy.png" src="images/add_strategy.png" />
+<p>You can choose different code languages and backtesting</p>
+<p>For beginners, copy this strategy to begain: <a class="reference external" href="https://www.fmz.com/strategy/103070">https://www.fmz.com/strategy/103070</a>, which can be found on <a class="reference external" href="https://www.fmz.com/square">https://www.fmz.com/square</a>.</p>
+<p>Clicking <code class="docutils literal"><span class="pre">Copy</span> <span class="pre">and</span> <span class="pre">backtest</span></code>:</p>
+<img alt="images/copy.png" src="images/copy.png" />
+<p>Clicking <code class="docutils literal"><span class="pre">Creat</span></code>:</p>
+<img alt="images/create.png" src="images/create.png" />
+<p>Now your can find this strategy on your dashboard strategies list. <a class="reference external" href="https://www.fmz.com/m/dashboard">https://www.fmz.com/m/dashboard</a></p>
+<p>Edit your code here, don’t forget to save your code:</p>
+<img alt="images/edit_code.png" src="images/edit_code.png" />
+<p>Change and add global variables here:</p>
+<img alt="images/variable.png" src="images/variable.png" />
+</div>
+<div class="section" id="backtest-your-strategy">
+<h2>1.3.5 Backtest your strategy<a class="headerlink" href="#backtest-your-strategy" title="Permalink to this headline">¶</a></h2>
+<p>Clicking Stragegy name to strategy page.</p>
+<img alt="images/go_to_strategy.png" src="images/go_to_strategy.png" />
+<p>Go to backtest page:</p>
+<img alt="images/backtest.png" src="images/backtest.png" />
+<p>Add exchange and config your strategy:</p>
+<img alt="images/backtest_config.png" src="images/backtest_config.png" />
+<p>Clicking <code class="docutils literal"><span class="pre">Start</span> <span class="pre">Backtest</span></code> to start.</p>
+</div>
+<div class="section" id="run-a-robot-on-botvs">
+<h2>1.3.6 Run a robot on BotVs<a class="headerlink" href="#run-a-robot-on-botvs" title="Permalink to this headline">¶</a></h2>
+<p>BotVs is FMZ Simulation Exchange, which is basically the same as a real exchange but free of charge, you can run your robot on FMZ Simulation Exchange for testing your strategy.</p>
+<p>Click <code class="docutils literal"><span class="pre">Add</span> <span class="pre">Robot</span></code> or <a class="reference external" href="https://www.fmz.com/m/add-robot">https://www.fmz.com/m/add-robot</a> to run a robot.</p>
+<p>Config page as below:</p>
+<img alt="images/add_robot.png" src="images/add_robot.png" />
+<p>You can find your robot is running on dashboard Now.</p>
+<img alt="images/robot.png" src="images/robot.png" />
+<p>Go to robot page:</p>
+<p>You can check the robot’s status and Logs, change the configs(need to stop robot first),</p>
+<img alt="images/robot_run.png" src="images/robot_run.png" />
+</div>
+<div class="section" id="charges-notes">
+<h2>1.3.7 Charges Notes<a class="headerlink" href="#charges-notes" title="Permalink to this headline">¶</a></h2>
+<p>0.125 RMB per robot per hour(around 0.018 USD).</p>
+<p>robot run on FMZ Simulation Exchange(BotVs) is free.</p>
+<img alt="images/pay.png" src="images/pay.png" />
+</div>
 </div>
 
 

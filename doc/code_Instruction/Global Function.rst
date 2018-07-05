@@ -706,7 +706,7 @@ Can be negative, -1 refers to the last, -2 is the second to last, such as:
 
 Supports the display of multiple charts. You only need to pass in array parameters like: ``var chart = Chart([{...}, {...}, {...}])``. 
 
-A JavaScript example of using Chart to draw a spread price of two coins.two exchanges need to be added before run the robot.
+A JavaScript example of using Chart to draw the prices of two coins.two exchanges need to be added before run the robot.
 
 .. code-block:: JavaScript
 

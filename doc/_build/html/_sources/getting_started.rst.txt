@@ -36,3 +36,182 @@ Both level are based on the real market historical data. Only the real market le
 **The simulation level Backtest System explanation.**
 
 Notice that backtesting is the strategy only preform in the past. Historical data doesn’t represent the future. History may replay, it also may lead to the black swan. Please treat the backtest results reasonable and objectively.
+
+
+1.3	FMZ Quantitative Trading Platform Instruction Manual
+=======================
+
+If you are new to trading, you need to understand a few basic concepts:
+
+KEY-WORD: "Futures", "Spot", "Stock", "Position", "Long", "Short", "Balance", "Margin Call", "Hedge", 
+"K Line", "MACD", "Ask / Bid".
+
+1.3.1 A quick look of the main page of FMZ
+>>>>>>>>>>>>>>>>>>
+
+After learning the most basic concepts, let’s start using FMZ to explore the quantitative world. 
+(Building your own quantitative trading system is a very large project, you need to have considerable computer knowledge and skills, Fortunately, FMZ has done this for you!)
+
+Register your FMZ account,Log in to https://www.fmz.com.
+
+.. image:: images/main_page.png
+
+First time to log in the website, it looks like this:
+
+.. image:: images/page_detail.png
+
+1.3.2 Deploy the docker
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+First of all, FMZ's framework is very advanced, 
+the user's robot program (that is, the automated trading program) is running on the user's own computer (of course, it can also be run on the cloud server),
+So, it's very safe (don't need worry about the FMZ website breakdown etc.), the user has direct control over the program. 
+
+Docker is a program that run your robots and communicate with FMZ website. You need to run a Docker first before start a real market robot.
+
+.. note::
+
+    It is highly recommended to use the cloud server for runing program stably, such as Amazon or Google Cloud Server. 
+
+In the Dashboard page--``Add docker`` button, you can link to the download page https://www.fmz.com/m/add-node.
+
+.. image:: images/download_docker.png
+
+Here are steps to deploy the dockr in a Linux server:
+
+- Buy a cloud server (VPS) from Amazon or Google, the lowest and cheapest configuration is enough. you may often has a free try for a long time.
+- Login your server, fellow the instruction from your server provider or Google.
+- Chose the docker that statisty your system version, most of the time, it is 64Bit.
+- For ``centos``, run ``wget http://q.botvs.net/dist/robot_linux_amd64.tar.gz``, command not found? install first ``yum install wget -y``.
+- Run ``tar -xzvf robot_linux_amd64.tar.gz`` to unzip.
+- Run ``./robot -s rpcs@a.botvs.com:9902/xxxxxx -p yourFMZpassword``,
+  you should see something like ``2018/07/05 05:04:10 Login OK, SID: 62086, PID: 7226, Name: host.localdomain``, which means everything is worked. 
+- ``rpcs@a.botvs.com:9902/xxxxxx`` is unique to every users, find your own on https://www.fmz.com/m/add-node.
+- Now the docker isn't run in the background, if you close the SHH client, the docker will stop.
+- Press ``ctrl + C`` to stop the docker.
+- Run ``nohup ./robot -s rpcs@a.botvs.com:9902/xxxxxx -p yourFMZpassword &`` to run in the background. this step can also be done by ``Screen`` command.
+- Check on https://www.fmz.com/m/dashboard, if everything is OK , you can find the docker deployed.
+
+.. image:: images/docker_dispaly.png
+
+.. note::
+
+    One docker can run many robots, however, you can deploy more than one dockers on different server for speed or request-rate-limit consideration. 
+    the docker can be specified or auto-distributed when start a robot.
+
+.. warning::
+
+    There are two public dockers for testing. don't use them to run your robot on real market.
+
+1.3.3 Add exchanges
+>>>>>>>>>>>>>>>>>>>>>>
+
+Add your exchanges at this page: https://www.fmz.com/m/add-platform.
+
+Now support:
+
+.. sourcecode:: http
+
+    Binance, Bitfinex, Huobi(huobipro), OKEX, Futures_OKCoin(OKEX), Futures_BitMEX, Poloniex, Bitstamp, 
+    BotVS(FMZ Simulation Exchange),AEX, BigONE, BitFlyer, Bithumb, Bitpie, Bittrex, CoinEx, CoinPlus,
+    Coincheck, Coinone, Futures_CTP, Futures_Deribit, Futures_Esunny, GateIO, HitBTC, KEX, Korbit, 
+    Kraken, LiveCoin, OKCoin_EN, Quoine, WEX, ZB, Zaif.
+
+``Access Key`` and ``Secret Key`` is needed, you should apply on your exchange first.
+
+.. image:: images/add_platform.png
+
+Once the exchange is added, you can find it on Dashboard https://www.fmz.com/m/dashboard.
+
+.. image:: images/platform_list.png
+
+.. note::
+
+    New exchange supported is keep being added. you need to update the lastest docker to support new exchange.
+
+1.3.4 Write or copy a strategy
+>>>>>>>>>>>>>>>>>>>>>>
+
+.. note::
+
+    There are lots of details this docs doesn't cover, you can explore by yourself, most of them are simple and clear.
+    You can always post on our forum if you have any question.
+
+Write your own strategy by clicking ``Add Strategy``.
+
+.. image:: images/add_strategy.png
+
+You can choose different code languages and backtesting
+
+For beginners, copy this strategy to begain: https://www.fmz.com/strategy/103070, which can be found on https://www.fmz.com/square.
+
+Clicking ``Copy and backtest``:
+
+.. image:: images/copy.png
+
+Clicking ``Creat``:
+
+.. image:: images/create.png
+
+Now your can find this strategy on your dashboard strategies list. https://www.fmz.com/m/dashboard
+
+Edit your code here, don't forget to save your code:
+
+.. image:: images/edit_code.png
+
+Change and add global variables here:
+
+.. image:: images/variable.png
+
+1.3.5 Backtest your strategy
+>>>>>>>>>>>>>>>>>>>>>>
+
+Clicking Stragegy name to strategy page.
+
+.. image:: images/go_to_strategy.png
+
+Go to backtest page:
+
+.. image:: images/backtest.png
+
+Add exchange and config your strategy:
+
+.. image:: images/backtest_config.png
+
+Clicking ``Start Backtest`` to start.
+
+1.3.6 Run a robot on BotVs
+>>>>>>>>>>>>>>>>>>>>>>
+
+BotVs is FMZ Simulation Exchange, which is basically the same as a real exchange but free of charge, you can run your robot on FMZ Simulation Exchange for testing your strategy.
+
+Click ``Add Robot`` or https://www.fmz.com/m/add-robot to run a robot.
+
+Config page as below:
+
+.. image:: images/add_robot.png
+
+You can find your robot is running on dashboard Now.
+
+.. image:: images/robot.png
+
+Go to robot page:
+
+You can check the robot's status and Logs, change the configs(need to stop robot first), 
+
+.. image:: images/robot_run.png
+
+1.3.7 Charges Notes
+>>>>>>>>>>>>>>>>>>>>>>
+
+0.125 RMB per robot per hour(around 0.018 USD).
+
+robot run on FMZ Simulation Exchange(BotVs) is free.
+
+.. image:: images/pay.png
+
+
+
+
+
+

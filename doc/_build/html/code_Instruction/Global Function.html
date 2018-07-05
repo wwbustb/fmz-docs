@@ -86,6 +86,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">1.1 Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html#fmz-quantitative-trading-platform-instruction-manual">1.3     FMZ Quantitative Trading Platform Instruction Manual</a></li>
 </ul>
 <p class="caption"><span class="caption-text">2.  API Instruction</span></p>
 <ul class="current">
@@ -735,7 +736,7 @@ call <code class="docutils literal"><span class="pre">reset()</span></code> to c
 Can be negative, -1 refers to the last, -2 is the second to last, such as:
 <code class="docutils literal"><span class="pre">Chart.add([0,</span> <span class="pre">13.5,</span> <span class="pre">-1])</span></code>, change the data of the first-to-last point of series[0].data.</p>
 <p>Supports the display of multiple charts. You only need to pass in array parameters like: <code class="docutils literal"><span class="pre">var</span> <span class="pre">chart</span> <span class="pre">=</span> <span class="pre">Chart([{...},</span> <span class="pre">{...},</span> <span class="pre">{...}])</span></code>.</p>
-<p>A JavaScript example of using Chart to draw a spread price of two coins.two exchanges need to be added before run the robot.</p>
+<p>A JavaScript example of using Chart to draw the prices of two coins.two exchanges need to be added before run the robot.</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="c1">// This chart is an object in the JS language. Before using the Chart function, we need to declare an object variable chart that configures the chart.</span>
 <span class="kd">var</span> <span class="nx">chart</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1">// Whether the mark is a general chart, if you are interested, you can change it to false and run it.</span>
