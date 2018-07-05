@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3.1 Moving Average Strategy &mdash; FMZ docs 0.1 documentation</title>
+  <title>3.1 Use Websocket &mdash; FMZ docs 0.1 documentation</title>
   
 
   
@@ -97,9 +97,12 @@
 </ul>
 <p class="caption"><span class="caption-text">3. Complete Examples</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">3.1 Moving Average Strategy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#iceberg-buy-order">3.2 Iceberg Buy Order</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#dual-thrust-okex-feature">3.3 Dual Thrust OKEX Feature</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3.1 Use Websocket</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#use-c">3.2 Use C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#sell-all-altcoin-to-btc-in-binance">3.3 Sell ALL AltCoin to BTC in Binance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#moving-average-strategy">3.4 Moving Average Strategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#iceberg-buy-order">3.5 Iceberg Buy Order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#dual-thrust-okex-feature">3.6 Dual Thrust OKEX Feature</a></li>
 </ul>
 
             
@@ -145,7 +148,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>3.1 Moving Average Strategy</li>
+      <li>3.1 Use Websocket</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -164,8 +167,207 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="moving-average-strategy">
-<h1>3.1 Moving Average Strategy<a class="headerlink" href="#moving-average-strategy" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="use-websocket">
+<h1>3.1 Use Websocket<a class="headerlink" href="#use-websocket" title="Permalink to this headline">¶</a></h1>
+<p>For JavaScript:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">LogStatus</span><span class="p">(</span><span class="s2">&quot;connecting...&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">client</span> <span class="o">=</span> <span class="nx">Dial</span><span class="p">(</span><span class="s2">&quot;wss://stream.binance.com:9443/ws/!ticker@arr&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">client</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;Connection failed, program exited&quot;</span><span class="p">);</span>
+        <span class="k">return</span>
+    <span class="p">}</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;The connection is successful and the disconnected line is automatically reconnected&quot;</span><span class="p">)</span>
+    <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">buf</span> <span class="o">=</span> <span class="nx">client</span><span class="p">.</span><span class="nx">read</span><span class="p">()</span> <span class="c1">// Read only returns data obtained after calling read</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">buf</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span>
+            <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39;Quotes chart&#39;</span><span class="p">,</span>
+            <span class="nx">cols</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;Currency&#39;</span><span class="p">,</span> <span class="s1">&#39;highest&#39;</span><span class="p">,</span> <span class="s1">&#39;lowest&#39;</span><span class="p">,</span> <span class="s1">&#39;Bid&#39;</span><span class="p">,</span> <span class="s1">&#39;Ask&#39;</span><span class="p">,</span> <span class="s1">&#39; Last traded price&#39;</span><span class="p">,</span> <span class="s1">&#39;volume&#39;</span><span class="p">,</span> <span class="s1">&#39;Update time&#39;</span><span class="p">],</span>
+            <span class="nx">rows</span><span class="o">:</span> <span class="p">[],</span>
+        <span class="p">};</span>
+        <span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">buf</span><span class="p">);</span>
+        <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ticker</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">table</span><span class="p">.</span><span class="nx">rows</span><span class="p">.</span><span class="nx">push</span><span class="p">([</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">s</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">h</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">l</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">b</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">c</span><span class="p">,</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">q</span><span class="p">,</span> <span class="nx">_D</span><span class="p">(</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">E</span><span class="p">)])</span>
+        <span class="p">});</span>
+        <span class="nx">LogStatus</span><span class="p">(</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">table</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;`&#39;</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">close</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For Python, you can use <code class="docutils literal"><span class="pre">Dial()</span></code> function  as well, or <code class="docutils literal"><span class="pre">websocket_client</span></code> library to access websocket.</p>
+</div>
+<div class="section" id="use-c">
+<h1>3.2 Use C++<a class="headerlink" href="#use-c" title="Permalink to this headline">¶</a></h1>
+<p>There are some difference between C++ and JavaScript in writing strategy.</p>
+<div class="highlight-C++"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">Test</span><span class="p">(</span><span class="s">&quot;c++&quot;</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">Panic</span><span class="p">(</span><span class="s">&quot;please download the lastest docker&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// json: https://github.com/nlohmann/json</span>
+    <span class="c1">// using Valid to judge return object is null or not.</span>
+    <span class="n">LogProfitReset</span><span class="p">();</span>
+    <span class="n">LogReset</span><span class="p">();</span>
+    <span class="n">Log</span><span class="p">(</span><span class="n">_N</span><span class="p">(</span><span class="mf">9.12345</span><span class="p">,</span> <span class="mi">2</span><span class="p">));</span>
+    <span class="n">Log</span><span class="p">(</span><span class="s">&quot;use _C&quot;</span><span class="p">,</span> <span class="n">_C</span><span class="p">(</span><span class="n">exchange</span><span class="p">.</span><span class="n">GetTicker</span><span class="p">),</span> <span class="n">_C</span><span class="p">(</span><span class="n">exchange</span><span class="p">.</span><span class="n">GetAccount</span><span class="p">));</span>
+
+    <span class="c1">// test async</span>
+    <span class="k">auto</span> <span class="n">routineTicker</span> <span class="o">=</span> <span class="n">exchange</span><span class="p">.</span><span class="n">Go</span><span class="p">(</span><span class="s">&quot;GetTicker&quot;</span><span class="p">);</span>
+    <span class="k">auto</span> <span class="n">routineDepth</span> <span class="o">=</span> <span class="n">exchange</span><span class="p">.</span><span class="n">Go</span><span class="p">(</span><span class="s">&quot;GetDepth&quot;</span><span class="p">);</span>
+    <span class="n">Ticker</span> <span class="n">asyncTicker</span><span class="p">;</span>
+    <span class="n">Depth</span> <span class="n">asyncDepth</span><span class="p">;</span>
+
+    <span class="c1">// No timeout, wait until Ticker is returned</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">routineTicker</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="n">asyncTicker</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">Log</span><span class="p">(</span><span class="s">&quot;Wait Ticker OK&quot;</span><span class="p">,</span> <span class="n">asyncTicker</span><span class="p">.</span><span class="n">Valid</span><span class="p">,</span> <span class="n">asyncTicker</span><span class="p">,</span> <span class="n">asyncTicker</span><span class="p">.</span><span class="n">Last</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">Log</span><span class="p">(</span><span class="s">&quot;Wait Ticker fail&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">// With 300ms tiemout, 0 means return immediately.</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">routineDepth</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="n">asyncDepth</span><span class="p">,</span> <span class="mi">200</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// not sure the depth returned is valid, use asyncDepth.Valid.</span>
+        <span class="n">Log</span><span class="p">(</span><span class="s">&quot;Wait Depth OK&quot;</span><span class="p">,</span> <span class="n">asyncDepth</span><span class="p">.</span><span class="n">Valid</span><span class="p">,</span> <span class="n">asyncDepth</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">Log</span><span class="p">(</span><span class="s">&quot;Wait Depth timeout&quot;</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">auto</span> <span class="n">records</span> <span class="o">=</span> <span class="n">_C</span><span class="p">(</span><span class="n">exchange</span><span class="p">.</span><span class="n">GetRecords</span><span class="p">);</span>
+    <span class="n">Log</span><span class="p">(</span><span class="s">&quot;Last Kline&quot;</span><span class="p">,</span> <span class="n">records</span><span class="p">[</span><span class="n">records</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">Time</span><span class="p">,</span> <span class="n">_D</span><span class="p">(</span><span class="n">records</span><span class="p">[</span><span class="n">records</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">].</span><span class="n">Time</span><span class="p">),</span> <span class="n">records</span><span class="p">[</span><span class="n">records</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="c1">// Test TA</span>
+    <span class="k">auto</span> <span class="n">ema</span> <span class="o">=</span> <span class="n">TA</span><span class="p">.</span><span class="n">EMA</span><span class="p">(</span><span class="n">records</span><span class="p">,</span> <span class="mi">20</span><span class="p">);</span>
+    <span class="n">Log</span><span class="p">(</span><span class="s">&quot;EMA&quot;</span><span class="p">,</span> <span class="n">ema</span><span class="p">[</span><span class="n">ema</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">ema</span><span class="p">[</span><span class="n">ema</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">ema</span><span class="p">[</span><span class="n">ema</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">3</span><span class="p">]);</span>
+
+    <span class="k">auto</span> <span class="n">macd</span> <span class="o">=</span> <span class="n">talib</span><span class="p">.</span><span class="n">MACD</span><span class="p">(</span><span class="n">records</span><span class="p">);</span>
+    <span class="n">Log</span><span class="p">(</span><span class="s">&quot;MACD&quot;</span><span class="p">,</span> <span class="n">macd</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">macd</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">macd</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">macd</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">macd</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">macd</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">]);</span>
+
+    <span class="c1">//SetErrorFilter(&quot;timeout&quot;);</span>
+    <span class="n">Log</span><span class="p">(</span><span class="n">GetOS</span><span class="p">(),</span> <span class="n">GetPid</span><span class="p">(),</span> <span class="n">GetLastError</span><span class="p">(),</span> <span class="s">&quot;MD5&quot;</span><span class="p">,</span> <span class="n">MD5</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">));</span>
+    <span class="n">Log</span><span class="p">(</span><span class="s">&quot;Hash&quot;</span><span class="p">,</span> <span class="n">Hash</span><span class="p">(</span><span class="s">&quot;md5&quot;</span><span class="p">,</span> <span class="s">&quot;hex&quot;</span><span class="p">,</span> <span class="s">&quot;hello&quot;</span><span class="p">),</span> <span class="n">Hash</span><span class="p">(</span><span class="s">&quot;sha512&quot;</span><span class="p">,</span> <span class="s">&quot;base64&quot;</span><span class="p">,</span> <span class="s">&quot;hello&quot;</span><span class="p">));</span>
+    <span class="n">Log</span><span class="p">(</span><span class="s">&quot;HMAC&quot;</span><span class="p">,</span> <span class="n">HMAC</span><span class="p">(</span><span class="s">&quot;sha512&quot;</span><span class="p">,</span> <span class="s">&quot;base64&quot;</span><span class="p">,</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;pass&quot;</span><span class="p">));</span>
+    <span class="n">Log</span><span class="p">(</span><span class="n">Version</span><span class="p">(),</span> <span class="n">Unix</span><span class="p">(),</span> <span class="n">UnixNano</span><span class="p">());</span>
+    <span class="n">Log</span><span class="p">(</span><span class="s">&quot;Start Test Chart&quot;</span><span class="p">);</span>
+    <span class="n">Chart</span> <span class="n">c</span> <span class="o">=</span> <span class="n">Chart</span><span class="p">(</span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">EOF(</span><span class="s">{&quot;chart&quot;:{&quot;type&quot;:&quot;line&quot;},&quot;title&quot;:{&quot;text&quot;:&quot;Simple Chart&quot;},&quot;xAxis&quot;:{&quot;title&quot;:{&quot;text&quot;:&quot;Date&quot;}},&quot;yAxis&quot;:{&quot;title&quot;:{&quot;text&quot;:&quot;Number&quot;}},&quot;series&quot;:[{&quot;name&quot;:&quot;number&quot;,&quot;data&quot;:[]}]}</span><span class="dl">)EOF</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="n">c</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">c</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">{(</span><span class="n">Unix</span><span class="p">()</span> <span class="o">+</span> <span class="n">i</span><span class="p">)</span><span class="o">*</span><span class="mi">1000</span><span class="p">,</span> <span class="n">rand</span><span class="p">()</span> <span class="o">%</span> <span class="mi">100</span><span class="p">});</span>
+    <span class="p">}</span>
+    <span class="n">Log</span><span class="p">(</span><span class="n">exchange</span><span class="p">.</span><span class="n">GetName</span><span class="p">(),</span> <span class="n">exchange</span><span class="p">.</span><span class="n">GetLabel</span><span class="p">(),</span> <span class="n">exchanges</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+    <span class="k">auto</span> <span class="n">acc</span> <span class="o">=</span> <span class="n">exchange</span><span class="p">.</span><span class="n">GetAccount</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">acc</span><span class="p">.</span><span class="n">Valid</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Log</span><span class="p">(</span><span class="n">acc</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">// Using LogStatus and json draw a table, learn more about json libray: https://github.com/nlohmann/json</span>
+    <span class="n">json</span> <span class="n">tbl</span> <span class="o">=</span> <span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">{&quot;type&quot; : &quot;table&quot;, &quot;title&quot; : &quot;AAA&quot;, &quot;cols&quot; : [&quot;Head1&quot;, &quot;Head2&quot;], &quot;rows&quot;: []}</span><span class="dl">)</span><span class="s">&quot;</span><span class="n">_json</span><span class="p">;</span>
+    <span class="n">tbl</span><span class="p">[</span><span class="s">&quot;rows&quot;</span><span class="p">].</span><span class="n">push_back</span><span class="p">({</span><span class="s">&quot;111&quot;</span><span class="p">,</span> <span class="s">&quot;222&quot;</span><span class="p">});</span>
+    <span class="n">tbl</span><span class="p">[</span><span class="s">&quot;rows&quot;</span><span class="p">].</span><span class="n">push_back</span><span class="p">({</span><span class="s">&quot;col2&quot;</span><span class="p">,</span> <span class="s">&quot;col22&quot;</span><span class="p">});</span>
+    <span class="n">LogStatus</span><span class="p">(</span><span class="s">&quot;`&quot;</span><span class="o">+</span><span class="n">tbl</span><span class="p">.</span><span class="n">dump</span><span class="p">()</span><span class="o">+</span><span class="s">&quot;`&quot;</span><span class="p">);</span>
+
+    <span class="k">auto</span> <span class="n">ticker</span> <span class="o">=</span> <span class="n">exchange</span><span class="p">.</span><span class="n">GetTicker</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">ticker</span><span class="p">.</span><span class="n">Valid</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Log</span><span class="p">(</span><span class="n">ticker</span><span class="p">);</span>
+        <span class="n">Log</span><span class="p">(</span><span class="n">ticker</span><span class="p">.</span><span class="n">Info</span><span class="p">);</span> <span class="c1">// Info Struct is json object</span>
+    <span class="p">}</span>
+
+    <span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="n">exchange</span><span class="p">.</span><span class="n">GetDepth</span><span class="p">();</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="p">.</span><span class="n">Valid</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">Log</span><span class="p">(</span><span class="n">d</span><span class="p">.</span><span class="n">Asks</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">d</span><span class="p">.</span><span class="n">Bids</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="p">}</span>
+    <span class="c1">// Test features</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">exchange</span><span class="p">.</span><span class="n">GetName</span><span class="p">()</span> <span class="o">==</span> <span class="s">&quot;Futures_OKCoin&quot;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">exchange</span><span class="p">.</span><span class="n">SetContractType</span><span class="p">(</span><span class="s">&quot;this_week&quot;</span><span class="p">);</span>
+        <span class="n">exchange</span><span class="p">.</span><span class="n">SetMarginLevel</span><span class="p">(</span><span class="mi">20</span><span class="p">);</span>
+        <span class="n">exchange</span><span class="p">.</span><span class="n">SetDirection</span><span class="p">(</span><span class="s">&quot;closebuy&quot;</span><span class="p">);</span>
+
+        <span class="k">auto</span> <span class="n">positions</span> <span class="o">=</span> <span class="n">exchange</span><span class="p">.</span><span class="n">GetPosition</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">positions</span><span class="p">.</span><span class="n">Valid</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Log</span><span class="p">(</span><span class="n">positions</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">// test other function</span>
+    <span class="n">Log</span><span class="p">(</span><span class="s">&quot;HttpQuery&quot;</span><span class="p">,</span> <span class="n">HttpQuery</span><span class="p">(</span><span class="s">&quot;http://www.baidu.com/404&quot;</span><span class="p">).</span><span class="n">size</span><span class="p">());</span>
+    <span class="k">auto</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">json</span><span class="o">::</span><span class="n">parse</span><span class="p">(</span><span class="n">HttpQuery</span><span class="p">(</span><span class="s">&quot;http://www.baidu.com/404&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="nb">true</span><span class="p">));</span>
+    <span class="n">string</span> <span class="n">body</span> <span class="o">=</span> <span class="n">obj</span><span class="p">[</span><span class="s">&quot;Body&quot;</span><span class="p">];</span>
+    <span class="n">Log</span><span class="p">(</span><span class="s">&quot;HttpQuery&quot;</span><span class="p">,</span> <span class="n">body</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">obj</span><span class="p">[</span><span class="s">&quot;Header&quot;</span><span class="p">].</span><span class="n">dump</span><span class="p">());</span>
+    <span class="n">Log</span><span class="p">(</span><span class="n">Mail</span><span class="p">(</span><span class="s">&quot;smtp://smtp.163.com&quot;</span><span class="p">,</span> <span class="s">&quot;test@163.com&quot;</span><span class="p">,</span> <span class="s">&quot;password&quot;</span><span class="p">,</span> <span class="s">&quot;admin@163.com&quot;</span><span class="p">,</span> <span class="s">&quot;title&quot;</span><span class="p">,</span> <span class="s">&quot;test c++ email&quot;</span><span class="p">));</span>
+    <span class="c1">// Test Dial</span>
+    <span class="k">auto</span> <span class="n">client</span> <span class="o">=</span> <span class="n">Dial</span><span class="p">(</span><span class="s">&quot;tcp://www.baidu.com:80&quot;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">client</span><span class="p">.</span><span class="n">Valid</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">client</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;GET / HTTP/1.1</span><span class="se">\n</span><span class="s">Host: www.baidu.com</span><span class="se">\n</span><span class="s">Connection: Close</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">);</span>
+        <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">string</span> <span class="n">buf</span> <span class="o">=</span> <span class="n">client</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">buf</span> <span class="o">==</span> <span class="s">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+            <span class="n">Log</span><span class="p">(</span><span class="s">&quot;Dial receive&quot;</span><span class="p">,</span> <span class="n">buf</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+        <span class="p">}</span>
+        <span class="n">client</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="p">}</span>
+
+    <span class="n">_G</span><span class="p">(</span><span class="s">&quot;OK&quot;</span><span class="p">,</span><span class="s">&quot;xxx&quot;</span><span class="p">);</span>
+    <span class="n">Log</span><span class="p">(</span><span class="n">_G</span><span class="p">(</span><span class="s">&quot;OK&quot;</span><span class="p">));</span>
+    <span class="n">_G</span><span class="p">(</span><span class="s">&quot;OK&quot;</span><span class="p">,</span><span class="s">&quot;yyyyyy&quot;</span><span class="p">);</span>
+    <span class="n">Log</span><span class="p">(</span><span class="n">_G</span><span class="p">(</span><span class="s">&quot;OK&quot;</span><span class="p">));</span>
+    <span class="n">_G</span><span class="p">(</span><span class="s">&quot;OK&quot;</span><span class="p">,</span><span class="nb">NULL</span><span class="p">);</span>
+    <span class="n">Log</span><span class="p">(</span><span class="n">_G</span><span class="p">(</span><span class="s">&quot;OK&quot;</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sell-all-altcoin-to-btc-in-binance">
+<h1>3.3 Sell ALL AltCoin to BTC in Binance<a class="headerlink" href="#sell-all-altcoin-to-btc-in-binance" title="Permalink to this headline">¶</a></h1>
+<p>This strategy will sell all your AltCoin to BTC (or ETH, BNB, USDT), learn how to trade multiple trading pair,
+and follow the price and amount filter of exchange.</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">quoteCurrency</span> <span class="o">=</span> <span class="s1">&#39;BTC&#39;</span><span class="p">;</span> <span class="c1">//Can be &#39;ETH&#39;, &#39;BNB&#39;, &#39;USDT&#39;</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;Quote Currency&quot;</span><span class="p">,</span> <span class="nx">quoteCurrency</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">symbols</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">_C</span><span class="p">(</span><span class="nx">HttpQuery</span><span class="p">,</span> <span class="s2">&quot;https://api.binance.com/api/v1/exchangeInfo&quot;</span><span class="p">)).</span><span class="nx">symbols</span><span class="p">;</span>
+    <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">).</span><span class="nx">Info</span><span class="p">.</span><span class="nx">balances</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ele</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">ele</span><span class="p">.</span><span class="nx">asset</span> <span class="o">==</span> <span class="nx">quoteCurrency</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="kd">var</span> <span class="nx">totalV</span> <span class="o">=</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">ele</span><span class="p">.</span><span class="nx">free</span><span class="p">)</span> <span class="o">+</span> <span class="nb">parseFloat</span><span class="p">(</span><span class="nx">ele</span><span class="p">.</span><span class="nx">locked</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">totalV</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kd">var</span> <span class="nx">cfg</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">findWhere</span><span class="p">(</span><span class="nx">symbols</span><span class="p">,</span> <span class="p">{</span><span class="nx">symbol</span><span class="o">:</span> <span class="nx">ele</span><span class="p">.</span><span class="nx">asset</span><span class="o">+</span><span class="nx">quoteCurrency</span><span class="p">});</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">cfg</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;Not found&quot;</span><span class="p">,</span> <span class="nx">ele</span><span class="p">.</span><span class="nx">asset</span><span class="p">,</span> <span class="s2">&quot;trading pair&quot;</span><span class="p">,</span> <span class="nx">ele</span><span class="p">);</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="kd">var</span> <span class="nx">filter</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">findWhere</span><span class="p">(</span><span class="nx">cfg</span><span class="p">.</span><span class="nx">filters</span><span class="p">,</span> <span class="p">{</span><span class="nx">filterType</span><span class="o">:</span> <span class="s2">&quot;LOT_SIZE&quot;</span><span class="p">});</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">filter</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="kd">var</span> <span class="nx">v</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">(</span><span class="nb">parseInt</span><span class="p">(</span><span class="nx">totalV</span><span class="o">/</span><span class="nx">filter</span><span class="p">.</span><span class="nx">stepSize</span><span class="p">)</span><span class="o">*</span><span class="nx">filter</span><span class="p">.</span><span class="nx">stepSize</span><span class="p">,</span> <span class="nx">cfg</span><span class="p">.</span><span class="nx">baseAssetPrecision</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">v</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">Log</span><span class="p">(</span><span class="nx">ele</span><span class="p">,</span> <span class="s2">&quot;stepSize&quot;</span><span class="p">,</span> <span class="nx">filter</span><span class="p">.</span><span class="nx">stepSize</span><span class="p">);</span>
+            <span class="nx">exchange</span><span class="p">.</span><span class="nx">IO</span><span class="p">(</span><span class="s2">&quot;currency&quot;</span><span class="p">,</span> <span class="nx">ele</span><span class="p">.</span><span class="nx">asset</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nx">quoteCurrency</span><span class="p">);</span>
+            <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kd">var</span> <span class="nx">orders</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrders</span><span class="p">);</span>
+                <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">orders</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">order</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">order</span><span class="p">.</span><span class="nx">Id</span><span class="p">);</span>
+                <span class="p">});</span>
+                <span class="k">if</span> <span class="p">(</span><span class="nx">orders</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">break</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="nx">v</span><span class="p">);</span>
+            <span class="nx">Log</span><span class="p">(</span><span class="nx">ele</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+    <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;Done, Now&quot;</span><span class="p">,</span> <span class="nx">quoteCurrency</span><span class="p">,</span> <span class="s2">&quot;Balance&quot;</span><span class="p">,</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">).</span><span class="nx">Balance</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="moving-average-strategy">
+<h1>3.4 Moving Average Strategy<a class="headerlink" href="#moving-average-strategy" title="Permalink to this headline">¶</a></h1>
 <p>The moving average (MA) is a simple technical analysis tool that smooths out price data by creating a constantly updated average price.</p>
 <p>Check on <a class="reference external" href="https://www.fmz.com/strategy/103070">https://www.fmz.com/strategy/103070</a> for parameters configs.The global variables <code class="docutils literal"><span class="pre">FastPeriod</span></code>, <code class="docutils literal"><span class="pre">SlowPeriod</span></code>,etc… are defined in configs.</p>
 <p>Source code:</p>
@@ -210,7 +412,7 @@
 <p>}</p>
 </div>
 <div class="section" id="iceberg-buy-order">
-<h1>3.2 Iceberg Buy Order<a class="headerlink" href="#iceberg-buy-order" title="Permalink to this headline">¶</a></h1>
+<h1>3.5 Iceberg Buy Order<a class="headerlink" href="#iceberg-buy-order" title="Permalink to this headline">¶</a></h1>
 <p>Check on <a class="reference external" href="https://www.fmz.com/strategy/103319">https://www.fmz.com/strategy/103319</a>.</p>
 <p>Source code:</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">CancelPendingOrders</span><span class="p">()</span> <span class="p">{</span>
@@ -293,7 +495,7 @@
 </div>
 </div>
 <div class="section" id="dual-thrust-okex-feature">
-<h1>3.3 Dual Thrust OKEX Feature<a class="headerlink" href="#dual-thrust-okex-feature" title="Permalink to this headline">¶</a></h1>
+<h1>3.6 Dual Thrust OKEX Feature<a class="headerlink" href="#dual-thrust-okex-feature" title="Permalink to this headline">¶</a></h1>
 <p>A classic breakout strategy, Check on <a class="reference external" href="https://www.fmz.com/strategy/103247">https://www.fmz.com/strategy/103247</a> for configs.</p>
 <p>You can learn how to trade features and draw charts from the source code.</p>
 <p>learn more on <a class="reference external" href="https://www.quantconnect.com/tutorials/strategy-library/dual-thrust-trading-algorithm">https://www.quantconnect.com/tutorials/strategy-library/dual-thrust-trading-algorithm</a></p>
