@@ -683,3 +683,14 @@ JavaScript example:
         The same as other properties*/
     }
 
+
+2.6.26 Third-party Library
+>>>>>>>>>>>>>>>>>>
+
+JavaScript
+ - http://mathjs.org/
+ - http://mikemcl.github.io/decimal.js/
+ - http://underscorejs.org/
+ - http://ta-lib.org/
+C++
+ - https://nlohmann.github.io/json/
