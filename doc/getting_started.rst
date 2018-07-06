@@ -145,11 +145,11 @@ You can choose different code languages and backtesting
 
 For beginners, copy this strategy to begain: https://www.fmz.com/strategy/103070, which can be found on https://www.fmz.com/square.
 
-Clicking ``Copy and backtest``:
+Click ``Copy and backtest``:
 
 .. image:: images/copy.png
 
-Clicking ``Creat``:
+Click ``Creat``:
 
 .. image:: images/create.png
 
@@ -166,7 +166,7 @@ Change and add global variables here:
 1.3.5 Backtest your strategy
 >>>>>>>>>>>>>>>>>>>>>>
 
-Clicking Stragegy name to strategy page.
+Click Stragegy name to strategy page.
 
 .. image:: images/go_to_strategy.png
 
@@ -178,12 +178,16 @@ Add exchange and config your strategy:
 
 .. image:: images/backtest_config.png
 
-Clicking ``Start Backtest`` to start.
+Click ``Start Backtest`` to start.
 
 1.3.6 Run a robot on BotVs
 >>>>>>>>>>>>>>>>>>>>>>
 
 BotVs is FMZ Simulation Exchange, which is basically the same as a real exchange but free of charge, you can run your robot on FMZ Simulation Exchange for testing your strategy.
+
+First, you need to deposit assets on your simulation account on https://www.fmz.com/m/sandbox.
+
+.. image:: images/deposit.png
 
 Click ``Add Robot`` or https://www.fmz.com/m/add-robot to run a robot.
 
