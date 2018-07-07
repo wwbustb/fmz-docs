@@ -85,6 +85,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html">1.1 Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html#fmz-instruction-manual">1.3     FMZ Instruction Manual</a></li>
 </ul>
 <p class="caption"><span class="caption-text">2.  API Instruction</span></p>
 <ul>
@@ -103,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="#moving-average-strategy">3.4 Moving Average Strategy</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#iceberg-buy-order">3.5 Iceberg Buy Order</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#dual-thrust-okex-feature">3.6 Dual Thrust OKEX Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#high-frequency-marketmaker">3.7 High Frequency Marketmaker</a></li>
 </ul>
 
             
@@ -711,6 +713,73 @@ and follow the price and amount filter of exchange.</p>
     <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
         <span class="nx">onTick</span><span class="p">(</span><span class="nx">exchange</span><span class="p">);</span>
         <span class="nx">Sleep</span><span class="p">(</span><span class="nx">LoopInterval</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="high-frequency-marketmaker">
+<h1>3.7 High Frequency Marketmaker<a class="headerlink" href="#high-frequency-marketmaker" title="Permalink to this headline">¶</a></h1>
+<p>This is a simple but powerful strategy that used to earn thousands of times in real BTC spot markets.
+Can’t run on exchanges that have high trade fee.</p>
+<p>Source code:</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">floatAmountBuy</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">floatAmountSell</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">diffPrice</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">Interval</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">CancelPendingOrders</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">orders</span> <span class="o">=</span> <span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetOrders</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">orders</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">exchange</span><span class="p">.</span><span class="nx">CancelOrder</span><span class="p">(</span><span class="nx">orders</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">Id</span><span class="p">,</span> <span class="nx">orders</span><span class="p">[</span><span class="nx">j</span><span class="p">]);}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">GetPrice</span><span class="p">(</span><span class="nx">Type</span><span class="p">,</span><span class="nx">depth</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">amountBids</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="kd">var</span> <span class="nx">amountAsks</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">Type</span><span class="o">==</span><span class="s2">&quot;Buy&quot;</span><span class="p">){</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="nx">i</span><span class="o">&lt;</span><span class="mi">20</span><span class="p">;</span><span class="nx">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="nx">amountBids</span><span class="o">+=</span><span class="nx">depth</span><span class="p">.</span><span class="nx">Bids</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">Amount</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">amountBids</span><span class="o">&gt;</span><span class="nx">floatAmountBuy</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">depth</span><span class="p">.</span><span class="nx">Bids</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">Price</span><span class="o">+</span><span class="mf">0.01</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="nx">Type</span><span class="o">==</span><span class="s2">&quot;Sell&quot;</span><span class="p">){</span>
+        <span class="k">for</span><span class="p">(</span><span class="kd">var</span> <span class="nx">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">j</span><span class="o">&lt;</span><span class="mi">20</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">){</span>
+            <span class="nx">amountAsks</span><span class="o">+=</span><span class="nx">depth</span><span class="p">.</span><span class="nx">Asks</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">Amount</span><span class="p">;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">amountAsks</span><span class="o">&gt;</span><span class="nx">floatAmountSell</span><span class="p">){</span>
+                <span class="k">return</span> <span class="nx">depth</span><span class="p">.</span><span class="nx">Asks</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">Price</span><span class="o">-</span><span class="mf">0.01</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nx">depth</span><span class="p">.</span><span class="nx">Asks</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Price</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onTick</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">depth</span><span class="o">=</span><span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetDepth</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">buyPrice</span> <span class="o">=</span> <span class="nx">GetPrice</span><span class="p">(</span><span class="s2">&quot;Buy&quot;</span><span class="p">,</span><span class="nx">depth</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">sellPrice</span><span class="o">=</span> <span class="nx">GetPrice</span><span class="p">(</span><span class="s2">&quot;Sell&quot;</span><span class="p">,</span><span class="nx">depth</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">((</span><span class="nx">sellPrice</span> <span class="o">-</span> <span class="nx">buyPrice</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nx">diffPrice</span><span class="p">){</span>
+        <span class="nx">buyPrice</span><span class="o">-=</span><span class="mi">10</span><span class="p">;</span>
+        <span class="nx">sellPrice</span><span class="o">+=</span><span class="mi">10</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nx">CancelPendingOrders</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">account</span><span class="o">=</span><span class="nx">_C</span><span class="p">(</span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">amountBuy</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">((</span><span class="nx">account</span><span class="p">.</span><span class="nx">Balance</span> <span class="o">/</span> <span class="nx">buyPrice</span><span class="o">-</span><span class="mf">0.1</span><span class="p">),</span><span class="mi">2</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">amountSell</span> <span class="o">=</span> <span class="nx">_N</span><span class="p">((</span><span class="nx">account</span><span class="p">.</span><span class="nx">Stocks</span><span class="p">),</span><span class="mi">2</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">amountSell</span> <span class="o">&gt;</span> <span class="mf">0.02</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">(</span><span class="nx">sellPrice</span><span class="p">,</span><span class="nx">amountSell</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">amountBuy</span> <span class="o">&gt;</span> <span class="mf">0.02</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="nx">buyPrice</span><span class="p">,</span> <span class="nx">amountBuy</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">while</span> <span class="p">(</span><span class="kc">true</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">onTick</span><span class="p">();</span>
+        <span class="nx">Sleep</span><span class="p">(</span><span class="nx">Interval</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
