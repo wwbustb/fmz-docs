@@ -560,6 +560,11 @@ A JavaScript example:
         Log(depth);
     }
 
+.. note::
+    
+    ``_C()`` can often be misused as ``_C(exchange.GetRecords(PERIOD_H1))``, should be ``_C(exchange.GetRecords,PERIOD_H1)``
+
+
 2.6.22 _G
 >>>>>>>>>>>>>>>>>>
 

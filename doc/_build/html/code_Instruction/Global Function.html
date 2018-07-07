@@ -225,12 +225,12 @@ the message will go to the push queue and be pushed to the WeChat account that u
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;hello Wechat!@&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Log supports printing base64-encoded pictures:</p>
+<p>Log supports base64-encoded pictures print:</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;`data:image/png;base64,AAAA`&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Log supports direct printing of Python matplotlib.pyplot object.
-as long as the object contains <code class="docutils literal"><span class="pre">savefig</span></code> method can be directly Log print, such as:</p>
+<p>Log supports Python matplotlib.pyplot object print directly.
+as long as the object contains <code class="docutils literal"><span class="pre">savefig</span></code> method, such as:</p>
 <div class="highlight-Python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
 
 <span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
@@ -239,8 +239,8 @@ as long as the object contains <code class="docutils literal"><span class="pre">
 </pre></div>
 </div>
 <p>Log supports present message’s character or background with custom color:</p>
-<p>Changing message’s character color, message need end with RGB color code such as <code class="docutils literal"><span class="pre">##FF0000</span></code>, for more RGB color, check on <a class="reference external" href="https://www.w3schools.com/colors/colors_picker.asp">https://www.w3schools.com/colors/colors_picker.asp</a>.</p>
-<p>Changing message’s background color, message need end with like <code class="docutils literal"><span class="pre">#FF0000CC3299</span></code> ,the last six number <code class="docutils literal"><span class="pre">CC3299</span></code> represnt the RGB color code.</p>
+<p>Change message’s character color: message need end with RGB color code such as <code class="docutils literal"><span class="pre">##FF0000</span></code>, for more RGB color, check on <a class="reference external" href="https://www.w3schools.com/colors/colors_picker.asp">https://www.w3schools.com/colors/colors_picker.asp</a>.</p>
+<p>Change message’s background color: message need end with like <code class="docutils literal"><span class="pre">#FF0000CC3299</span></code> ,the last six number <code class="docutils literal"><span class="pre">CC3299</span></code> represnt the RGB color code.</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;red color message&quot;</span><span class="p">,</span> <span class="s2">&quot;#FF0000&quot;</span><span class="p">);</span>
 <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;blue color message#FF0000CC3299&quot;</span><span class="p">);</span>
 </pre></div>
@@ -260,7 +260,7 @@ as long as the object contains <code class="docutils literal"><span class="pre">
 </div>
 <p>Like <code class="docutils literal"><span class="pre">Log()</span></code> function, <code class="docutils literal"><span class="pre">LogStatus</span></code> supports base64-encoded images and Python matplotlib.pyplot object.</p>
 <p>LogStatus can Log tables on your robot page.</p>
-<p>Log a table example, add <code class="docutils literal"><span class="pre">`</span></code> characters to both sides and treat it as a complex message format (currently supported table)</p>
+<p>Log a table example, add <code class="docutils literal"><span class="pre">`</span></code> characters to both sides and treat it as a complex message format (currently supported table).</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">table</span> <span class="o">=</span> <span class="p">{</span><span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;table&#39;</span><span class="p">,</span> <span class="nx">title</span><span class="o">:</span> <span class="s1">&#39; Account information support color #ff0000&#39;</span><span class="p">,</span> <span class="nx">cols</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;BTC&#39;</span><span class="p">,</span> <span class="s1">&#39;ETH&#39;</span><span class="p">,</span> <span class="s1">&#39;USDT&#39;</span><span class="p">],</span> <span class="nx">rows</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s1">&#39;free&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2000</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;frozen&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">3000</span><span class="p">]]};</span>
 <span class="nx">LogStatus</span><span class="p">(</span><span class="s1">&#39;`&#39;</span> <span class="o">+</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">table</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;`&#39;</span><span class="p">);</span>
 </pre></div>
@@ -627,6 +627,10 @@ default retry interval is 3 seconds, you can call <code class="docutils literal"
     <span class="nx">Log</span><span class="p">(</span><span class="nx">depth</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">_C()</span></code> can often be misused as <code class="docutils literal"><span class="pre">_C(exchange.GetRecords(PERIOD_H1))</span></code>, should be <code class="docutils literal"><span class="pre">_C(exchange.GetRecords,PERIOD_H1)</span></code></p>
 </div>
 </div>
 <div class="section" id="g">

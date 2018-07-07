@@ -29,14 +29,14 @@ the message will go to the push queue and be pushed to the WeChat account that u
 
     Log("hello Wechat!@");
 
-Log supports printing base64-encoded pictures:
+Log supports base64-encoded pictures print:
 
 .. code-block:: JavaScript
 
     Log("`data:image/png;base64,AAAA`");
 
-Log supports direct printing of Python matplotlib.pyplot object.
-as long as the object contains ``savefig`` method can be directly Log print, such as:
+Log supports Python matplotlib.pyplot object print directly.
+as long as the object contains ``savefig`` method, such as:
 
 .. code-block:: Python
 
@@ -48,9 +48,9 @@ as long as the object contains ``savefig`` method can be directly Log print, suc
 
 Log supports present message's character or background with custom color:
 
-Changing message's character color, message need end with RGB color code such as ``##FF0000``, for more RGB color, check on https://www.w3schools.com/colors/colors_picker.asp.
+Change message's character color: message need end with RGB color code such as ``##FF0000``, for more RGB color, check on https://www.w3schools.com/colors/colors_picker.asp.
 
-Changing message's background color, message need end with like ``#FF0000CC3299`` ,the last six number ``CC3299`` represnt the RGB color code.
+Change message's background color: message need end with like ``#FF0000CC3299`` ,the last six number ``CC3299`` represnt the RGB color code.
 
 .. code-block:: JavaScript
 
@@ -79,7 +79,7 @@ Like ``Log()`` function, ``LogStatus`` supports base64-encoded images and Python
 
 LogStatus can Log tables on your robot page.
 
-Log a table example, add ````` characters to both sides and treat it as a complex message format (currently supported table)
+Log a table example, add ````` characters to both sides and treat it as a complex message format (currently supported table).
 
 .. code-block:: JavaScript
 
@@ -559,6 +559,11 @@ A JavaScript example:
         Log(ticker);
         Log(depth);
     }
+
+.. note::
+    
+    ``_C()`` can often be misused as ``_C(exchange.GetRecords(PERIOD_H1))``, should be ``_C(exchange.GetRecords,PERIOD_H1)``
+
 
 2.6.22 _G
 >>>>>>>>>>>>>>>>>>
