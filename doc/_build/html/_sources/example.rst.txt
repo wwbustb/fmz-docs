@@ -571,7 +571,7 @@ Source code:
 
 
 3.7 High Frequency Marketmaker
-=======================
+================================
 
 This is a simple but powerful strategy that used to earn thousands of times in real BTC spot markets.
 Can't run on exchanges that have high trade fee.

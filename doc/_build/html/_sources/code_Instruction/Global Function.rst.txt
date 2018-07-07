@@ -412,7 +412,7 @@ A JavaScript example of connecting to binance websocket ticker.
 
     HttpQuery(Url, PostData, Cookies, Headers, IsReturnHeader)
 
-Web URL access, support ``PUT``,``GET``,``POST``,``DELETE``,etc.
+Web URL access, support ``PUT``, ``GET``, ``POST``, ``DELETE`` ,etc.
 
 Parameter values: all are string types
 
