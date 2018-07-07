@@ -412,7 +412,7 @@ A JavaScript example of connecting to binance websocket ticker.
 
     HttpQuery(Url, PostData, Cookies, Headers, IsReturnHeader)
 
-Web URL access.
+Web URL access, support ``PUT``,``GET``,``POST``,``DELETE``,etc.
 
 Parameter values: all are string types
 
@@ -421,7 +421,7 @@ The second parameter PostData can be a custom method such as:
 
 .. code-block:: JavaScript
 
-    HttpQuery("http://www.abc.com", {method:'PUT', data:'xx'});
+    HttpQuery("http://www.abc.com", {method:'PUT', data:'parameter1=value1&parameter2=value2'});//PUT method
     HttpQuery("http://www.abc.com", {method:'PUT', data:'xx', timeout:1000});
 
 Passing the cookie string requires a third parameter, but does not require POST. Please set the second parameter to ``null``
