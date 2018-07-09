@@ -96,10 +96,10 @@ Steps to update the docker:
 
 - Stop all robots that run on the docker.
 - Delete the docker from FMZ website. the docker will stop on your server too.
-- Run `rm -rf robot_linux_amd64.tar.gz` in your dokcer files to delete the old docker.
+- Run ``rm -rf robot_linux_amd64.tar.gz`` in your dokcer files to delete the old docker.
 - Run ``wget http://q.botvs.net/dist/robot_linux_amd64.tar.gz`` to download the lastest docker.
 - Repeate the steps above.
-_ Restart robots.
+- Restart robots.
 
 .. image:: images/docker_dispaly.png
 

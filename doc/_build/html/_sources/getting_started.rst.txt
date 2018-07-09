@@ -92,6 +92,15 @@ Here are steps to deploy the dockr in a Linux server:
 - Run ``nohup ./robot -s rpcs@a.botvs.com:9902/xxxxxx -p yourFMZpassword &`` to run in the background. this step can also be done by ``Screen`` command.
 - Check on https://www.fmz.com/m/dashboard, if everything is OK , you can find the docker deployed.
 
+Steps to update the docker:
+
+- Stop all robots that run on the docker.
+- Delete the docker from FMZ website. the docker will stop on your server too.
+- Run ``rm -rf robot_linux_amd64.tar.gz`` in your dokcer files to delete the old docker.
+- Run ``wget http://q.botvs.net/dist/robot_linux_amd64.tar.gz`` to download the lastest docker.
+- Repeate the steps above.
+- Restart robots.
+
 .. image:: images/docker_dispaly.png
 
 .. note::
