@@ -103,6 +103,8 @@ Here are steps to deploy the dockr in a Linux server:
 
     There are two public dockers for testing. don't use them to run your robot on real market.
 
+.. _add exchange:
+
 1.3.3 Add exchanges
 >>>>>>>>>>>>>>>>>>>>>>
 

@@ -10,7 +10,8 @@ trading pair is also called ``symbol`` or ``currency`` in some exchenge's API do
 2.2.1 Add Exchange
 >>>>>>>>>>>>>>>>>>
 
-Check on how to add exchange when start a robot.
+Check on how to add exchange when start a robot:
+:ref:`add exchange`
 
 Now support:
 

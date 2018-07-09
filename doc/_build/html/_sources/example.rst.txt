@@ -574,7 +574,7 @@ Source code:
 ================================
 
 This is a simple but powerful strategy that used to earn thousands of times in real BTC spot markets.
-Can't run on exchanges that have high trade fee.
+Can't run it on exchanges that have high trade fee.
 
 Source code:
 
@@ -591,22 +591,22 @@ Source code:
             exchange.CancelOrder(orders[j].Id, orders[j]);}
     }
 
-    function GetPrice(Type,depth) {
-        var amountBids=0;
-        var amountAsks=0;
-        if(Type=="Buy"){
+    function GetPrice(Type, depth) {
+        var amountBids = 0;
+        var amountAsks = 0;
+        if(Type == "Buy"){
             for(var i=0;i<20;i++){
-                amountBids+=depth.Bids[i].Amount;
-                if (amountBids>floatAmountBuy){
-                    return depth.Bids[i].Price+0.01;
+                amountBids += depth.Bids[i].Amount;
+                if (amountBids > floatAmountBuy){
+                    return depth.Bids[i].Price + 0.01;
                 }
             }
         }
-        if(Type=="Sell"){
+        if(Type == "Sell"){
             for(var j=0; j<20; j++){
-                amountAsks+=depth.Asks[j].Amount;
-                if (amountAsks>floatAmountSell){
-                    return depth.Asks[j].Price-0.01;
+                amountAsks += depth.Asks[j].Amount;
+                if (amountAsks > floatAmountSell){
+                    return depth.Asks[j].Price - 0.01;
                 }
             }
         }
@@ -614,19 +614,19 @@ Source code:
     }
     
     function onTick() {
-        var depth=_C(exchange.GetDepth);
-        var buyPrice = GetPrice("Buy",depth);
-        var sellPrice= GetPrice("Sell",depth);
+        var depth = _C(exchange.GetDepth);
+        var buyPrice = GetPrice("Buy", depth);
+        var sellPrice = GetPrice("Sell", depth);
         if ((sellPrice - buyPrice) <= diffPrice){
-            buyPrice-=10;
-            sellPrice+=10;
+            buyPrice -= 10;
+            sellPrice += 10;
         }
         CancelPendingOrders();
-        var account=_C(exchange.GetAccount);
-        var amountBuy = _N((account.Balance / buyPrice-0.1),2); 
-        var amountSell = _N((account.Stocks),2); 
+        var account = _C(exchange.GetAccount);
+        var amountBuy = _N((account.Balance / buyPrice-0.1), 2); 
+        var amountSell = _N((account.Stocks), 2); 
         if (amountSell > 0.02) {
-            exchange.Sell(sellPrice,amountSell);
+            exchange.Sell(sellPrice, amountSell);
         }
         if (amountBuy > 0.02) {
             exchange.Buy(buyPrice, amountBuy);
