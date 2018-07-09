@@ -246,13 +246,17 @@ you should see something like <code class="docutils literal"><span class="pre">2
 <li>Check on <a class="reference external" href="https://www.fmz.com/m/dashboard">https://www.fmz.com/m/dashboard</a>, if everything is OK , you can find the docker deployed.</li>
 </ul>
 <p>Steps to update the docker:</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to keep the old docker, one server can run many dockers, just create a new folder and repeate the deploy steps.</p>
+</div>
 <ul class="simple">
 <li>Stop all robots that run on the docker.</li>
-<li>Delete the docker from FMZ website. the docker will stop on your server too.</li>
+<li>Delete the docker from FMZ website. the docker will stop on your server too(don’t have to, you can run two dockers on one server, just create a new folder)</li>
 <li>Run <code class="docutils literal"><span class="pre">rm</span> <span class="pre">-rf</span> <span class="pre">robot_linux_amd64.tar.gz</span></code> in your dokcer files to delete the old docker.</li>
 <li>Run <code class="docutils literal"><span class="pre">wget</span> <span class="pre">http://q.botvs.net/dist/robot_linux_amd64.tar.gz</span></code> to download the lastest docker.</li>
 <li>Repeate the steps above.</li>
-<li>Restart robots.</li>
+<li>Change robot’s config to use the new docker, restart robots.</li>
 </ul>
 <img alt="_images/docker_dispaly.png" src="_images/docker_dispaly.png" />
 <div class="admonition note">

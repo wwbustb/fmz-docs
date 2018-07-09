@@ -94,12 +94,16 @@ Here are steps to deploy the dockr in a Linux server:
 
 Steps to update the docker:
 
+.. note::
+
+    If you want to keep the old docker, one server can run many dockers, just create a new folder and repeate the deploy steps.
+
 - Stop all robots that run on the docker.
-- Delete the docker from FMZ website. the docker will stop on your server too.
+- Delete the docker from FMZ website. the docker will stop on your server too(don't have to, you can run two dockers on one server, just create a new folder)
 - Run ``rm -rf robot_linux_amd64.tar.gz`` in your dokcer files to delete the old docker.
 - Run ``wget http://q.botvs.net/dist/robot_linux_amd64.tar.gz`` to download the lastest docker.
 - Repeate the steps above.
-- Restart robots.
+- Change robot's config to use the new docker, restart robots.
 
 .. image:: images/docker_dispaly.png
 
