@@ -13,6 +13,7 @@ trading pair is also called ``symbol`` or ``currency`` in some exchenge's API do
 Check on how to add exchange when start a robot:
 :ref:`add exchange`
 
+
 Now support:
 
 .. sourcecode:: http
