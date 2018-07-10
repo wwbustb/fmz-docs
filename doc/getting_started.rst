@@ -77,7 +77,7 @@ In the Dashboard page--``Add docker`` button, you can link to the download page 
 
 .. image:: images/download_docker.png
 
-Here are steps to deploy the dockr in a Linux server:
+Here are steps to deploy the dockr in a Linux server(centOS 6):
 
 - Buy a cloud server (VPS) from Amazon or Google, the lowest and cheapest configuration is enough. you may often has a free try for a long time.
 - Login your server, fellow the instruction from your server provider or Google.
