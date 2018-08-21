@@ -338,7 +338,24 @@ A  JavaScript example of using this API, which will cancel all open orders for s
         }
     }
 
-2.4.7 GetPosition
+2.4.7 SetContractType
+>>>>>>>>>>>>>>>>>>
+
+.. code-block:: JavaScript
+
+    exchange.SetContractType(ContractType)
+
+Set contract type for futures trade. must be set first before using other API.
+
+Parameter value: string type
+
+OKEX futures have “this_week”, “next_week”, “quarter” three parameters
+
+.. code-block:: JavaScript
+
+    exchange.SetContractType("this_week"); // Set to Weekly Contract
+
+2.4.8 GetPosition
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -380,9 +397,11 @@ A  JavaScript example:
         Log("Amount:", position[0].Amount, "FrozenAmount:", position[0].FrozenAmount, "Price:",
             position[0].Price, "Profit:", position[0].Profit, "Type:", position[0].Type,
             "ContractType:", position[0].ContractType);
+        exchange.SetDirection("closebuy"); 
+        exchange.Sell(10000, 2);
     }
 
-2.4.8 SetMarginLevel
+2.4.9 SetMarginLevel
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -396,7 +415,7 @@ Parameter value: number integer
 Set the leverage size of Buy or Sell. MarginLevel has 5, 10, 20 optional parameters. OKEX supports 10 times and 20 times. For example:
 ``exchange.SetMarginLevel(10)``
 
-2.4.9 SetDirection
+2.4.10 SetDirection
 >>>>>>>>>>>>>>>>>>
 
 .. code-block:: JavaScript
@@ -412,6 +431,7 @@ A  JavaScript example:
 .. code-block:: JavaScript
 
     function main(){
+        exchange.SetContractType("this_week");
         exchange.SetMarginLevel(5); // Set the leverage to 5 times
         exchange.SetDirection("buy"); // Set the order type to buy long 
         exchange.Buy(1000, 2); //buy long at the price 1000, quantity of 2
@@ -420,19 +440,4 @@ A  JavaScript example:
         exchange.Sell(1000, 2);
     }
 
-2.4.10 SetContractType
->>>>>>>>>>>>>>>>>>
 
-.. code-block:: JavaScript
-
-    exchange.SetContractType(ContractType)
-
-Set contract type
-
-Parameter value: string type
-
-OKEX futures have “this_week”, “next_week”, “quarter” three parameters
-
-.. code-block:: JavaScript
-
-    exchange.SetContractType("this_week"); // Set to Weekly Contract
