@@ -82,7 +82,7 @@ Here are steps to deploy the dockr in a Linux server(centOS 6):
 - Buy a cloud server (VPS) from Amazon or Google, the lowest and cheapest configuration is enough. you may often has a free try for a long time.
 - Login your server, fellow the instruction from your server provider or Google.
 - Chose the docker that statisty your system version, most of the time, it is 64Bit.
-- For ``centos``, run ``wget http://q.botvs.net/dist/robot_linux_amd64.tar.gz``, command not found? install first ``yum install wget -y``.
+- For ``centos``, run ``wget 'http://q.botvs.net/dist/robot_linux_amd64.tar.gz'``, command not found? install first ``yum install wget -y``.
 - Run ``tar -xzvf robot_linux_amd64.tar.gz`` to unzip.
 - Run ``./robot -s rpcs@a.botvs.com:9902/xxxxxx -p yourFMZpassword``,
   you should see something like ``2018/07/05 05:04:10 Login OK, SID: 62086, PID: 7226, Name: host.localdomain``, which means everything is worked. 
