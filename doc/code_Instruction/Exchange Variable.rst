@@ -49,7 +49,7 @@ Now support:
     OKEX
     Poloniex
     Quoine
-    Stocks.Exchange
+    STEX
     WEX
     ZB
     Zaif
