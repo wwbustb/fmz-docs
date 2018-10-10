@@ -14,7 +14,7 @@ If you want change the trading pair before trade, check on ``exchange.IO("curren
 
     exchange.GetAccount()
 
-Acquiring exchange account information
+Get exchange account information
 
 **Return value: Account structure**
 
