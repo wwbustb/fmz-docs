@@ -36,7 +36,6 @@ Such as `Windows`, `Linux`, `Mac OS`, `Android`, `Raspbian`, etc.
 "FMZ" doesn’t has a particular meanning in English.
 
 
-The docker is a program that runs
 1.2	The Backtest System
 =======================
 
@@ -55,6 +54,7 @@ Both level are based on the real market historical data. Only the real market le
 **The simulation level Backtest System explanation.**
 
 Notice that backtesting is the strategy only preform in the past. Historical data doesn’t represent the future. History may replay, it also may lead to the black swan. Please treat the backtest results reasonable and objectively.
+
 
 
 1.3	FMZ Instruction Manual
