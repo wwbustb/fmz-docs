@@ -1,22 +1,41 @@
 1.1 Getting Started
 =======================
 
-What if I don’t have any program developing or financial skills? Can I still make quantitative trading on this platform?
+What if I don’t have any program developing or financial skills? Can I still make quantitative trading or run a robot on this platform?
 
-Absolutely, our platform has a complete tutorial for beginners. Only need studying a couple of days, you are good to go.   Botvs for rookies
+Absolutely, our platform has a complete tutorial for beginners. Only need studying a couple of days, you are ready to code for your own robot.
 
-**What kinds of programming languages can I use to achieve my strategies?**
+**What can FMZ does for me?**
 
-FMZ supports `JavaScript`, `Python`, `C++` for coding your strategies. (JavaScript and Python are recommended)
+You can learn how to write your bots(strategies) from our strategies' square which contains lots of open source code, share your strategy’s code with others,
+ask for professional help any time, run your strategy on any exchanges, contorl your bot on website with computer or cellphone, sell your strategies if you want,
+communicate with many other auto-trading lovers in our group. In a word, FMZ is a perfect platform for those who want do automated trading.
+
+**Which Cryptocurrency exchanges does FMZ support?**
+
+FMZ supports almost all exchanges that are popular, such as Binance, Bitfinex, Bitstamp, OKEX, Huobi, Poloniex,etc. you can also trade futures on OKEX and BitMEX.
+Check a full support list on :ref:`exchanges list`.
+
+You only need to write one strategy and run it on all exchanges without any changes.
+
+**What kinds of programming languages can I use to write my strategies?**
+
+FMZ supports `JavaScript`, `Python`, `C++` (JavaScript and Python are recommended) for coding your strategies.  Benefiting from the completed languages supporting(not a custom language 
+only can be used for one platform), you can improve your programming skills as well as learn to write strategies.
 
 **What is The docker?**
 
-The docker is a program that runs on your own Internet Server, which in charge of the Data request, Data reception, Network link, Log review etc. 
+The docker is a program that runs on your own Internet Server, which in charge of the data request, data reception, network link, Log review etc. 
 You can treat it like your strategy’s executor. Even if the FMZ server offline (breakdown, etc.), 
-it will have no influence on your manager for function properly. 
+it will have no influence on your robot that is running. 
 
 The Manager can run on variety of operating system. 
 Such as `Windows`, `Linux`, `Mac OS`, `Android`, `Raspbian`, etc.
+
+**What does "FMZ" means?**
+
+"FMZ" doesn’t has a particular meanning in English.
+
 
 1.2	The Backtest System
 =======================
@@ -38,6 +57,7 @@ Both level are based on the real market historical data. Only the real market le
 Notice that backtesting is the strategy only preform in the past. Historical data doesn’t represent the future. History may replay, it also may lead to the black swan. Please treat the backtest results reasonable and objectively.
 
 
+
 1.3	FMZ Instruction Manual
 =======================
 
@@ -50,7 +70,7 @@ KEY-WORD: "Futures", "Spot", "Stock", "Position", "Long", "Short", "Balance", "M
 >>>>>>>>>>>>>>>>>>
 
 After learning the most basic concepts, let’s start using FMZ to explore the quantitative world. 
-(Building your own quantitative trading system is a very large project, you need to have considerable computer knowledge and skills, Fortunately, FMZ has done this for you!)
+(Building your own quantitative trading system is a very large project, you need to have considerable computer knowledge and skills, fortunately, FMZ has done this for you!)
 
 Register your FMZ account,Log in to https://www.fmz.com.
 
@@ -77,12 +97,12 @@ In the Dashboard page--``Add docker`` button, you can link to the download page 
 
 .. image:: images/download_docker.png
 
-Here are steps to deploy the dockr in a Linux server:
+Here are steps to deploy the dockr in a Linux server(centOS 6):
 
 - Buy a cloud server (VPS) from Amazon or Google, the lowest and cheapest configuration is enough. you may often has a free try for a long time.
 - Login your server, fellow the instruction from your server provider or Google.
 - Chose the docker that statisty your system version, most of the time, it is 64Bit.
-- For ``centos``, run ``wget http://q.botvs.net/dist/robot_linux_amd64.tar.gz``, command not found? install first ``yum install wget -y``.
+- For ``centos``, run ``wget 'http://q.botvs.net/dist/robot_linux_amd64.tar.gz'``, command not found? install first ``yum install wget -y``.
 - Run ``tar -xzvf robot_linux_amd64.tar.gz`` to unzip.
 - Run ``./robot -s rpcs@a.botvs.com:9902/xxxxxx -p yourFMZpassword``,
   you should see something like ``2018/07/05 05:04:10 Login OK, SID: 62086, PID: 7226, Name: host.localdomain``, which means everything is worked. 

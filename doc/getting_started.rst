@@ -14,9 +14,7 @@ communicate with many other auto-trading lovers in our group. In a word, FMZ is 
 **Which Cryptocurrency exchanges does FMZ support?**
 
 FMZ supports almost all exchanges that are popular, such as Binance, Bitfinex, Bitstamp, OKEX, Huobi, Poloniex,etc. you can also trade futures on OKEX and BitMEX.
-Check a full support list on 
-
-:ref:`exchanges list`.
+Check a full support list on :ref:`exchanges list`.
 
 You only need to write one strategy and run it on all exchanges without any changes.
 

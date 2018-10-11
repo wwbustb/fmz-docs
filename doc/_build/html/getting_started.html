@@ -181,16 +181,27 @@
             
   <div class="section" id="getting-started">
 <h1>1.1 Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>What if I don’t have any program developing or financial skills? Can I still make quantitative trading on this platform?</p>
-<p>Absolutely, our platform has a complete tutorial for beginners. Only need studying a couple of days, you are good to go.   Botvs for rookies</p>
-<p><strong>What kinds of programming languages can I use to achieve my strategies?</strong></p>
-<p>FMZ supports <cite>JavaScript</cite>, <cite>Python</cite>, <cite>C++</cite> for coding your strategies. (JavaScript and Python are recommended)</p>
+<p>What if I don’t have any program developing or financial skills? Can I still make quantitative trading or run a robot on this platform?</p>
+<p>Absolutely, our platform has a complete tutorial for beginners. Only need studying a couple of days, you are ready to code for your own robot.</p>
+<p><strong>What can FMZ does for me?</strong></p>
+<p>You can learn how to write your bots(strategies) from our strategies’ square which contains lots of open source code, share your strategy’s code with others,
+ask for professional help any time, run your strategy on any exchanges, contorl your bot on website with computer or cellphone, sell your strategies if you want,
+communicate with many other auto-trading lovers in our group. In a word, FMZ is a perfect platform for those who want do automated trading.</p>
+<p><strong>Which Cryptocurrency exchanges does FMZ support?</strong></p>
+<p>FMZ supports almost all exchanges that are popular, such as Binance, Bitfinex, Bitstamp, OKEX, Huobi, Poloniex,etc. you can also trade futures on OKEX and BitMEX.
+Check a full support list on <a class="reference internal" href="code_Instruction/Exchange Variable.html#exchanges-list"><span class="std std-ref">2.2.1 Add Exchange</span></a>.</p>
+<p>You only need to write one strategy and run it on all exchanges without any changes.</p>
+<p><strong>What kinds of programming languages can I use to write my strategies?</strong></p>
+<p>FMZ supports <cite>JavaScript</cite>, <cite>Python</cite>, <cite>C++</cite> (JavaScript and Python are recommended) for coding your strategies.  Benefiting from the completed languages supporting(not a custom language
+only can be used for one platform), you can improve your programming skills as well as learn to write strategies.</p>
 <p><strong>What is The docker?</strong></p>
-<p>The docker is a program that runs on your own Internet Server, which in charge of the Data request, Data reception, Network link, Log review etc.
+<p>The docker is a program that runs on your own Internet Server, which in charge of the data request, data reception, network link, Log review etc.
 You can treat it like your strategy’s executor. Even if the FMZ server offline (breakdown, etc.),
-it will have no influence on your manager for function properly.</p>
+it will have no influence on your robot that is running.</p>
 <p>The Manager can run on variety of operating system.
 Such as <cite>Windows</cite>, <cite>Linux</cite>, <cite>Mac OS</cite>, <cite>Android</cite>, <cite>Raspbian</cite>, etc.</p>
+<p><strong>What does “FMZ” means?</strong></p>
+<p>“FMZ” doesn’t has a particular meanning in English.</p>
 </div>
 <div class="section" id="the-backtest-system">
 <h1>1.2     The Backtest System<a class="headerlink" href="#the-backtest-system" title="Permalink to this headline">¶</a></h1>
@@ -212,7 +223,7 @@ Both level are based on the real market historical data. Only the real market le
 <div class="section" id="a-quick-look-of-the-main-page">
 <h2>1.3.1 A quick look of the main page<a class="headerlink" href="#a-quick-look-of-the-main-page" title="Permalink to this headline">¶</a></h2>
 <p>After learning the most basic concepts, let’s start using FMZ to explore the quantitative world.
-(Building your own quantitative trading system is a very large project, you need to have considerable computer knowledge and skills, Fortunately, FMZ has done this for you!)</p>
+(Building your own quantitative trading system is a very large project, you need to have considerable computer knowledge and skills, fortunately, FMZ has done this for you!)</p>
 <p>Register your FMZ account,Log in to <a class="reference external" href="https://www.fmz.com">https://www.fmz.com</a>.</p>
 <img alt="_images/main_page.png" src="_images/main_page.png" />
 <p>First time to log in the website, it looks like this:</p>
@@ -230,12 +241,12 @@ So, it’s very safe (don’t need worry about the FMZ website breakdown etc.), 
 </div>
 <p>In the Dashboard page–<code class="docutils literal"><span class="pre">Add</span> <span class="pre">docker</span></code> button, you can link to the download page <a class="reference external" href="https://www.fmz.com/m/add-node">https://www.fmz.com/m/add-node</a>.</p>
 <img alt="_images/download_docker.png" src="_images/download_docker.png" />
-<p>Here are steps to deploy the dockr in a Linux server:</p>
+<p>Here are steps to deploy the dockr in a Linux server(centOS 6):</p>
 <ul class="simple">
 <li>Buy a cloud server (VPS) from Amazon or Google, the lowest and cheapest configuration is enough. you may often has a free try for a long time.</li>
 <li>Login your server, fellow the instruction from your server provider or Google.</li>
 <li>Chose the docker that statisty your system version, most of the time, it is 64Bit.</li>
-<li>For <code class="docutils literal"><span class="pre">centos</span></code>, run <code class="docutils literal"><span class="pre">wget</span> <span class="pre">http://q.botvs.net/dist/robot_linux_amd64.tar.gz</span></code>, command not found? install first <code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span> <span class="pre">wget</span> <span class="pre">-y</span></code>.</li>
+<li>For <code class="docutils literal"><span class="pre">centos</span></code>, run <code class="docutils literal"><span class="pre">wget</span> <span class="pre">'http://q.botvs.net/dist/robot_linux_amd64.tar.gz'</span></code>, command not found? install first <code class="docutils literal"><span class="pre">yum</span> <span class="pre">install</span> <span class="pre">wget</span> <span class="pre">-y</span></code>.</li>
 <li>Run <code class="docutils literal"><span class="pre">tar</span> <span class="pre">-xzvf</span> <span class="pre">robot_linux_amd64.tar.gz</span></code> to unzip.</li>
 <li>Run <code class="docutils literal"><span class="pre">./robot</span> <span class="pre">-s</span> <span class="pre">rpcs&#64;a.botvs.com:9902/xxxxxx</span> <span class="pre">-p</span> <span class="pre">yourFMZpassword</span></code>,
 you should see something like <code class="docutils literal"><span class="pre">2018/07/05</span> <span class="pre">05:04:10</span> <span class="pre">Login</span> <span class="pre">OK,</span> <span class="pre">SID:</span> <span class="pre">62086,</span> <span class="pre">PID:</span> <span class="pre">7226,</span> <span class="pre">Name:</span> <span class="pre">host.localdomain</span></code>, which means everything is worked.</li>

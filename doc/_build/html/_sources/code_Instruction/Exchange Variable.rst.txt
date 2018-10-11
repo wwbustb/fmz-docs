@@ -7,12 +7,13 @@ Exchange and trade pair is set when you start a robot. The following market api 
 If you set your exchange is "Binance", trading pair is "BTC_USDT", then call ``exchange.GetTicker()``, you will get the ticker of "BTCUSDT" of Binance.
 trading pair is also called ``symbol`` or ``currency`` in some exchenge's API docs,
 
+.. _exchanges list:
+
 2.2.1 Add Exchange
 >>>>>>>>>>>>>>>>>>
 
 Check on how to add exchange when start a robot:
 :ref:`add exchange`
-
 
 Now support:
 
@@ -49,6 +50,7 @@ Now support:
     OKEX
     Poloniex
     Quoine
+    STEX
     WEX
     ZB
     Zaif

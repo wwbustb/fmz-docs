@@ -26,7 +26,7 @@ which are called from object ``exchange`` or ``exchanges[x]``,for example：``ex
 
     exchange.GetTicker()
 
-Acquiring the current market quotations.
+Get the current market quotations.
 
 Return value: Ticker structure
 
@@ -115,7 +115,7 @@ For Python the code is basically the same:
 
     exchange.GetDepth()
 
-Acquiring the exchange order book.
+Get the exchange order book.
 
 Return value: Depth structure
 
@@ -190,7 +190,7 @@ A useful JavaScript example using depth:
 
     exchange.GetTrades()
 
-Acquiring Exchange Trading History.(not your trading history)
+Get Exchange Trading History.(not your trading history)
 
 Return value: Array of Trade Structure 
 
@@ -258,7 +258,7 @@ A useful JavaScript example using trades:
     exchange.GetRecords(period)
     exchange.GetRecords()
 
-Acquiring Exchange's history K lines/Candlesticks data.
+Get Exchange's history K lines/Candlesticks data.
 
 Parameter ``period`` : K lines cycle, Optional Parameters, default K line cycle is set when start the robot.
 

@@ -86,6 +86,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html">1.1 Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../getting_started.html#the-backtest-system">1.2     The Backtest System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../getting_started.html#fmz-instruction-manual">1.3     FMZ Instruction Manual</a></li>
 </ul>
 <p class="caption"><span class="caption-text">2.  API Instruction</span></p>
 <ul class="current">
@@ -99,10 +100,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#cancelorder">2.4.4 CancelOrder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getorder">2.4.5 GetOrder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#getorders">2.4.6 GetOrders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#getposition">2.4.7 GetPosition</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#setmarginlevel">2.4.8 SetMarginLevel</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#setdirection">2.4.9 SetDirection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#setcontracttype">2.4.10 SetContractType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setcontracttype">2.4.7 SetContractType</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getposition">2.4.8 GetPosition</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setmarginlevel">2.4.9 SetMarginLevel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setdirection">2.4.10 SetDirection</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Extent API.html">2.5 Extended API</a></li>
@@ -110,9 +111,13 @@
 </ul>
 <p class="caption"><span class="caption-text">3. Complete Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../example.html">3.1 Moving Average Strategy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../example.html#iceberg-buy-order">3.2 Iceberg Buy Order</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../example.html#dual-thrust-okex-feature">3.3 Dual Thrust OKEX Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html">3.1 Use Websocket</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html#use-c">3.2 Use C++</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html#sell-all-altcoin-to-btc-in-binance">3.3 Sell ALL AltCoin to BTC in Binance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html#moving-average-strategy">3.4 Moving Average Strategy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html#iceberg-buy-order">3.5 Iceberg Buy Order</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html#dual-thrust-okex-feature">3.6 Dual Thrust OKEX Feature</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../example.html#high-frequency-marketmaker">3.7 High Frequency Marketmaker</a></li>
 </ul>
 
             
@@ -190,7 +195,7 @@ Send a buy order to the exchange with the price is 100, and the quantity is 1.</
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetAccount</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Acquiring exchange account information</p>
+<p>Get exchange account information</p>
 <p><strong>Return value: Account structure</strong></p>
 <p>The Account structure contains the following variables:</p>
 <table border="1" class="docutils">
@@ -545,8 +550,20 @@ Whether the exchange cancels the order, it is best to call <code class="docutils
 </pre></div>
 </div>
 </div>
+<div class="section" id="setcontracttype">
+<h2>2.4.7 SetContractType<a class="headerlink" href="#setcontracttype" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetContractType</span><span class="p">(</span><span class="nx">ContractType</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set contract type for futures trade. must be set first before using other API.</p>
+<p>Parameter value: string type</p>
+<p>OKEX futures have “this_week”, “next_week”, “quarter” three parameters</p>
+<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetContractType</span><span class="p">(</span><span class="s2">&quot;this_week&quot;</span><span class="p">);</span> <span class="c1">// Set to Weekly Contract</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="getposition">
-<h2>2.4.7 GetPosition<a class="headerlink" href="#getposition" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.8 GetPosition<a class="headerlink" href="#getposition" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">GetPosition</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -612,12 +629,14 @@ Whether the exchange cancels the order, it is best to call <code class="docutils
     <span class="nx">Log</span><span class="p">(</span><span class="s2">&quot;Amount:&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Amount</span><span class="p">,</span> <span class="s2">&quot;FrozenAmount:&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">FrozenAmount</span><span class="p">,</span> <span class="s2">&quot;Price:&quot;</span><span class="p">,</span>
         <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Price</span><span class="p">,</span> <span class="s2">&quot;Profit:&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Profit</span><span class="p">,</span> <span class="s2">&quot;Type:&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Type</span><span class="p">,</span>
         <span class="s2">&quot;ContractType:&quot;</span><span class="p">,</span> <span class="nx">position</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">ContractType</span><span class="p">);</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetDirection</span><span class="p">(</span><span class="s2">&quot;closebuy&quot;</span><span class="p">);</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="setmarginlevel">
-<h2>2.4.8 SetMarginLevel<a class="headerlink" href="#setmarginlevel" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.9 SetMarginLevel<a class="headerlink" href="#setmarginlevel" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetMarginLevel</span><span class="p">(</span><span class="nx">MarginLevel</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -627,7 +646,7 @@ Whether the exchange cancels the order, it is best to call <code class="docutils
 <code class="docutils literal"><span class="pre">exchange.SetMarginLevel(10)</span></code></p>
 </div>
 <div class="section" id="setdirection">
-<h2>2.4.9 SetDirection<a class="headerlink" href="#setdirection" title="Permalink to this headline">¶</a></h2>
+<h2>2.4.10 SetDirection<a class="headerlink" href="#setdirection" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetDirection</span><span class="p">(</span><span class="nx">Direction</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -635,6 +654,7 @@ Whether the exchange cancels the order, it is best to call <code class="docutils
 <p>Parameter value: string type, can be <code class="docutils literal"><span class="pre">buy</span></code>, <code class="docutils literal"><span class="pre">closebuy</span></code>, <code class="docutils literal"><span class="pre">sell</span></code>, <code class="docutils literal"><span class="pre">closesell</span></code>.</p>
 <p>A  JavaScript example:</p>
 <div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">main</span><span class="p">(){</span>
+    <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetContractType</span><span class="p">(</span><span class="s2">&quot;this_week&quot;</span><span class="p">);</span>
     <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetMarginLevel</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// Set the leverage to 5 times</span>
     <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetDirection</span><span class="p">(</span><span class="s2">&quot;buy&quot;</span><span class="p">);</span> <span class="c1">// Set the order type to buy long</span>
     <span class="nx">exchange</span><span class="p">.</span><span class="nx">Buy</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span> <span class="c1">//buy long at the price 1000, quantity of 2</span>
@@ -642,18 +662,6 @@ Whether the exchange cancels the order, it is best to call <code class="docutils
     <span class="nx">exchange</span><span class="p">.</span><span class="nx">SetDirection</span><span class="p">(</span><span class="s2">&quot;closebuy&quot;</span><span class="p">);</span>
     <span class="nx">exchange</span><span class="p">.</span><span class="nx">Sell</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
 <span class="p">}</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="setcontracttype">
-<h2>2.4.10 SetContractType<a class="headerlink" href="#setcontracttype" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetContractType</span><span class="p">(</span><span class="nx">ContractType</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Set contract type</p>
-<p>Parameter value: string type</p>
-<p>OKEX futures have “this_week”, “next_week”, “quarter” three parameters</p>
-<div class="highlight-JavaScript"><div class="highlight"><pre><span></span><span class="nx">exchange</span><span class="p">.</span><span class="nx">SetContractType</span><span class="p">(</span><span class="s2">&quot;this_week&quot;</span><span class="p">);</span> <span class="c1">// Set to Weekly Contract</span>
 </pre></div>
 </div>
 </div>

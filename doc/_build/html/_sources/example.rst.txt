@@ -595,7 +595,7 @@ Source code:
         var amountBids = 0;
         var amountAsks = 0;
         if(Type == "Buy"){
-            for(var i=0;i<20;i++){
+            for(var i=0;i<depth.Bids.length;i++){
                 amountBids += depth.Bids[i].Amount;
                 if (amountBids > floatAmountBuy){
                     return depth.Bids[i].Price + 0.01;
@@ -603,7 +603,7 @@ Source code:
             }
         }
         if(Type == "Sell"){
-            for(var j=0; j<20; j++){
+            for(var j=0; j<depth.Asks.length; j++){
                 amountAsks += depth.Asks[j].Amount;
                 if (amountAsks > floatAmountSell){
                     return depth.Asks[j].Price - 0.01;
@@ -623,7 +623,7 @@ Source code:
         }
         CancelPendingOrders();
         var account = _C(exchange.GetAccount);
-        var amountBuy = _N((account.Balance / buyPrice-0.1), 2); 
+        var amountBuy = _N((account.Balance / buyPrice-0.01), 2); 
         var amountSell = _N((account.Stocks), 2); 
         if (amountSell > 0.02) {
             exchange.Sell(sellPrice, amountSell);

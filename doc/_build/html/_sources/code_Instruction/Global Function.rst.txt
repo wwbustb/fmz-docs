@@ -422,7 +422,7 @@ The second parameter PostData can be a custom method such as:
 .. code-block:: JavaScript
 
     HttpQuery("http://www.abc.com", {method:'PUT', data:'parameter1=value1&parameter2=value2'});//PUT method
-    HttpQuery("http://www.abc.com", {method:'PUT', data:'xx', timeout:1000});
+    HttpQuery("http://www.abc.com", {method:'PUT', data:'parameter1=value1&parameter2=value2', timeout:1000});
 
 Passing the cookie string requires a third parameter, but does not require POST. Please set the second parameter to ``null``
 When runing in the backtes, the function returns the fixed string Dummy Data because the URL cannot be simulated.
@@ -432,7 +432,7 @@ You can use this interface to send text messages or interact with other APIs
 .. code-block:: JavaScript
 
     HttpQuery("http://www.google.com"); // Get 
-    HttpQuery("http://www.google.com", "xxx"); // Post 
+    HttpQuery("http://www.google.com", "parameter1=value1&parameter2=value2"); // Post 
     HttpQuery("http://www.google.com", null, "a=10; b=20", "User-Agent: Mobile\nContent-Type: text/html", true);  
 
 Example Accessing BIANACE APIs that do not require signatures:

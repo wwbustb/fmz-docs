@@ -57,6 +57,11 @@ their API is the same, just switching the base address you can trade on hadax.
 
 Acesss to exchange's other API.
 
+.. note::
+
+    Only used for those API methods needed secret key to sign, other methods can be acessed by ``HttpQuery(url)`` function.
+
+
 Using this function requires the understanding of exchange’s orgin API, it extend the functionality that the FMZ does not add (to submit a POST request without having to worry about the parameter encryption process, 
 the FMZ has completed the encryption already, just need fill in the corresponding parameters). 
 For example, the FMZ platform does not currently support margin leverage trading on bitfinex exchanges. We can implement this function by using the IO function. 
