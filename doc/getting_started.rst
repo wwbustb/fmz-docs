@@ -32,7 +32,7 @@ Such as `Windows`, `Linux`, `Mac OS`, `Android`, `Raspbian`, etc.
 
 **What does "FMZ" means?**
 
-"FMZ" doesn’t has a particular meanning in English.
+"FMZ" doesn’t have a particular meanning in English.
 
 
 1.2	The Backtest System
