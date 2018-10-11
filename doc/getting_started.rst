@@ -5,13 +5,13 @@ What if I don’t have any program developing or financial skills? Can I still m
 
 Absolutely, our platform has a complete tutorial for beginners. Only need studying a couple of days, you are ready to code for your own robot.
 
-**What can FMZ do for me?**
+**What can FMZ does for me?**
 
 You can learn how to write your bots(strategies) from our strategies' square which contains lots of open source code, share your strategy’s code with others,
 ask for professional help any time, run your strategy on any exchanges, contorl your bot on website with computer or cellphone, sell your strategies if you want,
 communicate with many other auto-trading lovers in our group. In a word, FMZ is a perfect platform for those who want do automated trading.
 
-**Which Cryptocurrency exchanges do FMZ support?**
+**Which Cryptocurrency exchanges does FMZ support?**
 
 FMZ supports almost all exchanges that are popular, such as Binance, Bitfinex, Bitstamp, OKEX, Huobi, Poloniex,etc. you can also trade futures on OKEX and BitMEX.
 Check a full support list on :ref:`exchanges list`.
