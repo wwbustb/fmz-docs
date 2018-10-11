@@ -1,23 +1,41 @@
 1.1 Getting Started
 =======================
 
-What if I don’t have any program developing or financial skills? Can I still make quantitative trading on this platform?
+What if I don’t have any program developing or financial skills? Can I still make quantitative trading or run a robot on this platform?
 
-Absolutely, our platform has a complete tutorial for beginners. Only need studying a couple of days, you are good to go.   Botvs for rookies
+Absolutely, our platform has a complete tutorial for beginners. Only need studying a couple of days, you are ready to code for your own robot.
+
+**What can FMZ do for me?**
+
+You can learn how to write your bots(strategies) from our strategies' square which contains lots of open source code, share your strategy’s code with others,
+ask for professional help any time, run your strategy on any exchanges, contorl your bot on website with computer or cellphone, sell your strategies if you want,
+communicate with many other auto-trading lovers in our group. In a word, FMZ is a perfect platform for those who want do automated trading.
+
+**Which Cryptocurrency exchanges do FMZ support?**
+
+FMZ supports almost all exchanges that are popular, such as Binance, Bitfinex, Bitstamp, OKEX, Huobi, Poloniex,etc. you can also trade futures on OKEX and BitMEX.
+You only need to write one strategy and run it on all exchanges without any changes.
 
 **What kinds of programming languages can I use to achieve my strategies?**
 
-FMZ supports `JavaScript`, `Python`, `C++` for coding your strategies. (JavaScript and Python are recommended)
+FMZ supports `JavaScript`, `Python`, `C++` (JavaScript and Python are recommended) for coding your strategies.  Benefiting from the completed languages supporting(not a custom language 
+only can be used for one platform), you can improve your programming skills as well as learn to write strategies.
 
 **What is The docker?**
 
-The docker is a program that runs on your own Internet Server, which in charge of the Data request, Data reception, Network link, Log review etc. 
+The docker is a program that runs on your own Internet Server, which in charge of the data request, data reception, network link, Log review etc. 
 You can treat it like your strategy’s executor. Even if the FMZ server offline (breakdown, etc.), 
-it will have no influence on your manager for function properly. 
+it will have no influence on your robot that is running. 
 
 The Manager can run on variety of operating system. 
 Such as `Windows`, `Linux`, `Mac OS`, `Android`, `Raspbian`, etc.
 
+**What does "FMZ" means?**
+
+"FMZ" doesn’t has a particular meanning in English.
+
+
+The docker is a program that runs
 1.2	The Backtest System
 =======================
 
@@ -50,7 +68,7 @@ KEY-WORD: "Futures", "Spot", "Stock", "Position", "Long", "Short", "Balance", "M
 >>>>>>>>>>>>>>>>>>
 
 After learning the most basic concepts, let’s start using FMZ to explore the quantitative world. 
-(Building your own quantitative trading system is a very large project, you need to have considerable computer knowledge and skills, Fortunately, FMZ has done this for you!)
+(Building your own quantitative trading system is a very large project, you need to have considerable computer knowledge and skills, fortunately, FMZ has done this for you!)
 
 Register your FMZ account,Log in to https://www.fmz.com.
 
