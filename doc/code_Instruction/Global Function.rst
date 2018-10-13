@@ -355,7 +355,7 @@ A JavaScript example:
 .. code-block:: JavaScript
 
     function main(){
-        var client = Dial("tls://www.baidu.com:443"); // Dial supports tcp://, udp://, tls://, unix:// protocol, plus one parameter to specify the number of seconds to timeout
+        var client = Dial("tls://www.baidu.com:443"); // Dial supports tcp://, udp://, tls://, unix:// protocol, extra parameter to specify the number of seconds to timeout
         if (client) {
             client.write("GET / HTTP/1.1\nConnection: Closed\n\n"); // Write can be followed by a number parameter to specify the timeout, write to return the number of bytes successfully sent
             while (true) {
@@ -403,6 +403,28 @@ A JavaScript example of connecting to binance websocket ticker.
         client.close();
     }
 
+Here is another JavaScript example of connecting to OKEX websocket ticker. In this case, the bot needs to send a ping message every 30 seconds, and okex will send a pong back.
+
+.. code-block:: JavaScript
+
+    function main(){
+        var ws = Dial("wss://real.okex.com:10441/websocket")
+        if(ws){
+            ws.write("{'event':'addChannel','channel':'ok_sub_spot_btc_usdt_ticker'}")
+            var lastPingTime = new Date().getTime()
+            while(1){
+                var nowTime = new Date().getTime()
+                var ret = ws.read(10000) //timeout is 10000ms
+                Log("ret:", ret)
+                if(nowTime - lastPingTime > 15000){
+                    var retPing = ws.write("{'event':'ping'}")
+                    lastPingTime = nowTime
+                }
+                LogStatus("Now time", _D())
+                Sleep(1000)
+            }
+        }
+    }
 
 
 2.6.16 HttpQuery
