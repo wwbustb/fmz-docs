@@ -22,7 +22,7 @@ You only need to write one strategy and run it on all exchanges without any chan
 FMZ supports `JavaScript`, `Python`, `C++` (JavaScript and Python are recommended) for coding your strategies.  Benefiting from the completed languages supporting(not a custom language 
 only can be used for one platform), you can improve your programming skills as well as learn to write strategies.
 
-**What is The docker?**
+**What is the docker?**
 
 The docker is a program that runs on your own Internet Server, which in charge of the data request, data reception, network link, Log review etc. 
 You can treat it like your strategy’s executor. Even if the FMZ server offline (breakdown, etc.), 
@@ -30,7 +30,7 @@ it will have no influence on your robot that is running.
 The Manager can run on variety of operating system. 
 Such as `Windows`, `Linux`, `Mac OS`, `Android`, `Raspbian`, etc.
 
-**What does "FMZ" means?**
+**What does "FMZ" mean?**
 
 "FMZ" doesn’t have a particular meanning in English.
 

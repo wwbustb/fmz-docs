@@ -346,7 +346,7 @@ Return value: bool type, return true if successful
 
     Dial(Address, Timeout)
 
-Original Socket access, support tcp, udp, tls, unix protocol.
+Get Original Socket access, support tcp, udp, tls, unix protocol.
 
 Parameter value: Address is string type, fill in the address, TimeOut is the timeout
 
@@ -369,7 +369,7 @@ A JavaScript example:
         }
     }
 
-Support websocket protocol.
+Support websocket.
 
 A JavaScript example of connecting to binance websocket ticker.
 
@@ -382,7 +382,7 @@ A JavaScript example of connecting to binance websocket ticker.
             Log("Connection failed, program exited");
             return
         }
-        Log("The connection is successful and the disconnected line is automatically reconnected")
+        Log("The connection is successful and will automatically reconnected")
         while (true) {
             var buf = client.read() // Read only returns data obtained after calling read
             if (!buf) {
