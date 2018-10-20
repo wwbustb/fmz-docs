@@ -218,6 +218,15 @@ ORDER_STATE_CLOSED     Completed             1
 ORDER_STATE_CANCELED   Canceled              2   
 =====================  ====================  ====================
 
+Order Type is global constant:
+
+=====================  ====================  ==================== 
+Global constant        Meaning               value
+=====================  ====================  ====================
+ORDER_TYPE_BUY         BUY                   0
+ORDER_TYPE_SELL        SELL                  1
+=====================  ====================  ====================
+
 Example of GetOrder from binance:
 
 .. sourcecode:: http
@@ -382,6 +391,15 @@ Profit              Number               Order Status
 Type                Const                ``PD_LONG`` is a long position, ``PD_SHORT`` is a short position.
 ContractType        String               Contract name
 ==================  ==================== ===============
+
+Postion Type is global constant:
+
+=====================  ====================  ==================== 
+Global constant        Meaning               value
+=====================  ====================  ====================
+PD_LONG                 long                   0
+PD_SHORT                short                  1
+=====================  ====================  ====================
 
 A  JavaScript example:
 
