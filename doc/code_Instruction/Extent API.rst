@@ -39,7 +39,7 @@ A JavaScript example of using ``IO`` to trade several trading pairs:
 
 .. code-block:: JavaScript
 
-    exchanges[0].IO("base", baseAddress)
+    exchangs.IO("base", baseAddress)
 
 Parameter value: ``baseAddress`` , exchange base API address to switch.
 
@@ -47,7 +47,7 @@ If an exchange change it's base API address,  you can use this function to chang
 
 In some case, changing the address can acess another part of a exchange, such as huobipro and hadax,
 their API is the same, just switching the base address you can trade on hadax.
-``exchanges[0].IO("base", "https://api.hadax.com/v1")``
+``exchange.IO("base", "https://api.hadax.com")``
 
 **Use exchange's orgin API**
 
