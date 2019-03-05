@@ -100,14 +100,14 @@ Here are steps to deploy the dockr in a Linux server(centOS 6):
 - Buy a cloud server (VPS) from Amazon or Google, the lowest and cheapest configuration is enough. you may often has a free try for a long time.
 - Login your server, fellow the instruction from your server provider or Google.
 - Chose the docker that statisty your system version, most of the time, it is 64Bit.
-- For ``centos``, run ``wget 'http://q.botvs.net/dist/robot_linux_amd64.tar.gz'``, command not found? install first ``yum install wget -y``.
+- For ``centos``, run ``wget 'http://q.fmz.net/dist/robot_linux_amd64.tar.gz'``, command not found? install first ``yum install wget -y``.
 - Run ``tar -xzvf robot_linux_amd64.tar.gz`` to unzip.
-- Run ``./robot -s rpcs@a.botvs.com:9902/xxxxxx -p yourFMZpassword``,
+- Run ``./robot -s rpcs@node.fmz.com:9902/xxxxxx -p yourFMZpassword``,
   you should see something like ``2018/07/05 05:04:10 Login OK, SID: 62086, PID: 7226, Name: host.localdomain``, which means everything is worked. 
-- ``rpcs@a.botvs.com:9902/xxxxxx`` is unique to every users, find your own on https://www.fmz.com/m/add-node.
+- ``rpcs@node.fmz.com:9902/xxxxxx`` is unique to every users, find your own on https://www.fmz.com/m/add-node.
 - Now the docker isn't run in the background, if you close the SHH client, the docker will stop.
 - Press ``ctrl + C`` to stop the docker.
-- Run ``nohup ./robot -s rpcs@a.botvs.com:9902/xxxxxx -p yourFMZpassword &`` to run in the background. this step can also be done by ``Screen`` command.
+- Run ``nohup ./robot -s rpcs@node.fmz.com:9902/xxxxxx -p yourFMZpassword &`` to run in the background. this step can also be done by ``Screen`` command.
 - Check on https://www.fmz.com/m/dashboard, if everything is OK , you can find the docker deployed.
 
 Steps to update the docker:
@@ -119,7 +119,7 @@ Steps to update the docker:
 - Stop all robots that run on the docker.
 - Delete the docker from FMZ website. the docker will stop on your server too(don't have to, you can run two dockers on one server, just create a new folder)
 - Run ``rm -rf robot_linux_amd64.tar.gz`` in your dokcer files to delete the old docker.
-- Run ``wget http://q.botvs.net/dist/robot_linux_amd64.tar.gz`` to download the lastest docker.
+- Run ``wget http://q.fmz.net/dist/robot_linux_amd64.tar.gz`` to download the lastest docker.
 - Repeate the steps above.
 - Change robot's config to use the new docker, restart robots.
 
