@@ -405,18 +405,13 @@ A  JavaScript example:
 
 .. code-block:: JavaScript
 
-    // Note: GetPosition function obtains position information of all positions.
     function main(){
-        exchange.SetContractType("this_week");
-        exchange.SetMarginLevel(10);
-        exchange.SetDirection("buy");
-        exchange.Buy(10000, 2);
-        position = exchange.GetPosition();
-        Log("Amount:", position[0].Amount, "FrozenAmount:", position[0].FrozenAmount, "Price:",
-            position[0].Price, "Profit:", position[0].Profit, "Type:", position[0].Type,
-            "ContractType:", position[0].ContractType);
-        exchange.SetDirection("closebuy"); 
-        exchange.Sell(10000, 2);
+        exchange.SetContractType("this_week") //for OKEX future
+        var position = exchange.GetPosition()
+        if(position.length>0){
+            Log("Amount:", position[0].Amount, "FrozenAmount:", position[0].FrozenAmount, "Price:",
+                position[0].Price, "Profit:", position[0].Profit, "Type:", position[0].Type, "ContractType:", position[0].ContractType)
+        }
     }
 
 2.4.9 SetMarginLevel
@@ -453,9 +448,8 @@ A  JavaScript example:
         exchange.SetMarginLevel(5); // Set the leverage to 5 times
         exchange.SetDirection("buy"); // Set the order type to buy long 
         exchange.Buy(1000, 2); //buy long at the price 1000, quantity of 2
-        exchange.SetMarginLevel(5); 
         exchange.SetDirection("closebuy"); 
-        exchange.Sell(1000, 2);
+        exchange.Sell(1000, 2); //close long position
     }
 
 
