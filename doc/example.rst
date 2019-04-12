@@ -264,81 +264,63 @@ Source code:
 
 .. code-block:: JavaScript
 
-    function CancelPendingOrders() {
-        while (true) {
-            var orders = _C(exchange.GetOrders);
-            if (orders.length == 0) {
-                return;
-            }
+    var floatAmountBuy = 20
+    var floatAmountSell = 20
+    var diffPrice = 3
+    var Interval = 3000
 
-            for (var j = 0; j < orders.length; j++) {
-                exchange.CancelOrder(orders[j].Id);
-                if (j < (orders.length-1)) {
-                    Sleep(Interval);
-                }
-            }
+    function CancelPendingOrders() {
+        var orders = _C(exchange.GetOrders);
+        for (var j = 0; j < orders.length; j++) {
+            exchange.CancelOrder(orders[j].Id, orders[j])
         }
     }
 
-    var LastBuyPrice = 0;
-    var InitAccount = null;
-
-    function dispatch() {
-        var account = null;
-        var ticker = _C(exchange.GetTicker);
-        if (LastBuyPrice > 0) {
-            if (_C(exchange.GetOrders).length > 0) {
-                if (ticker.Last > LastBuyPrice && ((ticker.Last - LastBuyPrice) / LastBuyPrice) > (2*(EntrustDepth/100))) {
-                    Log('deviate to much, newest last price:', ticker.Last, 'order buy price', LastBuyPrice);
-                    CancelPendingOrders();
-                } else {
-                    return true;
-                }
-            } else {
-                account = _C(exchange.GetAccount);
-                Log("order finised, total cost:", _N(InitAccount.Balance - account.Balance), "avg buy price:", _N((InitAccount.Balance - account.Balance) / (account.Stocks - InitAccount.Stocks)));
+    function GetPrice(depth) {
+        var price = {buy:0, sell:0}
+        var askAmount = 0
+        var bidAmount = 0
+        for(var i=0; i<depth.Bids.length; i++){
+            askAmount += depth.Asks[i].Amount
+            bidAmount += depth.Bids[i].Amount
+            if(askAmount >= floatAmountBuy && !price.buy){
+                price.buy = depth.Asks[i].Price
             }
-            LastBuyPrice = 0;
+            if(bidAmount >= floatAmountSell && !price.sell){
+                price.sell = depth.Bids[i].Price
+            }
         }
-        
-        var BuyPrice = _N(ticker.Buy * (1 - EntrustDepth/100),PricePerision);
-        if (BuyPrice > MaxBuyPrice) {
-            return true;
+        if(!price.buy || !price.sell){
+            price = {buy:depth.Asks[depth.Asks.length-1].Price, sell:depth.Bids[depth.Bids.length-1].Price}
         }
-        
-        if (!account) {
-            account = _C(exchange.GetAccount);
-        }
+        return price
+    }
 
-
-        if ((InitAccount.Balance - account.Balance) >= TotalBuyNet) {
-            return false;
+    function onTick() {
+        var price = GetPrice(_C(exchange.GetDepth))
+        var buyPrice = price.buy + 0.01
+        var sellPrice = price.sell - 0.01
+        if ((sellPrice - buyPrice) <= diffPrice){
+            buyPrice -= 10
+            sellPrice += 10
         }
-        
-        var RandomAvgBuyOnce = (AvgBuyOnce * ((100 - FloatPoint) / 100)) + (((FloatPoint * 2) / 100) * AvgBuyOnce * Math.random());
-        var UsedMoney = Math.min(account.Balance, RandomAvgBuyOnce, TotalBuyNet - (InitAccount.Balance - account.Balance));
-        
-        var BuyAmount = _N(UsedMoney / BuyPrice, 3);
-        if (BuyAmount < MinStock) {
-            return false;
+        CancelPendingOrders()
+        var account = _C(exchange.GetAccount)
+        var amountBuy = _N((account.Balance / buyPrice-0.01), 2)
+        var amountSell = _N((account.Stocks), 2)
+        if (amountSell > 0.02) {
+            exchange.Sell(sellPrice, amountSell)
         }
-        LastBuyPrice = BuyPrice;
-        exchange.Buy(BuyPrice, BuyAmount, 'Cost: ', _N(UsedMoney), 'last price', ticker.Last);
-        return true;
+        if (amountBuy > 0.02) {
+            exchange.Buy(buyPrice, amountBuy)
+        }
     }
 
     function main() {
-        CancelPendingOrders();
-        InitAccount = _C(exchange.GetAccount);
-        Log(InitAccount);
-        if (InitAccount.Balance < TotalBuyNet) {
-            throw "balance not enough";
+        while (true) {
+            onTick()
+            Sleep(Interval)
         }
-        LoopInterval = Math.max(LoopInterval, 1);
-        while (dispatch()) {
-            Sleep(LoopInterval * 1000);
-        }
-        Log("All Done", _C(exchange.GetAccount));
     }
 
 
@@ -405,9 +387,6 @@ Source code:
         l: 0
     };
 
-    function _N(v) {
-        return Decimal(v).toSD(4, 1).toNumber();
-    }
 
     function GetPosition(posType) {
         var positions = exchange.GetPosition();
