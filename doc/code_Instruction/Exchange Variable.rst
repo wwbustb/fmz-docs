@@ -91,6 +91,6 @@ The exchange’s array, it contains multiple exchange objects which are sorted b
 >>>>>>>>>>>>>>>>>>
 
 FMZ Simulation Exchange is basically the same as a real exchange, you can run your robot on FMZ Simulation Exchange for testing your strategy, which is totally free.
-check it on https://www.fmz.com/m/sandbox, and deposit some money or bitcoin to start
+check it on https://wex.app, and deposit some money or bitcoin to start
 
 

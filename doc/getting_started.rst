@@ -146,7 +146,7 @@ Now support:
 .. sourcecode:: http
 
     Binance, Bitfinex, Huobi(huobipro), OKEX, Futures_OKCoin(OKEX), Futures_BitMEX, Poloniex, Bitstamp, 
-    BotVS(FMZ Simulation Exchange),AEX, BigONE, BitFlyer, Bithumb, Bitpie, Bittrex, CoinEx, CoinPlus,
+    Wexapp(FMZ Simulation Exchange),AEX, BigONE, BitFlyer, Bithumb, Bitpie, Bittrex, CoinEx, CoinPlus,
     Coincheck, Coinone, Futures_CTP, Futures_Deribit, Futures_Esunny, GateIO, HitBTC, KEX, Korbit, 
     Kraken, LiveCoin, OKCoin_EN, Quoine, WEX, ZB, Zaif.
 
@@ -213,10 +213,10 @@ Add exchange and config your strategy:
 
 Click ``Start Backtest`` to start.
 
-1.3.6 Run a robot on BotVs
+1.3.6 Run a robot on Wexapp
 >>>>>>>>>>>>>>>>>>>>>>
 
-BotVs is FMZ Simulation Exchange, which is basically the same as a real exchange but free of charge, you can run your robot on FMZ Simulation Exchange for testing your strategy.
+Wexapp is FMZ Simulation Exchange, which is basically the same as a real exchange but free of charge, you can run your robot on FMZ Simulation Exchange for testing your strategy.
 
 First, you need to deposit assets on your simulation account on https://www.fmz.com/m/sandbox.
 
@@ -243,7 +243,7 @@ You can check the robot's status and Logs, change the configs(need to stop robot
 
 0.125 RMB per robot per hour(around 0.018 USD).
 
-robot run on FMZ Simulation Exchange(BotVs) is free.
+robot run on FMZ Simulation Exchange(Wexapp) is free.
 
 .. image:: images/pay.png
 
