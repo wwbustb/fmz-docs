@@ -1,9 +1,8 @@
 1.1 Getting Started
 =======================
 
-What if I don’t have any program developing or financial skills? Can I still make quantitative trading or run a robot on this platform?
-
-Absolutely, our platform has a complete tutorial for beginners. Only need studying a couple of days, you are ready to code for your own robot.
+FMZ is an automated trading platform for cryptocurrency traders with support for many bitcoin/eth/altcoin exchange markets.
+We has a complete tutorial for beginners, such as https://www.fmz.com/bbs-topic/3649 . Only need studying a couple of days, you are ready to code for your own robot.
 
 **What can FMZ do for me?**
 
@@ -30,9 +29,7 @@ it will have no influence on your robot that is running.
 The Manager can run on variety of operating system. 
 Such as `Windows`, `Linux`, `Mac OS`, `Android`, `Raspbian`, etc.
 
-**What does "FMZ" mean?**
 
-"FMZ" doesn’t have a particular meanning in English.
 
 
 1.2	The Backtest System
@@ -72,11 +69,30 @@ After learning the most basic concepts, let’s start using FMZ to explore the q
 
 Register your FMZ account,Log in to https://www.fmz.com.
 
-.. image:: images/main_page.png
 
 First time to log in the website, it looks like this:
 
 .. image:: images/page_detail.png
+
+- 1.Your main control page
+- 2.Manage all your bots (start,stop,delete,open,etc)
+- 3.Manage all your strategies' code
+- 4.Deploy and manage your docker
+- 5.Add new exchanges
+- 6.Manual trading on the exchanges you added
+- 7.Pay your bill
+- 8.Ask any question here
+- 9.FMZ's simulated exchange
+- 10.Debug tool where you can run a block of code without start a bot.
+- 11.All kinds of message
+- 12.Strategy square where open-source and charging strategies are listed
+- 13.Live Robots where all live-running bots are listed.
+- 14.Forums where you can post a post to discuss any question related.
+- 15.Ask for someone to write code for you or provide this service for others.
+- 16.Products for exchanges and agencies.
+- 17.API documentation.
+- 18.Some useful tools, check for yourself.
+- 19.Your account information.
 
 1.3.2 Deploy the docker
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -191,6 +207,25 @@ Now your can find this strategy on your dashboard strategies list. https://www.f
 Edit your code here, don't forget to save your code:
 
 .. image:: images/edit_code.png
+
+- 1.Edit your code
+- 2.Backtesting, we will cover this part on an intermediate tutorial
+- 3.The programer language of your code, JavaScript was used in this demo
+- 4.The title, "|" splits Chinese and English title, which one will be showed is decided by the language of FMZ website
+- 5.The type of your strategy, the default is common
+- 6.The category of your strategy. You can divide your strategies into different categories if you have too many
+- 7.Remote editing your code from your own IDE instead of our website
+- 8.A link to the API doc
+- 9.Notes of the strategy(only be seen by yourself). you can record the thoughts here.
+- 10.Descriptions of the strategy. Others will see the descriptions if you share or sell your strategy on Square.
+- 11.Manual of the strategy, can only be seen when someone bought your strategy.
+- 12.Save your code, or ``Ctrl+S`` on edit mode.
+- 13.Save the backtesting config on the code.
+- 14.Download the strategy file
+- 15.Export and import the strategy while keeping all the parameters
+- 16.Change the font size and edit the theme
+- 17.Format the code automatically
+- 18.Use VIM mode to edit.
 
 Change and add global variables here:
 
